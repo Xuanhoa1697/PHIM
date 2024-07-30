@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="lichchieu" name="lichchieu">
+        <t t-call="website.layout">
+        <link rel="stylesheet" type="text/css" href="/tht_cinema_website/static/src/css/dangchieu.css" />
+        <!-- <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/vexemphim.css" />
+            <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/lichchieu.css" /> -->
+            <!-- <script type="text/javascript" src="/tht_cinema_website/static/src/js/dangchieu.js"/> -->
+            <div class="container d-flex flex-column flex-grow-1 justify-content-around">
+            <div class="o_wdiadiem_obj_diadiem_obj_title" style="text-align: center;">
+                
+            </div>
+        </div>
+        
+
+            <div class="container d-flex flex-column flex-grow-1 justify-content-around">
+                <div class='row'>
+                    <div class="product-chooser-item selected">
+                        <img class='suatchieu_img_phim' 
+                        t-attf-src='data:image/*;base64,{{dm_phim_obj.hinhanh}}' />
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tenphim">
+                            <t t-esc='dm_phim_obj.name' /> <br/>
+                            
+                        </div>
+                    </div>
+                    <t t-foreach='event' t-as='line' >
+                        <div class='col-md-3'>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" >
+                            
+                                <div class="product-chooser-item selected">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tenphim">
+                                    <br/>
+                                        <t t-esc='line["dm_lc"].ngaychieu' /> 
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- <span t-field="lc.batdau"   t-options='{"format": "MM/dd/yyyy "} '/> <br/> -->
+
+                            
+                            <div class="col-xs-8 col-sm-4 col-md-8 col-lg-8 text-left " style="padding:0px" >
+                                <!-- <div style='display:block'> <span class='date_ddmmyyyy ngaychieu suatchieu_date' t-esc="ngaychieu" /> </div> -->
+                                
+                                
+                                <div class='box_suatchieu'> 
+                                    <t t-foreach="line['dm_lichchieu_obj']" t-as="lc">
+                                        <div class=''> 
+                                        <a t-attf-href="/cinema/datve/lichchieu/#{lc.id}"> 
+                                            <span class='suatchieu_time'  t-field="lc.batdau"   t-options='{"format": "dd/MM/yyyy HH:mm"} ' /> 
+                                        </a> 
+                                        </div>
+                                        
+                                    </t>
+                                </div>
+                                <br/>
+                            </div>
+                    </div>
+                    </t>
+                </div>
+            </div>
+                
+            
+
+
+
+        <script type="text/javascript" >
+           
+                
+        </script>
+
+        
+        
+            
+        
+    </t>
+    </template>
+</odoo>

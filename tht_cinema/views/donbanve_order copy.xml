@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="donbanve_order" name="donbanve_order">
+        <head>
+            <t t-call='tht_cinema.dm_website_cinema_assets' />
+            <script type="text/javascript" src="/tht_cinema/static/src/js/datvetruoc.js"/>
+            
+        </head>
+
+        <t t-call='tht_cinema.dm_website_cinema_menu' />
+      
+        <h3 class='text-center'>Đơn đặt vé trước
+            <t t-call="tht_cinema.donbanve_searchbar"/>
+            
+        </h3>
+        <t t-if="not orders">
+            <p>Không có đơn đặt vé trước</p>
+        </t>
+        <div t-if="orders" class="panel panel-default">
+            <div class="table-responsive"><table class="table table-hover o_portal_my_doc_table">
+                <thead>
+                  <tr class="active">
+                    <th>
+                      <span class='hidden-xs'>Mã đơn bán vé #</span>
+                      <span class='visible-xs'>Ref.</span>
+                    </th>
+                    <th>Ngày đặt</th>
+                    <th ></th>
+                    <th>Số tiền </th>
+                    <th>Huỷ đơn</th>
+                  </tr>
+                </thead>
+                <t t-foreach="orders" t-as="order">
+                    <tr>
+                        <td>
+                            <a t-attf-href="/cinema/datvetruoc_line/{{dm_session.id}}/{{order.id}}?{{keep_query()}}">
+                            <t t-esc="order.name"/></a>
+                            <br/> <t t-esc="order.dm_phim_id.name"/>
+                            <br/> <span t-field="order.dm_lichchieu_id.batdau" t-options='{"format": "dd/MM/yyyy HH:mm"}'/>
+                        </td>
+                        <td>
+                          <span t-field="order.date_order" t-options="{'widget': 'date'}"/>&amp;nbsp;
+                          <span class='hidden-xs' t-field="order.date_order" t-options="{'time_only': True}"/>
+                          <br/> SĐT: <span class='hidden-xs' t-field="order.sodienthoai" />
+                        </td>
+                        <td>
+                            <t t-if="order.state == 'sale' ">
+                                <span class="label label-info"><i class="fa fa-fw fa-clock-o"></i><span class="hidden-xs"> Sale</span></span>
+                            </t>
+                            <t t-if="order.state == 'done' ">
+                                <span class="label label-success"><i class="fa fa-fw fa-done"></i><span class="hidden-xs"> Done</span></span>
+                            </t>
+                            <t t-if="order.state == 'draft'">
+                                <span class="label label-success hidden-xs"><i class="fa fa-fw fa-check"></i><span class="hidden-xs"> Đặt trước</span></span>
+                            </t>
+                        </td>
+                        <td><span t-field="order.amount_total" /></td>
+                        <td>
+                          <a t-attf-data-id="{{order.id}}" href='#' class='dvt_delete'> 
+                            <i class="icon-remove icon-large" style='color:red;'></i>
+                          </a> 
+                      </td>
+                    </tr>
+                </t>
+            </table></div>
+            <div t-if="pager" class="o_portal_pager text-center">
+              <t t-call="portal.pager"/>
+            </div>
+        </div>
+      
+    </template>
+
+
+    <template id="donbanve_order_line" name="donbanve_order_line">
+        <head>
+            <t t-call='tht_cinema.dm_website_cinema_assets' />
+
+            <script type="text/javascript" src="/tht_cinema/static/src/js/datvetruoc.js"/>
+            <style>
+              .row{
+                padding: 10px;
+              }
+              .row:hover {
+                background-color: gray ; opacity:95%
+              }
+            </style>
+        </head>
+        <t t-call='tht_cinema.dm_website_cinema_menu' />
+
+      
+        <t t-set="sales_order" t-value="order"/> <!-- rename to ensure breadcrumb compatibility (differentiate with purchase orders) -->
+        
+        
+        
+        <div id="optional_placeholder"></div>
+        <div class="container">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-md-6 col-xs-9 col-sm-9">
+                    <h4>
+                        <t t-call='portal.record_pager'/>
+                        <t t-if="order.state in ('sent', 'cancel')">Quotation</t>
+                        <t t-else=""></t> 
+                        
+                        <t t-esc="order.name"/> 
+                        <strong>Ngày đặt :</strong> <span t-field="order.create_date" t-options='{"widget": "date"}'/>
+                          <br/> SĐT:  <t t-esc="order.sodienthoai"/>
+                        <br/> <t t-esc="order.dm_phim_id.name"/>
+                         
+                        <br/> <span t-field="order.dm_lichchieu_id.batdau" t-options='{"format": "dd/MM/yyyy HH:mm"}'/>
+                        
+                        <t t-if="order.state == 'cancel'">
+                            <span class="label label-default"><i class="fa fa-fw fa-remove"/> Cancelled</span>
+                        </t>
+                        <t t-if="order.state == 'done'">
+                            <span class="label label-success"><i class="fa fa-fw fa-check" /> Done</span>
+                        </t>
+                    </h4>
+                </div>
+                <div class="col-md-6 col-sm-3 col-xs-3 hidden-print" id="o_portal_order_actions">
+                    <t t-if="order.state == 'sent' and portal_confirmation == 'sign'" name="portal_confirmation_sign">
+                        <a class="btn btn-primary ml8 pull-right" href="#portal_sign">
+                            <i class="fa fa-arrow-circle-right"/> Accept &amp; Sign
+                        </a>
+                    </t>
+                    <t t-if="order.state == 'sale' and portal_confirmation == 'sign'">
+                        <a class="btn btn-success ml8 pull-right" disabled="disabled"
+                            t-attf-title="Order signed on #{order.confirmation_date} by #{order.partner_id.name}">
+                            <i class="fa fa-check-circle"/> Signed
+                        </a>
+                    </t>
+                    <a target="_blank" t-att-href="'/my/orders/pdf/%s?%s' % (order.id, keep_query())" class="ml8 pull-right mt4 mr8" title="Download">
+                        <i class="fa fa-download fa-2x" aria-hidden="true"/>
+                    </a>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <t t-if="error or warning" t-call="sale.portal_order_error"/>
+              <t t-if="success and (not error and not warning)" t-call="sale.portal_order_success"/>
+              
+              
+
+              <div class="row">
+                <div class="col-md-2">
+                  <strong>Vé </strong>
+                </div>
+                <div class="hidden-sm hidden-xs col-md-2 text-right">
+                  <strong>Đơn giá</strong>
+                </div>
+                <div class="hidden-sm hidden-xs col-md-2 text-right">
+                  <strong>Số lượng</strong>
+                </div>
+                <div class="hidden-sm hidden-xs col-md-2 text-right">
+                  <strong>Thành tiền </strong>
+                </div>
+                <div class="hidden-sm hidden-xs col-md-2 text-right">
+                  <strong>Huỷ vé </strong>
+                </div>
+              </div>
+              <t t-foreach="order.dm_donbanve_line_ids" t-as="ol">
+                <div class="row orders_vertical_align">
+
+                  
+                    <div class="col-md-2">
+                      <strong><span t-esc="ol.vitrighe.replace('_','') "/> </strong>
+                    </div>
+                    <div class="hidden-sm hidden-xs col-md-2 text-right">
+                      <strong> <span t-field="ol.dongia"/> </strong>
+                    </div>
+                    <div class="hidden-sm hidden-xs col-md-2 text-right">
+                      <strong><span t-field="ol.soluong"/></strong>
+                    </div>
+                    <div class="hidden-sm hidden-xs col-md-2 text-right">
+                      <strong><span t-field="ol.price_total"/></strong> 
+                    </div>
+                    <div class="hidden-sm hidden-xs col-md-2 text-right">
+                      <!-- <a t-attf-href="/my/timesheet/delete/{{ol.id}}?{{keep_query()}}">
+                          <i class="icon-remove icon-large" style='color:red;'></i>
+                      </a>  -->
+                      <a t-attf-data-id="{{ol.id}}" href='#' class='dvt_line_delete'> 
+                          <i class="icon-remove icon-large" style='color:red;'></i>
+                      </a> 
+                    </div>
+                  
+                    
+                    
+                </div>
+              </t>
+
+              <hr/>
+
+              <div class="row">
+                <div class="col-md-4">
+                  
+                </div>
+                <div class="col-md-8">
+                  
+                  
+                  <div class="row">
+                    <div class="col-md-4  text-left">
+                      <strong>Tổng cộng </strong>
+                    </div>
+                    <div class="col-md-2 text-right ">
+                     <strong>  <div class='btn-primary' id="total_dongia" t-field="order.amount_total" /> </strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+                      
+                      <div class="form-group form-tien-thua col-md-8" style="padding-top:5px">
+                        <form t-attf-action="/cinema/datvetruoc_inve/{{dm_session.id}}/{{order.id}}?{{keep_query()}}"> 
+                            <input type="radio" id="pay_cash" name="payment_method" value="cash"  checked='1'/>
+                            <label style='width:80px; padding-bottom:5px; margin-right:30px;' for="cash">Tiền mặt </label> 
+                            <input type="radio" id="pay_bank" name="payment_method" value="bank" />
+                            <label style='width:80px; padding-bottom:5px; ' for="bank">Thẻ</label>
+                            
+                             <br/>
+
+                            <label style='width:80px; padding-bottom:5px;' for="exampleFormControlInput1">Khách đưa </label>
+                            <input class='form-control money' id='khachdua' type="text" />
+                            <label style='width:80px' for="exampleFormControlInput1">Tiền thừa</label>
+                            <input class='form-control money' id='tienthua' type="text" maxlength='50' readonly='1' /> 
+                            
+                            <t t-if='len(order.dm_donbanve_line_ids) > 0' >
+                              <a > <button class='btn btn-primary' id='thanhtoan'> Thanh toán </button></a> 
+                            </t>
+                        </form>
+
+                        </div>
+
+            </div>
+            
+          </div>
+        </div>
+        <div class="oe_structure mb32"/>
+      
+    </template>
+
+
+</odoo>

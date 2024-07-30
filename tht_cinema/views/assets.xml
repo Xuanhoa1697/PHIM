@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="golden_assets_frontend" name="Seat assets frontend" inherit_id="website.assets_frontend">
+        <xpath expr="." position="inside">
+            <!-- <script type="text/javascript" src="/tht_cinema/static/src/js/jquery.seat-charts.js"></script> -->
+            <!-- <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/jquery.seat-charts.css" />
+            <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/seat-charts-custom.css" /> -->
+            <!-- <script type="text/javascript" src="/tht_cinema/static/src/js/tht_seat_booking.js"></script> -->
+            
+
+        </xpath>
+    </template>
+
+   
+</odoo>

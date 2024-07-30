@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="momo" name="momo">
+		<!--
+		<link rel="stylesheet" type="text/css" href="/tht_cinema_website/static/src/css/momo.css" />
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+		-->
+		<!--
+		<script type="text/javascript" src="/tht_cinema_website/static/src/js/product.js">
+		</script>
+		-->
+		
+			<div>
+				<!-- <form id="attendee_registration" t-attf-action="/event/#{slug(event)}/registration/confirm" method="post" class="js_website_submit_form"> -->
+				<form id="attendee_registration" action="" method="post" class="js_website_submit_form">
+					<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+					<div class="modal-content">
+						<div class="modal-header align-items-center">
+							<a id="basic" href="#" class="btn btn-primary">
+								In vé
+							</a>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span>
+									&amp;times;
+								</span>
+							</button>
+							<button type="submit" id="donketiep" class="btn btn-primary" t-if="availability_check" style="margin-left:200px">
+								Đơn kế tiếp
+							</button>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								
+                        <form class="myForm" method="POST" target="_blank" enctype="application/x-www-form-urlencoded" action="/cnm/momo/req">
+				<div class="form-group row">
+					<div class="col-sm-6">
+						<label for="fxRate">
+							PartnerCode
+						</label>
+						<div id="fxRate">
+							<input type="text" class="form-control" name="partnerCode" value="MOMOBKUN20180529" />
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<label for="fxRate">
+							AccessKey
+						</label>
+						<div id="fxRate">
+							<input type="text" class="form-control" name="accessKey" value="klm05TvNBzhg7h7j" />
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<label for="fxRate">
+							SecretKey
+						</label>
+						<div id="fxRate">
+							<input type="text" class="form-control" name="secretKey" value="at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa" />
+						</div>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-6">
+						<label for="fxRate">
+							OrderInfo
+						</label>
+						<div id="fxRate">
+							<input type="text" class="form-control" name="orderInfo" value="test thanh toan" />
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<label for="fxRate">
+							OrderId
+						</label>
+						<div id="fxRate">
+							<input type="text" class="form-control" name="orderId" value="1627646148" />
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<label for="fxRate">
+							Amount
+						</label>
+						<div id="fxRate">
+							<input type="text" class="form-control" name="amount" value="10000" />
+						</div>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-6">
+						<label for="fxRate">
+							NotifyUrl
+						</label>
+						<div id="fxRate">
+							<input type="text" class="form-control" name="notifyUrl" value="https://momo.vn/" />
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<label for="fxRate">
+							ReturnUrl
+						</label>
+						<div id="fxRate">
+							<input type="text" class="form-control" name="returnUrl" value="https://momo.vn/" />
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="fxRate">
+						ExtraData
+					</label>
+					<div id="fxRate">
+						<!-- <input type='text' class="form-control" type="text" name="extraData" value="merchantName=Payment" /> -->
+					</div>
+				</div>
+				<div style="margin-top: 1em;">
+					<button type="submit" class="btn btn-lg button-momo">
+						Send request
+					</button>
+				</div>
+			</form>
+                   
+							</div>
+						</div>
+						
+					</div>
+				</form>
+			</div>
+			
+		
+   
+   </template>
+
+		<template id="product" name="product">
+			<h1>
+				template product
+			</h1>
+			<t t-esc="momo" />
+			>
+			<form class="myForm" method="POST" target="_blank" enctype="application/x-www-form-urlencoded" action="/cnm/momo/req">
+				<div class="form-group row">
+					<div class="col-sm-6">
+						<label for="fxRate">
+							PartnerCode
+						</label>
+						<div id="fxRate">
+							<input type="text" class="form-control" name="partnerCode" value="MOMOBKUN20180529" />
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<label for="fxRate">
+							AccessKey
+						</label>
+						<div id="fxRate">
+							<input type="text" class="form-control" name="accessKey" value="klm05TvNBzhg7h7j" />
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<label for="fxRate">
+							SecretKey
+						</label>
+						<div id="fxRate">
+							<input type="text" class="form-control" name="secretKey" value="at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa" />
+						</div>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-6">
+						<label for="fxRate">
+							OrderInfo
+						</label>
+						<div id="fxRate">
+							<input type="text" class="form-control" name="orderInfo" value="test thanh toan" />
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<label for="fxRate">
+							OrderId
+						</label>
+						<div id="fxRate">
+							<input type="text" class="form-control" name="orderId" value="1627646148" />
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<label for="fxRate">
+							Amount
+						</label>
+						<div id="fxRate">
+							<input type="text" class="form-control" name="amount" value="10000" />
+						</div>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-6">
+						<label for="fxRate">
+							NotifyUrl
+						</label>
+						<div id="fxRate">
+							<input type="text" class="form-control" name="notifyUrl" value="https://momo.vn/" />
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<label for="fxRate">
+							ReturnUrl
+						</label>
+						<div id="fxRate">
+							<input type="text" class="form-control" name="returnUrl" value="https://momo.vn/" />
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="fxRate">
+						ExtraData
+					</label>
+					<div id="fxRate">
+						<!-- <input type='text' class="form-control" type="text" name="extraData" value="merchantName=Payment" /> -->
+					</div>
+				</div>
+				<div style="margin-top: 1em;">
+					<button type="submit" class="btn btn-lg button-momo">
+						Send request
+					</button>
+				</div>
+			</form>
+		
+	</template>
+</odoo>

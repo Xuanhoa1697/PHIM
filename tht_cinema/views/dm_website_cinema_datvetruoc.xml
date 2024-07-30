@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="dm_website_cinema_datvetruoc" name="dm_website_cinema_datvetruoc">
+        <html>
+            <head>
+                <t t-call='tht_cinema.dm_website_cinema_assets' />
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/lichchieu.css" />
+            </head>
+            <t t-call='tht_cinema.dm_website_cinema_menu' />
+            <body>
+
+            <div class='col-md-12 text-center'> <h3> Chọn suất chiếu theo ngày <br/> <span class='thangchieu'> <t t-esc="date_list[0]"/> </span> </h3> </div>
+            <div class='col-md-12 text-center' style='margin-bottom:20px'>
+                <t t-foreach="date_list" t-as="line">
+                    <div class='text-center' style='display:inline-block'><a t-attf-href="#{ dm_session.url_banve }?ngaychieu=#{ line }"> 
+                        <span class='format_date_ddmmyyyy' t-esc='line' />
+                        </a>
+                    </div>
+                </t>
+
+                <t t-foreach="date_list" t-as="line">
+                    <div class='text-center' style='display:none'><a t-attf-href="#{ dm_session.url_banve }?ngaychieu=#{ line }"> 
+                        <span class='date_ddmmyyyy' t-esc='line' />
+                        </a>
+                    </div>
+                </t>
+            </div>
+        <!-- end header panel -->
+        <!-- cinema/pos_id_datvetruoc/6/ -->
+        
+        
+            <div class="container d-flex flex-column flex-grow-1 justify-content-around">
+            <div class='row'>
+                <t t-foreach='event' t-as='line' >
+                    <div class='col-md-4'>
+                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                            <div class="product-chooser-item selected">
+                                <img class='suatchieu_img_phim'
+                                t-attf-src='data:image/*;base64,{{line["dm_phim"].hinhanh}}' />
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tenphim">
+                                    <t t-esc='line["dm_phim"].name' /> <br/>                                   
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-left" style="padding:0px" >
+                            <div style='display:block'> <span class='date_ddmmyyyy ngaychieu' t-esc="ngaychieu" /> </div>
+
+                            <div class='box_suatchieu'> 
+                                <t t-foreach="line['dm_lichchieu_obj']" t-as="lc">
+                                    <div class='suatchieu'> 
+                            
+                                        <a t-attf-href="/cinema/pos_line_datvetruoc/#{current_session_line_id.id}/#{ lc.id }/"> 
+                                            <span t-field="lc.batdau"   t-options='{"format": "HH:mm"} '/>
+                                            
+                                        </a>
+                                    </div>
+                                    
+                                </t>
+                            </div>
+                        </div>
+                </div>
+                </t>
+            </div>
+            </div>
+
+            
+
+            <script type="text/javascript" >
+                const clock24 = document.getElementById('clock24')
+
+                
+                function concatZero(timeFrame) {
+                    return timeFrame &lt; 10 ? '0'.concat(timeFrame) : timeFrame
+                }
+                function realTime() {
+                    let date = new Date()
+                    let sec = date.getSeconds()
+                    let mon = date.getMinutes()
+                    let hr = date.getHours()
+                    
+                    clock24.textContent = `${concatZero(hr)} : ${concatZero(mon)} : ${concatZero(sec)}`
+                    }
+
+                    setInterval(realTime, 1000)
+                    
+            </script>
+
+        </body>
+
+        
+    </html>
+    </template>
+</odoo>

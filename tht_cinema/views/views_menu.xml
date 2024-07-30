@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    
+
+    <!-- Top menu item -->
+
+    <menuitem name="Quản lý rạp phim" id="menu_root" web_icon="tht_cinema,static/description/icon.png" groups="base.group_no_one"/>
+    
+    <menuitem name="Cài đặt rạp phim" id="menu_caidat_rapphim" parent="menu_root"/>
+    <menuitem name="Vé " id="menu_caidat_ve" parent="menu_root"/>
+    <menuitem name="Phim " id="menu_caidat_phim" parent="menu_root"/>
+    <menuitem name="Hóa đơn " id="menu_caidat_hoadon" parent="menu_root"/>
+    <menuitem name="Báo cáo " id="menu_caidat_baocao" parent="menu_root"/>
+
+    
+  </data>
+</odoo>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<!-- Báo cáo chieu phim noi bo chi tiết  -->
+	   	<report
+	            id="action_dm_report_thanhtoan_detail_xlsx"
+	            model="dm.report.thanhtoan"
+	            string="Báo cáo chiếu phim"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.dm_report_thanhtoan_detail_xlsx"
+	            file="tht_cinema.dm_report_thanhtoan_detail_xlsx"
+	        />
+	        
+	   	<!-- Báo cáo chieu phim noi bo Tổng hợp  -->
+	   	<report
+	            id="action_dm_report_thanhtoan_general_xlsx"
+	            model="dm.report.donbanve"
+	            string="Báo cáo bán hàng Tổng hợp POS"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.dm_report_donbanve_general_xlsx"
+	            file="tht_cinema.dm_report_donbanve_general_xlsx"
+	        />
+
+		<record id="view_dm_report_thanhtoan_form" model="ir.ui.view">
+			<field name="name">view.dm.report.thanhtoan.form</field>
+			<field name="model">dm.report.thanhtoan</field>
+			<field name="arch" type="xml">
+				<form string="Báo cáo Thanh toán ">
+					<header>
+						<button name="action_general" string="Tính" type="object" class="oe_highlight"/>
+					</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="date_from" required="1"/>
+								<!-- <field name="dm_diadiem_id"/> -->
+								<field name="dm_ptthanhtoan_id"/>
+								
+								<!-- <field name="payment_method"/> -->
+								
+								<!-- <field name="dm_session_line_id"/> -->
+								
+							</group>
+							<group>
+								<field name="date_to" required="1"/>
+								<field name="phienbanve"/>
+								
+							</group>
+							
+						</group>
+						<!-- <group>
+							<group>
+								<field name="specification"/>
+								<field name="yet_exported"/>
+							</group>
+							<group>
+								<field name="specification_number"/>
+								<field name="date_export_specification"/>
+							</group>
+						</group> -->
+						<notebook>
+							<page string="Dữ liệu Báo cáo thanh toán">
+								<separator string="Dữ liệu Chi tiết"/>
+									<div>
+										<!-- <button name="%(action_dm_report_thanhtoan_detail_xlsx)d" string="In báo cáo (Excel)" type="action" class="oe_highlight" style='margin-right: 5px;'/> -->
+										
+										<group class="oe_subtotal_footer oe_right" col="6">
+				            				<field name="total_qty"/>
+				            				<field name="total_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+				            			</group>
+									</div>
+									<field name="detail_lines" nolabel="1" readonly="1">
+										<tree default_order='id' editable="bottom">
+											<field name="id"/>
+											<!-- <field name="ngay" widget='date'/> -->
+											<field name="ht_thanhtoan"/>
+											
+											<!-- <field name="dm_phim_id"/> -->
+											<!-- <field name="tenphim"/> -->
+											<!-- <field name="nhaphathanh"/> -->
+											<!-- <field name="suatchieu" /> -->
+											<!-- <field name="phong" />
+											<field name="soghe" /> -->
+											<!-- <field name="tongsove" /> -->
+											<!-- <field name="payment_method" /> -->
+											<field name="qty"/>
+											<!-- <field name="price_unit"/> -->
+											<field name="total_amount" widget='float'/>
+										</tree>
+									</field>
+								<!-- <separator string="Dữ liệu tổng hợp"/> -->
+									<div>
+										
+									</div>
+									<!-- <field name="general_lines" nolabel="1" readonly="1">
+										<tree editable="bottom">
+											<field name="id"/>
+											<field name="ht_thanhtoan"/>
+											
+											<field name="qty"/>
+											<field name="total_amount"/>
+										</tree>
+									</field> -->
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		
+		<record id="view_dm_report_thanhtoan_tree" model="ir.ui.view">
+			<field name="name">view.dm.report.thanhtoan.tree</field>
+			<field name="model">dm.report.thanhtoan</field>
+			<field name="arch" type="xml">
+				<tree string="Báo cáo thanh toán">
+					<field name="dm_ptthanhtoan_id"/>
+					<field name="date_from"/>
+					<field name="date_to"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record id="view_dm_report_thanhtoan_search" model="ir.ui.view">
+			<field name="name">view.dm.report.thanhtoan.search</field>
+			<field name="model">dm.report.thanhtoan</field>
+			<field name="arch" type="xml">
+				<search string="Báo cáo thanh toán">
+					<field name="tenphim"/>
+					<field name="date_from"/>
+					<field name="date_to"/>
+					<group expand="1" string="Group By">
+						<filter string="Cửa hàng" domain="[]" context="{'group_by': 'ht_thanhtoan'}"/>
+					</group>
+				</search>
+			</field>
+		</record>
+		
+		<record id="action_dm_report_thanhtoan" model="ir.actions.act_window">
+            <field name="name">Báo cáo thanh toán</field>
+            <field name="res_model">dm.report.thanhtoan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','sale')]</field>
+            <field name="context">{'default_type': 'sale'}</field>
+            <field name="search_view_id" ref="view_dm_report_thanhtoan_search"/>
+        </record>
+        
+        <menuitem id="menu_dm_report_thanhtoan" action="action_dm_report_thanhtoan" parent="tht_cinema.menu_caidat_baocao" sequence="4"/> 
+        
+       
+        
+	</data>
+</odoo>

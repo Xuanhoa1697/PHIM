@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dm_loaighe_action" model="ir.actions.act_window">
+        <field name="name">Loại ghế  </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.loaighe</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Loại ghế 
+                </p>
+        </field>
+    </record>
+
+    <record id="dm_loaighe_tree" model="ir.ui.view">
+        <field name="name">Loại ghế </field>
+        <field name="model">dm.loaighe</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <!-- <field name="id"/> -->
+                <field name="name"/>
+                <field name="kieughe"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="dm_loaighe_form" model="ir.ui.view">
+        <field name="name">Bảng loại ghế</field>
+        <field name="model">dm.loaighe</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                <group>
+                <!-- <field name="id"/> -->
+                <field name="name"/>
+                <field name="kieughe"/>
+                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <menuitem id="dm_loaighe_menu"
+              parent="menu_caidat_rapphim"
+              name="Loại ghế "
+              action="dm_loaighe_action"
+              sequence = "3"/>
+</odoo>

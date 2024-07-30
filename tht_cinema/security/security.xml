@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="cinema_user" model="res.groups">
+        <field name="name">Cinema_User</field>
+    </record>
+
+    <record id="cinema_manager" model="res.groups">
+        <field name="name">Cinema Manager</field>
+    </record>
+
+
+
+</odoo>

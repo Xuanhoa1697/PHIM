@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="dm_website_cinema_booking_result" name="dm_website_cinema_booking_result">
+        <div id="modal_attendees_registration" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <!-- <form id="attendee_registration" t-attf-action="/event/#{slug(event)}/registration/confirm" method="post" class="js_website_submit_form"> -->
+                <form id="attendee_registration" action="" method="post" class="js_website_submit_form">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                    <div class="modal-content">
+                        <div class="modal-header align-items-center">
+                            <a id="basic" href='#' class="btn btn-primary" > In vé </a>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&amp;times;</span></button>
+                            <button type="submit" id='donketiep' class="btn btn-primary" t-if="availability_check" style='margin-left:200px'>Đơn kế tiếp </button>
+                        </div>
+
+                        <div class='row'>
+                            <div class='col-md-12' >
+                                <t t-call='tht_cinema.dm_website_cinema_vexemphim' />
+                            </div>
+                        </div>
+
+
+
+                        
+                        
+                        
+                        <div class="modal-footer border-0 justify-content-between">
+                            
+                            <!-- <button type="button" class="btn btn-secondary js_goto_event" data-dismiss="modal">Cancel</button> -->
+                            
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <script>
+            $('#donketiep').hide()
+             // $('#basic').on("load", function () {
+                $('.demo').printThis()
+                $('.demo').removeClass('demo')
+                $('#donketiep').show()
+                $('#basic').hide()
+
+            // })
+  </script>
+        </div>
+        
+    </template>
+</odoo>

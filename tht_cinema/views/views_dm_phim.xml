@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dm_phim_action" model="ir.actions.act_window">
+        <field name="name">Bảng danh sách phim </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.phim</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Bảng danh sách phim
+                </p>
+        </field>
+    </record>
+
+    <record id="dm_phim_tree" model="ir.ui.view">
+        <field name="name">Bảng danh sách phim</field>
+        <field name="model">dm.phim</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="thoiluong"/>
+                <field name="nhaphathanh" />
+                <field name="ratephim" />
+                <field name="namphathanh" />
+                <field name="noibat" widget="boolean_toggle"/>
+                <field name="status" />
+                <field name="dm_phim_theloai_id"/>
+                <field name="sudung" widget="boolean_toggle"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="dm_phim_form" model="ir.ui.view">
+        <field name="name">Bảng danh sách phim</field>
+        <field name="model">dm.phim</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                <group>
+                    <!-- <field name="id"/> -->
+                    <field name="name"/>
+                    <field name="thoiluong"/>
+                    <field name="noibat" widget="boolean_toggle"/>
+                    <field name="sudung" widget="boolean_toggle"/>
+                    <field name="nhaphathanh" />
+                    <field name="ratephim" />
+                    <field name="namphathanh" />
+                    <field name="status" />
+                    <field name="gioihantuoi" />
+                    
+                    <field name="dm_phim_theloai_id"/>
+                    <field name="hinhanh" widget='image' class="oe_avatar" />
+                    <field name="trailer" />
+                    <field name="noidung" />
+                    <field name="daodien" />
+                    <field name="dienvien" />
+                    <field name="ngonngu" />
+                    <field name="ngaykhoichieu" />
+                    
+
+                    <field name="dm_lichchieu_ids" readonly='1'>
+                        <tree editable="false" >
+                            <field name="name" />
+                            <field name="dm_phong_id" />
+                            <field name="dm_phim_id" />
+                            <field name="dm_banggia_id" />
+                            <field name="batdau" />
+                            <field name="ketthuc" />
+                            
+                        </tree>
+                    
+                    </field>
+
+                    
+                </group>
+                </sheet>
+    
+            </form>
+        </field>
+    </record>
+
+
+    <menuitem id="dm_phim_menu"
+              parent="menu_caidat_phim"
+              name="Danh sách phim"
+              action="dm_phim_action"
+              sequence = "3"/>
+
+    <record id="dm_phim_theloai_action" model="ir.actions.act_window">
+        <field name="name">Bảng danh sách thể loại </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.phim.theloai</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Bảng danh sách thể loại
+                </p>
+        </field>
+    </record>
+
+    <record id="dm_phim_theloai_tree" model="ir.ui.view">
+        <field name="name">Bảng danh sách thể loại</field>
+        <field name="model">dm.phim.theloai</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- <field name="id"/> -->
+                <field name="name"/>
+                
+                
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="dm_phim_theloai_form" model="ir.ui.view">
+        <field name="name">Thể loại phim</field>
+        <field name="model">dm.phim.theloai</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                <group>
+                    <!-- <field name="id"/> -->
+                    <field name="name"/>
+                    
+                </group>
+                </sheet>
+    
+            </form>
+        </field>
+    </record>
+
+
+    <menuitem id="dm_phim_theloai_menu"
+              parent="menu_caidat_phim"
+              name="Thể loại phim "
+              action="dm_phim_theloai_action"
+              sequence = "3"/>
+              
+                        
+</odoo>

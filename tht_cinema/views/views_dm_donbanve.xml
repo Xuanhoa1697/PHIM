@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dm_donbanve_action" model="ir.actions.act_window">
+        <field name="name">Bảng đơn bán vé </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.donbanve</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Bảng đơn bán vé
+                </p>
+        </field>
+    </record>
+
+    <record id="dm_donbanve_tree" model="ir.ui.view">
+        <field name="name">Bảng đơn bán vé</field>
+        <field name="model">dm.donbanve</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="id"/>
+                <field name="name"/>
+                <field name="dm_lichchieu_id"/>
+                <field name="dm_phim_id"/>
+                <field name="dm_phong_id"/>
+                <field name="dm_banggia_id"/>
+                
+                <!-- <field name="dm_donbanve_line_id"/> -->
+                
+
+            </tree>
+        </field>
+    </record>
+    
+
+    <record id="dm_donbanve_form" model="ir.ui.view">
+        <field name="name">Bảng đơn bán vé</field>
+        <field name="model">dm.donbanve</field>
+        <field name="arch" type="xml">
+            <form string="" class="">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" readonly="0"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="user_id"/>
+                        <field name="dm_lichchieu_id"/>
+                        <field name="marap"/>
+                        <field name="dm_khachhang_id"/>
+                        <field name="source"/>
+                        <field name="date_order"/>
+                    </group>
+                    <notebook>
+                        <page name="name" string="Chi tiết đơn hàng">
+                            
+                            <field name="dm_donbanve_line_ids">
+                                <tree string="">
+                                    <field name="dm_banggia_id" />
+                                    <field name="dm_lichchieu_id"/>
+                                    <field name="vitrighe" />
+                                    <field name="dongia" />
+                                    <field name="soluong" />
+                                    <field name="price_total" />
+                                    
+                                </tree>
+                                
+                                
+                            </field>
+
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                <!-- <field name="amount_untaxed" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                <field name="" widget='monetary' options="{'currency_field': 'currency_id'}"/> -->
+                                <div class="oe_subtotal_footer_separator oe_inline">
+                                    <label for="amount_total" />
+                                    <!-- <button name="button_dummy"
+                                        states="draft,sent" string="(update)" type="object" class="oe_edit_only oe_link"/> -->
+                                </div>
+                                <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                            
+                        </page>
+                    </notebook>>
+                        
+                        
+                    
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <menuitem id="dm_donbanve_menu"
+              parent="menu_caidat_hoadon"
+              name="Đơn bán vé"
+              action="dm_donbanve_action"
+              sequence = "3"/>
+
+    <!-- <record id="dm_donbanve_line_action" model="ir.actions.act_window">
+        <field name="name">Bảng danh sách đơn bán vé </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.donbanve.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Bảng danh sách đơn bán vé
+                </p>
+        </field>
+    </record>
+
+    <record id="dm_donbanve_line_tree" model="ir.ui.view">
+        <field name="name">Bảng danh sách đơn bán vé</field>
+        <field name="model">dm.donbanve.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="id"/>
+                <field name="name"/>
+                
+                
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="dm_donbanve_line_form" model="ir.ui.view">
+        <field name="name">Bảng danh sách đơn bán vé</field>
+        <field name="model">dm.donbanve.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="id"/>
+                    <field name="name"/>
+                    
+                </group>
+                
+    
+            </form>
+        </field>
+    </record>
+
+
+    <menuitem id="dm_donbanve_line_menu"
+              parent="menu_caidat_ve"
+              name="danh sách đơn bán vé"
+              action="dm_donbanve_line_action"
+              sequence = "3"/>
+               -->
+                        
+</odoo>

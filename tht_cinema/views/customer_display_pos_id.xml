@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="customer_display_pos_id" name="customer_display_pos_id">
+      <html>
+        <head>
+
+        <script type="text/javascript">
+            var odoo = {
+                csrf_token: "<t t-esc="request.csrf_token(None)"/>",
+                session_info: <t t-raw="session_info"/>,
+                config_id:"<t t-esc="config_id"/>",
+            };
+        </script>
+
+            <!-- <t t-call='tht_cinema.dm_website_cinema_assets' /> -->
+            <t t-call-assets="web.assets_common" t-css="false"/>
+            <t t-call-assets="web.assets_backend" t-css="false"/>
+            <t t-call-assets="web_editor.summernote" t-css="false"/>
+            <t t-call-assets="web_editor.assets_editor" t-css="false"/>
+
+            <link href="/tht_cinema/static/src/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+            <script type="text/javascript" src="/tht_cinema/static/src/js/jquery.seat-charts.js"></script>
+            <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/jquery.seat-charts.css" />
+            <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/seat-charts-custom.css" />
+            <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/vexemphim.css" />
+
+            <script type="text/javascript" src="/tht_cinema/static/src/js/cinema_customer_display.js"></script>
+            
+        </head>
+        <script type="text/javascript" id="loading-script" t-raw="init">
+            
+            odoo.define('web.web_client', function (require) {
+                var WebClient = require('web.AbstractWebClient');
+                var web_client = new WebClient();
+                web_client._title_changed = function() {};
+                web_client.show_application = function() {
+                    return web_client.action_manager.do_action("cinema_customer_display.ui");
+                };
+
+                $(function () {
+                    web_client.setElement($(document.body));
+                    web_client.start();
+                });
+                return web_client;
+            });
+        </script>
+        <body>
+        <style id='style_map'>
+        </style>
+
+        <div id="wrap">
+                <div class="oe_structure" />
+                <div class="container">
+                        
+                    <input type="hidden" id="lichchieu_id" t-att-value="lichchieu_id" />
+                    <input type="hidden" id="banggia_id" t-att-value="banggia_id" />
+                    <div id="jquery-script-menu">
+                        <div class="jquery-script-center">
+                            <div class="jquery-script-clear"></div>
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <div class="container">
+                         <div class='row'>
+                            <div class="col-md-8">
+                                    <div id="lichchieu" style='display:none;'>
+                                    </div>
+                                    
+                                    <div id="seat-map">
+                                        
+                                    </div>                              
+                            </div>
+
+                            <div class="col-md-4">
+                                
+                                <div class='row'>
+                                    <div class=' col-md-4 btn '> <div id='lichchieu_info'> </div>  </div>
+                                    <div class=' col-md-4 btn '> <input type="hidden" id='dm_session_line_id' name="dm_session_line" t-att-value="pos_session_line_id" /> </div>
+                                </div>
+                                
+                                
+                                        <div class="booking-details">                                            
+                                            <div id='donbanhang' style="border:0px">
+                                                                                            
+
+                                            </div>
+                                            
+                                            
+                                        </div>
+                            </div>
+                         
+                         </div>
+                            <div id="legend"></div>
+
+                            <div id="seat_layout">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        
+        
+        </body>
+      </html>
+    </template>
+
+
+
+    <template id="pos_index" name="pos_index">
+      <html>
+        <head>
+
+        <script type="text/javascript">
+            var odoo = {
+                csrf_token: "<t t-esc="request.csrf_token(None)"/>",
+                session_info: <t t-raw="session_info"/>,
+                config_id:"<t t-esc="config_id"/>",
+            };
+        </script>
+
+        <t t-call-assets="web.assets_common" t-css="false"/>
+        <t t-call-assets="web.assets_backend" t-css="false"/>
+        <t t-call-assets="web_editor.summernote" t-css="false"/>
+        <t t-call-assets="web_editor.assets_editor" t-css="false"/>
+
+        <script type="text/javascript" id="loading-script" t-raw="init">
+            
+            odoo.define('web.web_client', function (require) {
+                var WebClient = require('web.AbstractWebClient');
+                var web_client = new WebClient();
+                return web_client;
+            });
+        </script>
+
+        
+        
+        <script type="text/javascript" src="/tht_cinema/static/src/js/cinema_pos_index.js"></script>
+
+      
+        
+        <!-- <t t-call-assets="pos_customer_screen.customer_assets"/> -->
+
+        <t t-call='tht_cinema.dm_website_cinema_menu' />
+        </head>
+        <body>
+
+        
+        <div class="o_main_content"> aaaa </div>
+        <button id='query'>asdfasdfsd</button>
+    </body>
+      </html>
+    </template>
+
+
+</odoo>

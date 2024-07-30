@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dm_lichchieu_action" model="ir.actions.act_window">
+        <field name="name">Bảng Lịch chiếu </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.lichchieu</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Bảng Lịch chiếu
+                </p>
+        </field>
+    </record>
+
+    <record id="dm_lichchieu_tree" model="ir.ui.view">
+        <field name="name">Bảng Lịch chiếu</field>
+        <field name="model">dm.lichchieu</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- <field name="id"/> -->
+                <field name="name"/>
+                <field name="sudung"/>
+                <field name="dm_diadiem_id"/>
+                <field name="dm_phong_id"/>
+                <field name="dm_phim_id"/>
+                <field name="dm_banggia_id"/>
+                <field name="ngaychieu"/>
+                <field name="batdau" />
+                <field name="ketthuc" />
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="dm_lichchieu_form" model="ir.ui.view">
+        <field name="name">Bảng Lịch chiếu</field>
+        <field name="model">dm.lichchieu</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                <group>
+                    <!-- <field name="id"/> -->
+                    <field name="name"/>
+                    <field name="sudung"/>
+                    <field name="dm_diadiem_id"/>
+                    <field name="dm_phong_id" domain="[('dm_diadiem_id', '=', dm_diadiem_id)]"/>
+                    <field name="dm_phim_id"/>
+                    <field name="thoiluong"/>
+                    <field name="dm_banggia_id"/>
+                    
+                    <field name="batdau" />
+                    <field name="ketthuc" />
+                    <field name="ngaychieu"/>
+                    <field name="tenphim"/>
+                    
+                </group>
+                
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="dm_lichchieu_timeline" model="ir.ui.view">
+        <field name="model">dm.lichchieu</field>
+        <field name="type">timeline</field>
+        <field name="arch" type="xml">
+            <timeline date_start="batdau" 
+                      date_stop="ketthuc"
+                      default_group_by="dm_phong_id"
+                      string="Lich chieu"
+                      title='batdau'
+                      
+            >
+
+            <field name="tenphim"/>
+            <field name='batdau' widget="date" />
+            <field name='thoiluong'  />
+
+            <field name="name"/>
+                <templates>
+                    <div t-name="timeline-item">
+                            <!-- <div name="name">
+                                <t t-esc="record.name" />
+                            </div> -->
+                        
+                        <div t-esc="record.tenphim"/>
+                        <!-- <span t-esc="record.batdau.strftime('%m/%d/%Y')"/> -->
+                        <!-- <span t-esc="'{}:{}'.format(rec.batdau[11:13],rec.batdau[14:16])" /> -->
+
+                        <div t-esc="field_utils.format.datetime(moment(record.batdau))"/> 
+                        <div t-esc="field_utils.format.datetime(moment(record.ketthuc))"/> 
+                        <span name="thoiluong" style="font-weight: bold;">
+                                    <t t-esc="record.thoiluong"/>
+                                </span>
+                        <span> phút</span>
+
+                        
+                        
+                    </div>
+                </templates>
+
+            </timeline>
+        </field>
+    </record>
+
+
+    <menuitem id="dm_lichchieu_menu"
+              parent="menu_caidat_rapphim"
+              name="Lịch chiếu"
+              action="dm_lichchieu_action"
+              sequence = "5"/>
+</odoo>

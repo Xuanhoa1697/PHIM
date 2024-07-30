@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<template id="sapchieu" name="sapchieu">
+		<t t-call="website.layout">
+			<link rel="stylesheet" type="text/css" href="/tht_cinema_website/static/src/css/dangchieu.css" />
+            <h1 style="margin-left: 100px;"> Phim sắp chiếu</h1>
+			<!--
+			<link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/vexemphim.css" />
+			<link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/lichchieu.css" />
+			-->
+			<!-- <script type="text/javascript" src="/tht_cinema_website/static/src/js/dangchieu.js"/> -->
+			<div class="container d-flex flex-column flex-grow-1 justify-content-around">
+				<div class="o_wdiadiem_obj_diadiem_obj_title" style="text-align: center;">
+				</div>
+			</div>
+			<div class="container d-flex flex-column flex-grow-1 justify-content-around">
+				<div class="row">
+					<t t-foreach="dm_phim_obj" t-as="line">
+						<div class="col-md-6">
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="height:320px">
+								<div class="">
+									<img class="suatchieu_img_phim" t-attf-src="data:image/*;base64,{{line.hinhanh}}" />
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tenphim">
+										<t t-esc="line.name" />
+										<br />
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left " style="padding:0px">
+								<div class="box_sapchieu_info">
+									
+						<div class="col-12 col-md-8 col-lg-9 col-xl-7">
+								<div class="card__content">
+									<ul class="card__meta">
+										<li><span>Thời lượng:</span> <t t-esc="line.thoiluong"/></li>
+										<li><span>Nhà phát hành:</span> <t t-esc="line.nhaphathanh"/> </li>
+										<li><span>Năm phát hành:</span> <t t-esc="line.namphathanh"/></li>
+										<li><span>Giới hạn tuổi:</span> <t t-esc="line.gioihantuoi"/></li>
+										<li><span>Thể loại:</span> <t t-esc="line.dm_phim_theloai_id.name"/></li>
+										<li><span>Nội dung:</span> <span t-field="line.noidung"/></li>
+									</ul>
+									
+									
+									
+								</div>
+							</div>
+									
+								</div>
+							</div>
+						</div>
+					</t>
+				</div>
+			</div>
+		</t>
+	</template>
+</odoo>

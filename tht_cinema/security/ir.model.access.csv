@@ -1,0 +1,23 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+__export__.ir_model_access_354_8c70592b,Điểm bán vé,tht_cinema.model_dm_session,tht_cinema.cinema_user,1,1,1,1
+__export__.ir_model_access_355_844f1f3b,Loại Vé,tht_cinema.model_dm_loaive,tht_cinema.cinema_manager,1,1,1,1
+__export__.ir_model_access_356_4939d4df,Lịch Chiếu,tht_cinema.model_dm_lichchieu,tht_cinema.cinema_manager,1,1,1,1
+__export__.ir_model_access_357_7a5e643c,Bảng giá,tht_cinema.model_dm_banggia,tht_cinema.cinema_manager,1,1,1,1
+__export__.ir_model_access_358_2bde17b6,Điểm Bán vé,tht_cinema.model_dm_session,tht_cinema.cinema_manager,1,0,0,1
+__export__.ir_model_access_359_383a751a,Loại Ghế,tht_cinema.model_dm_loaighe,tht_cinema.cinema_manager,1,1,1,1
+__export__.ir_model_access_360_010c693e,Phòng Chiếu,tht_cinema.model_dm_phong,tht_cinema.cinema_manager,1,1,1,1
+__export__.ir_model_access_361_b0abb42d,Thể loại Phim,tht_cinema.model_dm_phim_theloai,tht_cinema.cinema_manager,1,1,1,1
+__export__.ir_model_access_362_75db59cf,Danh sách Phim,tht_cinema.model_dm_phim,tht_cinema.cinema_manager,1,1,1,1
+__export__.ir_model_access_363_99a4a4f7,Phiên,tht_cinema.model_dm_session_line,tht_cinema.cinema_user,1,1,0,0
+tht_cinema.access_cinema_user_dm_diadiem,Cinema user,tht_cinema.model_dm_diadiem,tht_cinema.cinema_user,1,0,0,0
+tht_cinema.access_cinema_user_dm_diadiem_portal,Cinema portal,tht_cinema.model_dm_diadiem,base.group_portal,1,0,0,0
+__export__.ir_model_access_372_c4687e18,Lịch chiếu,tht_cinema.model_dm_lichchieu,tht_cinema.cinema_user,1,0,0,0
+__export__.ir_model_access_372_c4687e19_portal,Lịch chiếu,tht_cinema.model_dm_lichchieu,base.group_portal,1,0,0,0
+__export__.ir_model_access_520_2d917cb5,Phim,tht_cinema.model_dm_phim,tht_cinema.cinema_user,1,0,0,0
+__export__.ir_model_access_521_c28340e2,Bảng giá,tht_cinema.model_dm_banggia,tht_cinema.cinema_user,1,0,0,0
+__export__.ir_model_access_522_66d04961,Chi tiết bảng giá,tht_cinema.model_dm_banggia_line,tht_cinema.cinema_user,1,0,0,0
+__export__.ir_model_access_523_0f7acdf6,Loại vé,tht_cinema.model_dm_loaive,tht_cinema.cinema_user,1,0,0,0
+__export__.ir_model_access_524_51fb9966,Phòng chiếu,tht_cinema.model_dm_phong,tht_cinema.cinema_user,1,0,0,0
+__export__.ir_model_access_525_31c341ba,Chi tiết đơn bán vé,tht_cinema.model_dm_donbanve_line,tht_cinema.cinema_user,1,0,0,0
+__export__.ir_model_access_526_2597d1cc,Đơn bán vé,tht_cinema.model_dm_donbanve,tht_cinema.cinema_user,1,0,0,0
+

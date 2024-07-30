@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dm_session_line_action" model="ir.actions.act_window">
+        <field name="name">Phiên bán vé </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.session.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Phiên bán vé
+                </p>
+        </field>
+    </record>
+
+    <record id="dm_session_line_tree" model="ir.ui.view">
+        <field name="name">Phiên bán vé</field>
+        <field name="model">dm.session.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- <field name="id" string='Phiên'/> -->
+                <field name="name"/>
+                <field name="user_id" string='nhân viên'/>
+                <field name="start_at"/>
+                <field name="end_at"/>
+                <field name="state"/>
+                
+            </tree>
+        </field>
+    </record>
+
+    <record id="dm_session_line_form" model="ir.ui.view">
+        <field name="name">Phiên bán vé</field>
+        <field name="model">dm.session.line</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0" >
+            <sheet>
+                <group>
+                    <!-- <field name="id" string='Phiên'/> -->
+                    <field name="name"/>
+                    <field name="user_id" string='nhân viên'/>
+                    <field name="start_at"/>
+                    <field name="end_at"/>
+                    <field name="state"/>
+                    <button type="object" name="open_in_ket_ca" icon="fa-external-link" string="in kết ca"/>
+                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    
+
+
+    <menuitem id="dm_session_line_menu"
+              parent="menu_caidat_rapphim"
+              name="Phiên bán vé"
+              action="dm_session_line_action"
+              sequence = "3"/>
+</odoo>

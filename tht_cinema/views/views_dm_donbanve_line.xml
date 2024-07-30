@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dm_donbanve_line_action" model="ir.actions.act_window">
+        <field name="name">Bảng chi tiết đơn bán vé </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.donbanve.line</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Bảng chi tiết đơn bán vé
+                </p>
+        </field>
+    </record>
+
+    <record id="dm_donbanve_line_tree" model="ir.ui.view">
+        <field name="name">Bảng chi tiết đơn bán vé</field>
+        <field name="model">dm.donbanve.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- <field name="id"/> -->
+                <field name="name" string='Ghế' />
+                <field name="so_phien_ban_ve"/>
+                <field name="dm_session_line_id"/>
+                <field name="dm_lichchieu_id"/>
+                <field name="dm_donbanve_id"/>
+                <field name="loaive"/>
+                <field name="dongia"/>
+                <field name="create_date" string='Ngày đặt vé' />
+                <field name="write_date" string='Ngày bán vé' />
+                
+            </tree>
+        </field>
+    </record>
+    
+
+    <record id="dm_donbanve_line_form" model="ir.ui.view">
+        <field name="name">Bảng chi tiết đơn bán vé</field>
+        <field name="model">dm.donbanve.line</field>
+        <field name="arch" type="xml">
+            <form string="" class="">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        
+                       
+                        
+                        <field name="name"/>
+                        <field name="dm_lichchieu_id"/>
+                        <field name="dm_donbanve_id"/>
+                        <field name="loaive"/>
+                        <field name="dongia"/>
+                        
+                    </group>
+                    
+                        
+                        
+                    
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="dm_donbanve_line_search" model="ir.ui.view">                                
+        <field name="name">dm.donbanve.line</field>                                
+        <field name="model">dm.donbanve.line</field>                                
+        <field name="arch" type="xml">                                    
+            <search string="Số phiên bán vé">                                        
+            <field name="so_phien_ban_ve"></field>                                        
+            <!-- <filter string="Has VAT number" domain="[('vat', '!=', '')]" name="has_vat"></filter>                                        
+            <filter string="Has tags" domain="[('category_id', '!=', False)]" name="has_tags"></filter>                                         -->
+            <!-- <group expand="0" string="Group By">                                            
+                <filter string="Company" name="parent_id" context="{'group_by': 'parent_id'}"></filter>                                            
+                <filter string="Country" name="country_id" context="{'group_by': 'country_id'}"></filter>                                            
+                <filter string="Sales person" name="salesperson_id" context="{'group_by': 'user_id'}"></filter>                                        
+            </group>                                     -->
+            </search>                                
+        </field>                            
+        </record>
+
+
+    <menuitem id="dm_donbanve_line_menu"
+              parent="menu_caidat_hoadon"
+              name="Chi tiết Đơn bán vé"
+              action="dm_donbanve_line_action"
+              sequence = "5"/>
+
+    
+                        
+</odoo>

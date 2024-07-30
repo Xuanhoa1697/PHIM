@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dm_ptthanhtoan_action" model="ir.actions.act_window">
+        <field name="name">Phương thức thanh toán </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.ptthanhtoan</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Phương thức thanh toán
+                </p>
+        </field>
+    </record>
+
+    <record id="dm_ptthanhtoan_tree" model="ir.ui.view">
+        <field name="name">Phương thức thanh toán</field>
+        <field name="model">dm.ptthanhtoan</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- <field name="id"/> -->
+                <field name="name"/>
+                <field name="source"/>
+                <field name="ht_thanhtoan"/>
+                <field name="account_journal_id"/>
+                <field name="status"/>
+               
+            </tree>
+        </field>
+    </record>
+
+    <record id="dm_ptthanhtoan_form" model="ir.ui.view">
+        <field name="name">Phương thức thanh toán</field>
+        <field name="model">dm.ptthanhtoan</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                <group>
+                    <!-- <field name="id"/> -->
+                    <field name="name"/>
+                    <field name="source"/>
+                    <field name="ht_thanhtoan"/>
+                    <field name="account_journal_id"/>
+                    <field name="status"/>
+                    <field name="tt_chuyenkhoan"/>
+                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <menuitem id="dm_ptthanhtoan_menu"
+              parent="menu_caidat_rapphim"
+              name="Phương thức thanh toán"
+              action="dm_ptthanhtoan_action"
+              sequence = "3"/>
+</odoo>

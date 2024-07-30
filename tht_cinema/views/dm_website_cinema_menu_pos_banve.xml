@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="dm_website_cinema_menu_pos_banve" name="dm_website_cinema_menu_pos_banve">
+        
+            <nav id='pos-nav' class="navbar">
+                <div  class="container-fluid">
+                    <div class="navbar-header">
+
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li class="">
+                            <a class="" href="#"><img width='80px' height='40px'
+                            t-attf-src="data:image/*;base64,{{dm_session.dm_diadiem_id.logo}}" /></a>
+                        </li>
+
+                        <!-- <li class="active"><a href="#"> Rạp: <span t-field="dm_session.dm_diadiem_id.marap"  /> 
+                            </a> 
+                        </li> -->
+
+                        <t t-if='dm_lichchieu' >
+                            <li class="active" id='lichchieu_info'>  <a href='' >
+                                <span t-field="dm_lichchieu.dm_phong_id.name" />
+                                *** Ngày: <span t-field="dm_lichchieu.batdau" t-options='{"format": "dd/MM/yyyy HH:mm"} '/> 
+                                <br/> Phim : <span t-field="dm_lichchieu.dm_phim_id.name" style='color:green; ' />
+                                </a>
+                            </li>
+                        </t>
+
+                
+                    <li><a href="#"> <span t-field="user_id.name" />  <br/> <span id='clock24'/> </a>  </li>
+
+                    <t t-if='dm_session.datvetruoc'>
+                    <li class="lichchieu_link">
+                            <a t-attf-href="/cinema/pos_id_datvetruoc/#{dm_session.id}/"> <button class='btn btn-success'> Lịch chiếu  </button>  </a>
+                    </li>
+                    </t>
+
+                    <t t-if='not dm_session.datvetruoc'>
+                    <li class="lichchieu_link">
+                            <a t-attf-href="/cinema/pos_id/#{dm_session.id}/"> <button class='btn btn-success'>Lịch chiếu  </button> </a>
+                    </li>
+                    </t>
+
+
+                    <li class="lichchieu_link">
+                            <a t-attf-href="/cinema/datvetruoc_order/#{dm_session.id}/"> <button class='btn btn-success'> In vé đặt trước </button> </a>
+                    </li>
+
+                    <li class="lichchieu_link">
+                            <a t-attf-href="/cinema/trave_order/#{dm_session.id}/"><button class='btn btn-info'>  Trả vé </button></a>
+                    </li>
+
+                    <li class="lichchieu_link">
+                            <a id='ketca' t-attf-href="/cinema/ketca/#{dm_session.id}/"> <button class='btn btn-danger'> Kết ca <br/> </button> </a>
+                            <!-- <a id='ketca' t-attf-href="#"> <button class='btn btn-danger'> Kết ca </button> </a> -->
+                    </li>
+                    
+                    </ul>
+                    
+                </div>
+            </nav>
+
+           
+        <!-- end header panel menu -->
+        
+    
+    </template>
+</odoo>

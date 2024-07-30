@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="dm_website_cinema_dangchieu_index" name="dm_website_cinema_dangchieu">
+        <html>
+            <head>
+                <t t-call='tht_cinema.dm_website_cinema_assets' />
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/bootstrap4/css/bootstrap.min.css" />
+                <link rel="stylesheet" href="/tht_cinema/static/src/font-awesome/css/all.min.css"/>
+                <script type="text/javascript" src="/tht_cinema/static/src/js/rating.js"></script>
+                <script type="text/javascript" src="/tht_cinema/static/src/js/dangchieu.js"></script>
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/dangchieu.css" />
+            </head>
+            <script type="text/javascript" >
+                var limit = <t t-esc='limit' />
+                var page = <t t-esc='page' />
+                var load_delay = <t t-esc='load_delay' />
+                var page_next_load = 1
+            </script>
+        <body>  
+            
+            <div class="bg" >
+        
+            <div id='content' />
+            </div>
+        </body>
+    </html>
+</template>
+<!-- end template index-->
+
+
+<template id="dm_website_cinema_dangchieu" name="dm_website_cinema_dangchieu">
+    <html>
+        <head>
+            <!-- <t t-call='tht_cinema.dm_website_cinema_assets' /> -->
+            
+            
+            <script type="text/javascript">
+                limit = <t t-esc='limit' />
+                var page = <t t-esc='page' />
+                var page_count = <t t-esc='page_count' />
+                var rating_val = 4;
+            </script>
+        </head>
+        
+
+        <body>
+            <div class="ctn_veinfo">
+                <div class="container ct_ve_info">
+                    <div class="row" style='width:101vw'>
+                        <div class="col-md-12 row_ve_info">
+                            <div>
+                                <div class='title_dangchieu'> LỊCH CHIẾU HÔM NAY </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ctn_lichchieu">
+                <div class="container">
+                    <t t-foreach='event' t-as='line' >
+                    <div class="row row_lichchieu">
+                        <div class="col-md-4 col-xl-4">
+                            <div class="vertical-left">
+                                <h1  class='ten_phim' ><t t-esc='line["dm_phim"].name' /></h1>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div>
+                                <p class='gioihantuoi'><t t-esc='line["dm_phim"].gioihantuoi' /></p>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="d-inline-flex flex-row flex-wrap">
+
+                                <t t-foreach="line['dm_lichchieu_obj']" t-as="lc">
+                                <div>
+                                    <t t-if='lc.tylebanve(lc.id) &lt; 80' >     
+                                        <span style='color:green' class='text-center time_dangchieu' t-field="lc.batdau" t-options='{"format": "HH:mm"} ' />
+                                    </t>
+
+                                    <t t-if=' 80 &lt;= lc.tylebanve(lc.id) &lt; 100  ' >     
+                                        <span style='color:yellow' class='text-center time_dangchieu' t-field="lc.batdau" t-options='{"format": "HH:mm"} ' />
+                                    </t>
+
+                                    <t t-if=' lc.tylebanve(lc.id) == 100  ' >     
+                                        <span style='color:red' class='text-center time_dangchieu' t-field="lc.batdau" t-options='{"format": "HH:mm"} ' />
+                                    </t>
+
+                                </div>
+                                </t>
+
+                            </div>
+                        </div>
+                    </div>
+                    </t>
+
+                </div>
+            </div>
+            <div class="ctn_veinfo">
+                <div class="container ct_ve_info">
+                    <div class="row" style='width:101vw'>
+                        <div class='col-md-3' /> 
+                        <div class="col-md-8 row_ve_info ">
+                            <div>
+                                <ul class="list-group d-flex flex-row text-center">
+                                    <li class="list-group-item flex-wrap row_ve_info">
+                                        <div><i class="fa fa-square conve"></i><span class="conve_name conve">Còn vé</span></div>
+                                    </li>
+                                    <li class="list-group-item flex-wrap row_ve_info">
+                                        <div><i class="fa fa-square saphetve"></i><span class="conve_name saphetve_name">Sắp hết vé</span></div>
+                                    </li>
+                                    <li class="list-group-item flex-wrap row_ve_info">
+                                        <div><i class="fa fa-square hetve"></i><span class="conve_name saphetve_name">Hết vé</span></div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class='col-md-1' /> 
+
+                    </div>
+                </div>
+            </div>
+        
+        </body>
+
+
+    </html>
+</template>
+<!-- end template -->
+
+<template id="dm_website_cinema_dangchieu_lichieu_id" name="dm_website_cinema_dangchieu_lichieu_id">
+    <html>
+        <head>
+            <t t-call='tht_cinema.dm_website_cinema_assets' />
+            <style>
+                <t t-raw='event.dm_phong_id.css_custom' />
+            </style>
+        </head>
+
+        <body>
+        
+
+            <nav id='pos-nav' class="navbar">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li class="">
+                            <a class="" href="#">
+                                <img width='80px' height='40px' t-attf-src="data:image/*;base64,{{dm_diadiem_obj.logo}}" />
+                            </a>
+                        </li>
+
+                        <t t-if='dm_lichchieu' >
+                            <li class="active" id='lichchieu_info'>
+                                <a href='' >
+                                    <span t-field="dm_lichchieu.dm_phong_id.name" />
+                                *** Ngày: <span t-field="dm_lichchieu.batdau" t-options='{"format": "dd/MM/yyyy HH:mm"} '/>
+                                <br/>
+ Phim : <span t-field="dm_lichchieu.dm_phim_id.name" style='color:green; ' />
+                            </a>
+                        </li>
+                    </t>
+
+                    <li class="active">
+                        <a href="#"></a>
+                    </li>
+                    <li>
+                        <a href="#"></a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <span id='clock24' style='display:none'/>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+
+
+
+        <div class="container d-flex flex-column flex-grow-1 justify-content-around">
+            <div class="o_wevent_event_title" style="text-align: center;">
+
+            </div>
+        </div>
+
+        <t t-set="additional_title">Lịch chiếu </t>
+        <div id="wrap">
+            <div class="oe_structure" />
+            <div class="container">
+
+                <input type="hidden" id="lichchieu_id" t-att-value="lichchieu_id" />
+                <input type="hidden" id="banggia_id" t-att-value="banggia_id" />
+                <div id="jquery-script-menu">
+                    <div class="jquery-script-center">
+                        <div class="jquery-script-clear"></div>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="container">
+                        <div class='row' >
+                            <div id="legend"></div>
+                        </div>
+                        <div class='row'>
+                            <div class="col-md-8">
+                                <div id="lichchieu" style='display:none;'>
+                                </div>
+
+                                <div id="seat-map">
+                                    <div class="front-indicator">MÀN HÌNH</div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class='row'>
+                                    <div class="col-md-4">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Panel Heading</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <span>Panel Body</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class='col-md-12' >
+
+                                        <table class='table'>
+                                            <tr>
+                                                <td>
+                                                Tổng số ghế
+                                                </td>
+                                                <td>
+                                                    <t t-esc="dm_lichchieu.dm_phong_id.tongsoghe"/>
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                Đã bán
+                                                </td>
+                                                <td>
+                                                    <t t-esc="sovedaban"/>
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                Còn trống
+                                                </td>
+                                                <td>
+                                                    <t t-esc="soveconlai"/>
+                                                </td>
+
+                                            </tr>
+
+                                        </table>
+                                    </div>
+
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+                        <div id="seat_layout">
+                            <div class="row">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Panel Heading</h3>
+                            </div>
+                            <div class="panel-body">
+                                <span>Panel Body</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Panel Heading</h3>
+                            </div>
+                            <div class="panel-body">
+                                <span>Panel Body</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Panel Heading</h3>
+                            </div>
+                            <div class="panel-body">
+                                <span>Panel Body</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+                const clock24 = document.getElementById('clock24')
+
+                
+                function concatZero(timeFrame) {
+                    return timeFrame &lt; 10 ? '0'.concat(timeFrame) : timeFrame
+                }
+                function realTime() {
+                    let date = new Date()
+                    let sec = date.getSeconds()
+                    let mon = date.getMinutes()
+                    let hr = date.getHours()
+                    
+                    clock24.textContent = `${concatZero(hr)} : ${concatZero(mon)} : ${concatZero(sec)}`
+                    }
+
+                    setInterval(realTime, 1000)
+
+                $("#close_page").click(function() {
+                        var confirm_result = confirm("Are you sure you want to quit?");
+                        if (confirm_result == true) {
+                        window.close();
+                        }
+                    });
+                    
+        </script>
+
+    </body>
+
+
+</html>
+</template>
+</odoo>

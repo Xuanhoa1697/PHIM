@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dm_session_action" model="ir.actions.act_window">
+        <field name="name">Điểm bán vé </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.session</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Điểm bán vé
+                </p>
+        </field>
+    </record>
+
+    <record id="dm_session_tree" model="ir.ui.view">
+        <field name="name">Điểm bán vé</field>
+        <field name="model">dm.session</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- <field name="id"/> -->
+                <field name="name"/>
+                <field name="datvetruoc"/>
+                <field name="user_id"/>
+                <field name="dm_diadiem_id"/>
+                
+            </tree>
+        </field>
+    </record>
+
+    <record id="dm_session_form" model="ir.ui.view">
+        <field name="name">Điểm bán vé</field>
+        <field name="model">dm.session</field>
+        <field name="arch" type="xml">
+            <form>
+            <sheet>
+                <group>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="datvetruoc"/>
+                    <field name="user_id"/>
+                    <field name="dm_diadiem_id"/>
+                    
+                    <!-- <field name="dm_donbanve_ids" string='Đơn bán vé' >
+                        <tree editable="bottom">
+                            <field name="name" invisible="0" />
+                        </tree>
+                    </field> -->
+                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_session_kanban">
+        <field name="name">dm.session.kanban</field>
+        <field name="model">dm.session</field>
+        
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name" />
+                <field name="user_id" />
+                <field name="start_at" />
+                <field name="state" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_record_top">
+                                
+                                <field name="state" widget="label_selection" options="{'classes': {'opening_control': 'default',
+                                        'opened': 'success', 'closing_control': 'warning', 'closed': 'warning'}}"/>
+                            </div>
+
+                            <div class="o_kanban_record_body">
+                                <field name="name" />
+                                <div> <span><t t-esc="record.user_id.value"/></span> </div>
+                            </div>
+
+                                <div class="row">
+                                    <div class="col-6 o_kanban_primary_left">
+                                        <!-- <button t-if="record.current_session_state.raw_value === 'opened'" class="btn btn-primary" name="open_ui" type="object">Resume</button>
+
+                                        <button t-if="record.current_session_state.raw_value === 'new_session' || record.current_session_state.raw_value === 'opening_control'" class="btn btn-primary" name="open_existing_session_cb" type="object">Open Session</button>
+
+                                        <button t-if="_.contains(['opened', 'closing_control'], record.current_session_state.raw_value)" class="btn btn-secondary" name="open_existing_session_cb" type="object">Close</button>
+
+                                        <button t-if="!record.current_session_id.raw_value &amp;&amp; !record.pos_session_username.value" class="btn btn-primary" name="open_session_cb" type="object">New Session</button> -->
+
+                                    </div>
+                                    <div class="col-6 o_kanban_primary_right">
+                                     
+
+                                        <div t-if="record.value" class="row">
+                                            <div class="col-6">
+                                                <span>Last Closing Date</span>
+                                            </div>
+                                            <div class="col-6">
+                                                <!-- <span><t t-esc="record.last_session_closing_date.value"/></span> -->
+                                            </div>
+                                        </div>
+
+                                        <!-- <div t-if="record.last_session_closing_date.value" attrs='{"invisible": [("cash_control","=",False)]}' class="row">
+                                            <div class="col-6">
+                                                <span>Cash Balance</span>
+                                            </div>
+                                            <div class="col-6">
+                                                <span><field name="last_session_closing_cash" widget="monetary"/></span>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+
+                            <div class="col-6 o_kanban_primary_left" modifiers="{}">
+                                     <button class="btn btn-primary oe_kanban_action oe_kanban_action_button" modifiers="{}" options="{}" data-name="open_dm_session" attrs='{"invisible":[("state", "=", "opened" )]}' data-type="object" type="button">Bắt đầu bán</button>
+                            </div>
+                            
+                            <div class="col-6 o_kanban_primary_right" modifiers="{}">
+                                <button t-if="record.state.raw_value === 'opened'" class="btn btn-primary" name="resume_dm_session" type="object">Tiếp tục </button>
+                                
+                                     <!-- <button class="btn btn-primary oe_kanban_action oe_kanban_action_button" modifiers="{}" options="{}" data-name="close_dm_session" attrs='{"invisible":[("state", "=", "closed" )]}' data-type="object" type="button">Ngừng bán</button> -->
+                            </div>
+
+
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left">
+                                    <span><field name="start_at" /></span>
+                                </div>
+                                <div class="oe_kanban_bottom_right">
+                                    <!-- <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar pull-right"/> -->
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <menuitem id="dm_session_menu"
+              parent="menu_caidat_rapphim"
+              name="Điểm bán vé"
+              action="dm_session_action"
+              sequence = "3"/>
+</odoo>

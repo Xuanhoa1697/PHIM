@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="blog_post_inherit_list" model="ir.ui.view">
+        <field name="name">blog_post_inherit_list</field>
+        <field name="model">blog.post</field>
+        <field name="inherit_id" ref="website_blog.view_blog_post_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='blog_id']" position="after">
+<!--                <field name="showinapp"/>-->
+            </xpath>
+        
+        </field>
+    </record>
+    <record id="blog_post_inherit" model="ir.ui.view">
+        <field name="name">blog_post_inherit</field>
+        <field name="model">blog.post</field>
+        <field name="inherit_id" ref="website_blog.view_blog_post_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='blog_id']" position="after">
+<!--                <field name="showinapp"/>-->
+            </xpath>
+        
+        </field>
+    </record>
+
+</odoo>

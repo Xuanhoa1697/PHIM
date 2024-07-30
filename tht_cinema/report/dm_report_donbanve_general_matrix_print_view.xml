@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="dm_report_donbanve_general_matrix_print">
+		    <t t-call="web.basic_layout">
+	            <t t-foreach="docs" t-as="o">
+	               <!-- <div style="top: 0px!important; padding: 0px!important; margin: 0px!important; font-size: 14px!important; font-family: 'Arial'important; height:1250px!important; background-image:url(goldmart_module/static/description/mau.png)!important; background-repeat: no-repeat!important;background-size:100% 100%!important;"> -->
+	               <div style="top: 0px!important; padding: 0px!important; margin: 0px!important; font-size: 14px!important; font-family: 'Arial'important; height:1250px!important;">
+	               <div>
+	                  <div>
+	                        <div style="width: 100%; float:left; height:200px;"/>
+	                        <div style="width: 100%; float:left; height:29px;">
+	                            <span t-esc="get_date_invoice_day(o.date_from)" style="position: absolute; left: 350px;"/>
+	                            <span t-esc="get_date_invoice_month(o.date_from)" style="position: absolute; left: 465px;"/>
+	                            <span t-esc="get_date_invoice_year(o.date_from)" style="position: absolute; left: 565px;"/>
+	                        </div>
+	                        <div style="width: 100%; float:left; height:140px;">
+	                           <div style="padding: 0px 40px 0px 340px; float: left; width: 100%; line-height: 24px; height: 25px;"><span t-esc="get_res_partner_not_invoice(o)"/></div>
+	                           <div style="padding: 0px 40px 0px 220px; float: left; width: 100%; line-height: 24px; height: 25px;"></div>
+	                           <div style="padding: 0px 40px 0px 170px; float: left; width: 100%; line-height: 24px; height: 25px;"></div>
+	                           <div style="padding: 0px 40px 0px 150px; float: left; width: 100%; line-height: 20px; height: 45px; overflow: hidden;"></div>
+	                           <div style="padding: 0px 40px 0px 280px; float: left; width: 100%; line-height: 24px; height: 25px;"></div>
+	                        </div>
+	                        <div style="width: 100%; float:left; height:360px; padding-top:75px; padding-left:40px;">
+	                        	<div style="width: 100%; float:left; height:265px; font-size:12px;">
+	                        		<table style="width: 100%; float:left; font-size:12px;">
+		                              <t t-foreach="get_lines(o)" t-as="line">
+		                                 <tr style="text-align:center; height: 26px;">
+		                                    <td style="width: 55px; padding:0; line-height: 26px;"><span t-esc="line_index + 1"/></td>
+		                                    <td style="width: 295px; padding-left:5px;line-height: 26px; font-size:12px;  text-align:left;"><span t-esc="get_specification(o)"/> </td>
+		                                    <td style="width: 80px;padding:0; line-height: 26px;">/</td>
+		                                    <td style="width: 105px;padding:0;line-height: 26px;">/</td>
+		                                    <td style="width: 100px; padding:0;line-height: 26px;">/</td>
+		                                    <td style="width: 150px; padding:0;line-height: 26px;"><span t-esc="convert_to_money(line.get('total_amount'))"/></td>
+		                                    <td style="width: 75px; padding:0; line-height: 11px;"></td>
+		                                 </tr>
+		                              	<tr style="text-align:center; height: 26px;">
+		                              		<td></td>
+		                              		<td style=" width: 295px; line-height: 26px; font-size:13px;text-align:left;"><i>(Kèm theo bảng kê số <t t-esc="o.specification_number or ''"/>, <t t-esc="get_convert_date(today)"/>)</i></td>
+		                              		<td colspan="5"></td>
+		                              	</tr>
+		                              </t>
+		                           </table>
+	                        	</div>
+	                           <table style="width: 100%; float:left; height: 20px;">
+	                              <tr style=" height: 20px; text-align:center;">
+	                                 <td style="width: 640px;"/>
+	                                 <td style="width: 150px; valign=bottom; line-height: 20px;"><t t-if="get_total_vat('all') &gt; 0" ><span t-esc="convert_to_money(round(get_total_vat('all')))"/></t></td>
+	                                 <td style="width: 70px;"/>
+	                              </tr>
+	                           </table>
+	                        </div>
+	                        <div style="width: 100%; float:left; height:450px; padding: 30px 0px 0; padding-left:40px;">
+	                           <table style="width: 100%; float:left;">
+	                              <tr style="width: 100%; float:left; height: 40px; text-align:center;">
+	                                 <td style="width: 380px;  float: left; height: 100%; line-height: 45px;"/>
+	                                 <td style="width: 195px;  float: left; height: 100%; line-height: 45px;"><t t-if="get_total_vat() &gt; 0" ><span t-esc="convert_to_money(get_total_vat())"/></t> </td>
+	                                 <td style="width: 145px;  float: left; height: 100%; line-height: 45px;"/>
+	                                 <td style="width: 195px;  float: left; height: 100%; line-height: 45px;"><t t-if="get_total_vat() &gt; 0" ><span t-esc="convert_to_money(get_total_vat())"/></t></td>
+	                              </tr>
+	                              <tr style="width: 100%; float:left; height: 40px; text-align:center;">
+	                                 <td style="width: 380px;  float: left; height: 100%; line-height: 45px;"/>
+	                                 <td style="width: 195px;  float: left; height: 100%; line-height: 45px;"><t t-if="get_total_vat('0') &gt; 0" ><span t-esc="convert_to_money(get_total_vat('0'))"/></t></td>
+	                                 <td style="width: 145px;  float: left; height: 100%; line-height: 45px;"></td>
+	                                 <td style="width: 195px;  float: left; height: 100%; line-height: 45px;"><t t-if="get_total_vat('0') &gt; 0" ><span t-esc="convert_to_money(get_total_vat('0'))"/></t></td>
+	                              </tr>
+	                              <tr style="width: 100%; float:left; height: 40px; text-align:center;">
+	                                 <td style="width: 380px;  float: left; height: 100%; line-height: 45px;"/>
+	                                 <td style="width: 195px;  float: left; height: 100%; line-height: 45px;"><t t-if="round(get_vat_amount('5'),2) &gt; 0" ><span t-esc="convert_to_money(get_total_vat('5'))"/></t></td>
+	                                 <td style="width: 145px;  float: left; height: 100%; line-height: 45px;"><t t-if="round(get_vat_amount('5'),2) &gt; 0" ><span t-esc="convert_to_money(round(get_vat_amount('5'),2))"/></t></td>
+	                                 <td style="width: 195px;  float: left; height: 100%; line-height: 45px;"><t t-if="(get_total_vat('5') + get_vat_amount('5')) &gt; 0" ><span t-esc="convert_to_money(round(get_total_vat('5') + get_vat_amount('5')))"/></t></td>
+	                              </tr>
+	                              <tr style="width: 100%; float:left; height: 40px; text-align:center;">
+	                                 <td style="width: 380px;  float: left; height: 100%; line-height: 45px;"/>
+	                                 <td style="width: 195px;  float: left; height: 100%; line-height: 45px;"><t t-if="get_total_vat('10') &gt; 0" ><span t-esc="convert_to_money(get_total_vat('10'))"/></t></td>
+	                                 <td style="width: 145px;  float: left; height: 100%; line-height: 45px;"><t t-if="get_vat_amount('10') &gt; 0" ><span t-esc="convert_to_money(round(get_vat_amount('10'),2))"/></t></td>
+	                                 <td style="width: 195px;  float: left; height: 100%; line-height: 45px;"><t t-if="round(get_total_vat('10') + get_vat_amount('10')) &gt; 0" ><span t-esc="convert_to_money(round(get_total_vat('10') + get_vat_amount('10')))"/></t></td>
+	                              </tr>
+	                              <tr style="width: 100%; float:left; height: 35px; text-align:center;">
+	                                 <td style="width: 380px; float: left; height: 100%; line-height: 37px;"/>
+	                                 <td style="width: 195px; float: left; height: 100%; line-height: 37px;"><t t-if="get_total_vat('all') &gt; 0" ><span t-esc="convert_to_money(round(get_total_vat('all')))"/></t></td>
+	                                 <td style="width: 145px; float: left; height: 100%; line-height: 37px;"><t t-if="get_vat_amount('all') &gt; 0" ><span t-esc="convert_to_money(round(get_vat_amount('all')))"/></t></td>
+	                                 <td style="width: 195px; float: left; height: 100%; line-height: 37px;"><t t-if="round(get_total_vat('all') + get_vat_amount('all')) &gt; 0" ><span t-esc="convert_to_money(round(get_total_vat('all') + get_vat_amount('all')))"/></t></td>
+	                              </tr>
+	                              <tr style="width: 100%; float:left; height: 40px; text-align:left;">
+	                                 <td style="width: 285px; float: left; height: 100%; line-height: 20px;"/>
+	                                 <td style="width: 580px; text-align: left; height: 100%; padding-right:20px; line-height: 18px;">
+	                                    <span t-esc="vietnam_number(round(get_total_vat('all') + get_vat_amount('all'))) + ' đồng'"/>
+	                                 </td>
+	                              </tr>
+	                           </table>
+	                        </div>
+	                     </div>
+	                  </div>
+	               </div>
+	            </t>
+	         </t>
+		</template>
+		
+		<record id="paperformat_euro_custom" model="report.paperformat">
+	        <field name="name">European A4 low margin</field>
+	        <field name="default" eval="True"/>
+	        <field name="format">A4</field>
+	        <field name="page_height">0</field>
+	        <field name="page_width">0</field>
+	        <field name="orientation">Portrait</field>
+	        <field name="margin_top">7</field>
+	        <field name="margin_bottom">7</field>
+	        <field name="margin_left">10</field>
+	        <field name="margin_right">10</field>
+	        <field name="header_line" eval="False"/>
+	        <field name="header_spacing">0</field>
+	        <field name="dpi">90</field>
+	    </record>
+	    
+		<report
+            id="action_dm_report_donbanve_general_matrix_print"
+            string="Xuất hóa đơn kim"
+            model="dm.report.donbanve"
+            report_type="qweb-pdf"
+            name="tht_cinema.pos_sale_general_report_matrix_print"
+            file="tht_cinema.pos_sale_general_report_matrix_print"
+            menu="False"
+            auto="False"
+            paperformat="tht_cinema.paperformat_euro_custom"
+        />
+
+		<record id="paperformat_report_pos_session" model="report.paperformat">
+			<field name="name">Pos Session A4</field>
+			<field name="default" eval="True" />
+			<field name="format">A4</field>
+			<field name="page_height">0</field>
+			<field name="page_width">0</field>
+			<field name="orientation">Portrait</field>
+			<field name="margin_top">15</field>
+			<field name="margin_bottom">15</field>
+			<field name="margin_left">4</field>
+			<field name="margin_right">4</field>
+			<field name="header_line" eval="False" />
+			<field name="header_spacing">10</field>
+			<field name="dpi">90</field>
+		</record>
+        
+        <record id="action_dm_report_donbanve_general_matrix_print" model="ir.actions.report">
+		    <field name="paperformat_id" ref="tht_cinema.paperformat_report_pos_session"/>
+		</record>
+	</data>
+</odoo>

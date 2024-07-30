@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates xml:space="preserve">
+    <t t-name="seatBookingBoardMain">
+        <div class="container-fluid">
+            <div class="wrapper">
+                <div class="container">
+                    <h1></h1>
+                    <div id="seat_layout">
+                        <div class="row">
+                            <div class="col-lg-9 col-md-12 col-sm-12 col-12">
+                                <div id="seat_layout_left">
+                                    <div id="seat-map">
+                                        <div class="front-indicator">SCREEN123</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-12 col-sm-12 col-12">
+                                <div class="booking-details">
+                                    <div class="front-indicator" style="font-size: 14px; display: none;">Seat Selection Information</div>
+                                    <!--  <h3> Selected Seats (
+			                                    <span id="counter">0</span>):
+			                                </h3> -->
+                                    <ul id="selected-seats" style="display: none;"></ul>
+                                    <!-- 	 Total: 
+			                                <b>$
+			                                    <span id="total">0</span>
+			                                </b> -->
+                                    <button disabled="disabled" type="submit" class="btn btn-primary change-seat-button">Change Seat</button>
+                                    <div id="legend"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="dm_website_cinema_datvetruoc_inve" name="dm_website_cinema_datvetruoc_inve">
+        <html>
+            <head>
+                <t t-call='tht_cinema.dm_website_cinema_assets' />
+            </head>
+
+            <t t-call='tht_cinema.dm_website_cinema_menu' />
+
+            <div class="modal-header align-items-center">
+                <a id="basic" href='#' class=""> In vé </a>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&amp;times;</span></button>
+            </div>
+        
+            <t t-foreach="tickets.dm_donbanve_line_ids" t-as="ticket" t-if="availability_check">
+                    <div class="demo vexemphim">
+                        <div class='container' id='noidungve'>
+                            <div class='row ' id='logo'>
+                                <div class='col-md-12 '>
+                                    <div class='logo text-center'>
+                                        <img t-attf-src="data:image/*;base64,{{tickets.dm_lichchieu_id.dm_diadiem_id.logo}}" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class='row'>
+                                <div class='col-md-12'>
+                                    <div class='text-center'>
+                                        <div> The Gold Cinema </div>
+                                        <div class='address' > <t t-raw='tickets.dm_lichchieu_id.dm_diadiem_id.diachi' /> </div>
+                                        
+                                        <div> Vé Xem Phim </div>
+                                        <div class='tenphim' > <t t-raw='tickets.dm_lichchieu_id.dm_phim_id.name' /> </div>
+                                    </div>
+                                </div>
+                            </div> 
+
+                            <div class='row '>
+                                
+                                    <div class='tableve '>
+                                    <table width='90%' class='text-center'> 
+                                        <tr>
+                                            <td width='50%'> Giờ (Time) <br/> 
+                                            <span t-field="tickets.dm_lichchieu_id.batdau"   t-options='{"format": "HH:mm"} '/> 
+                                            </td>
+                                            <td rowspan='2'> Rạp <br/> (Screen) <br/> <t t-esc='tickets.dm_phong_id.name' /> </td>
+                                            <td rowspan='2'> Ghế <br/> (Seat) <br/> <b> <span  t-esc="ticket.vitrighe.replace('_','') " />  </b> </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td> Ngày (Date) <br/> 
+                                            <span t-field="tickets.dm_lichchieu_id.batdau"   t-options='{"format": "dd/MM/yyyy"} '/>  </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan='3'> Người lớn <br/>
+                                            ---------------------------------------- <br/>
+                                            Giá vé (Price) <br/>
+                                            
+                                            <b> <span  t-esc="'{:0,.0f}'.format(float(ticket.dongia))" />  VNĐ </b>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td> Giảm giá <br/> (Discount ) </td>
+                                            <td colspan='2'> Tổng tiền <br/> Đã gồm VAT 5% </td>                               
+                                        </tr>
+                                        <tr>
+                                            <td> 0 VNĐ </td>
+                                            <td colspan='2'> <b> <span  t-esc="'{:0,.0f}'.format(float(ticket.dongia))" />  VNĐ </b> </td> 
+                                        </tr>
+
+                                        <tr>
+                                            <td> <nobr> <span t-field="user_id.name" /> </nobr> </td>
+                                            <td colspan='2'>  <t t-esc="datetime.datetime.now(vn_timezone).strftime('%d/%m/%Y %H:%M')" /> 
+                                            
+
+                                            
+                                            
+                                             </td>                               
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan='3' class='mavach'> 
+                                                <div width='70%'>
+                                                <svg id="madonbanve" width="50px" height="50px"  ></svg>
+                                                </div>
+                                                
+                                            </td>
+                                        </tr>
+
+                                        
+
+                                    </table>
+                                    
+                                    </div>
+
+                                    <div class='row' >
+                                    <div class='text-center'> Design by Modern Lotus Company </div>
+                                    </div>
+                                
+                            </div>
+
+                        </div>
+
+                    </div>
+                        
+                
+                
+            </t>
+
+            <script type="text/javascript" >
+                JsBarcode("#madonbanve", "<t t-esc='tickets.name'/>", {
+                            width:1.8,
+                            height:50,
+                            fontSize: 12,
+                            });
+
+            </script>
+
+            <script>
+                $('#basic').on("click", function () {
+                    $('.demo').printThis()
+                    $('.demo').removeClass('demo')
+                    $('#basic').hide()
+                })
+            </script>
+
+        
+
+
+
+    </html>        
+    </template>
+</odoo>

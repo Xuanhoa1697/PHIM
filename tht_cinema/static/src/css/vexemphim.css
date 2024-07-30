@@ -1,0 +1,108 @@
+
+@page {
+    size: 8cm 16cm;
+    margin: 0.5cm 0cm 0.0cm 0.2cm;
+  }
+.demo {
+    
+}
+#tienthua{
+    color: red;
+    font-weight: bold;
+}
+
+.vexemphim {
+    
+    margin-bottom: 10px;
+    border: 1px solid black;
+    width: 8cm;
+    
+    display: flex;
+    /* flex-direction: row-reverse; */
+    justify-content: center;
+    page-break-before: always;
+}
+
+#noidungve {
+    padding:5px;
+    border: 1px solid green;
+    width: 7.8 cm;
+    
+    
+}
+
+#logo {
+    height: 1.5cm;
+    background-repeat: no-repeat;
+    /* background-size: 4cm 1.5cm;
+    background-image: url("/tht_cinema/static/description/logocine.png");
+    background-position: center;     */
+}
+
+.logo img {
+    padding-top: 0.25cm;
+    width:4cm;
+    height:1.5cm;
+}
+
+.lien2 {
+    padding-right:0.5cm;
+}
+
+.address {
+    border-bottom: 1px solid black
+}
+
+.tenphim {
+    font-weight: bold;
+    font-size: 14pt;
+}
+
+.tableve {
+    
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+table, th, td {
+    padding-top: 3px;
+    border: 1px solid black;
+  }
+
+.mavach {
+    padding-bottom: 3px;
+}
+
+.FlexContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    width: 100%;
+    /* background-color: #3a8ee2; */
+    height: 20vh;
+    overflow: auto;
+    flex-direction: row;
+    align-content: center;
+}
+
+.FlexContainer div {
+    width: 180px;
+    height: 40px;
+    margin: 2px;
+    background-color: lightblue;
+    text-overflow: clip;
+    padding-top: 10px;
+    padding-left: 10px;
+
+}
+
+input[type="radio"] {
+    -ms-transform: scale(2); /* IE 9 */
+    -webkit-transform: scale(2); /* Chrome, Safari, Opera */
+    transform: scale(2);
+    margin-right: 10px;
+}
+

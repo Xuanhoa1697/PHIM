@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    
+
+    <template id="portal_my_home_dbv" name="Portal My Home : dbv entries" inherit_id="portal.portal_my_home" priority="20">
+        <xpath expr="//ul[hasclass('o_portal_docs')]" position="inside">
+            <li t-if="quotation_count" class="list-group-item">
+                <span class="badge" t-esc="quotation_count"/>
+                <a href="/cnm/my/dbv">Đơn mua vé</a>
+            </li>
+            <li t-if="order_count" class="list-group-item">
+                <span class="badge" t-esc="order_count"/>
+                <a href="/my/orders">Sales Orders</a>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="portal_dbv" name="portal_dbv">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Maintenance</t>
+            </t>
+            <t t-if="not donbanve_ids">
+                 <p>There are currently no maintenance request for your account.</p>
+            </t>
+
+            <div class="container" style="margin-top: 50px">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr t-attf-class="{{'thead-light' if not groupby == 'none' else ''}}">
+                                        <th>
+                                            <t t-if="donbanve_ids">
+                                                <t t-if="groupby == 'none'">Mã đơn</t>
+                                                <t t-if="groupby == 'stage_id'">
+                                                    <em class="font-weight-normal text-muted">Status:</em>
+                                                    <span t-field="donbanve_ids[0].stage_id"/>
+                                                </t>
+                                            </t>
+                                        </th>
+                                        <th> Ngày hoá đơn </th>
+                                        <th> Thành tiền </th>
+                                        <th> Hình thức thanh toán </th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="grouped_maintenance" t-as="donbanve_ids">
+                    
+                                        <t t-foreach="donbanve_ids" t-as="l">
+                                            <tr>
+                                                <td>
+                                                    <a t-attf-href="/cnm/user/dbv/{{ l.name }}" t-att-title="l.name">
+                                                        <t t-esc="l.name" t-if="l.name"/>
+                                                        <em t-else="">Name</em>
+                                                    </a>
+                                                </td>
+                                                <td> <t t-esc="l.date_hoadon"/> </td>
+                                                <td> <t t-esc="'{:0,.0f}'.format(float(l.amount_total))"/> </td>
+                                                <td> <span t-field="l.payment_method"/> </td>
+                                               
+                                                
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+           
+
+            <div t-if="pager" class="o_portal_pager text-center">
+              <t t-call="portal.pager"/>
+            </div>
+        </t>
+    </template>
+</odoo>

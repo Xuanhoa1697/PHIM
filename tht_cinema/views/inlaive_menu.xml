@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="inlaive_menu" name="inlaive_menu">
+        <nav id='pos-nav' class="navbar">
+                <div  class="container-fluid">
+                    <ul class="nav navbar-nav">
+                    
+                    <li><a href="#"> <button class='btn btn-info'> <span t-field="user_id.name" /> </button> </a>  </li>
+
+                    <li><a href="/cinema/inlaive/"> <button class='btn btn-info'> In lại vé </button> </a>  </li>
+
+                    
+                    <li><a href="#"><span id='clock24'/> </a></li>
+                    
+                    </ul>
+                </div>
+            </nav>
+      
+    </template>
+
+    <record id="cinema_inlaive" model="ir.actions.act_url">
+        <field name="name">In lại vé</field>
+        <field name="type">ir.actions.act_url</field>
+        <field name="target">new</field>
+        <field name="url">/cinema/inlaive/</field>
+</record>
+
+<!-- <menuitem action="cinema_inlaive" name="In lại vé " id="menu_inlaive_link" parent="tht_cinema.menu_caidat_ve"/> -->
+
+<record id="cinema_soatve" model="ir.actions.act_url">
+        <field name="name">Soát vé</field>
+        <field name="type">ir.actions.act_url</field>
+        <field name="target">new</field>
+        <field name="url">/cnm/soatve/</field>
+</record>
+
+<!-- <menuitem action="cinema_soatve" name="Soát vé " id="menu_soatve_link" parent="tht_cinema.menu_caidat_ve"/> -->
+
+
+</odoo>

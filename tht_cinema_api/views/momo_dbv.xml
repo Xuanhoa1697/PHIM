@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="momo_dbv" name="momo_dbv_donbanve">
+              
+        <t t-set="sales_order" t-value="order"/> <!-- rename to ensure breadcrumb compatibility (differentiate with purchase orders) -->
+        
+        
+        
+        <div id="optional_placeholder"></div>
+        <div class="container">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-md-6 col-xs-9 col-sm-9 text-left">
+                    <h4>
+                        <t t-call='portal.record_pager'/>
+                        <t t-if="order.state in ('sent', 'cancel')">Quotation</t>
+                        <t t-else=""></t> 
+                        
+                        Mã đơn hàng: <t t-esc="order.name"/> <br/>
+                        <strong>Ngày đặt :</strong> <span t-field="order.create_date" t-options='{"widget": "date"}'/>
+                        
+                        <t t-if="order.state == 'cancel'">
+                            <span class="label label-default"><i class="fa fa-fw fa-remove"/> Cancelled</span>
+                        </t>
+                        <t t-if="order.state == 'done'">
+                            <span class="label label-success"><i class="fa fa-fw fa-check" /> Done</span>
+                        </t>
+                    </h4>
+                    Tên phim: <t t-esc="order.dm_lichchieu_id.dm_phim_id.name"/> <br/>
+                          <!-- <t t-esc="order.dm_lichchieu_id.batdau"/> <br/> -->
+                    <span> Ngày chiếu: </span> <span t-field="order.dm_lichchieu_id.batdau"  t-options='{"format": "dd/MM/yyyy"} '/>  <br/>
+                    <span> Giờ chiếu: </span> <span t-field="order.dm_lichchieu_id.batdau"  t-options='{"format": "HH:mm"} '/>  <br/>
+                    Rạp phim: <t t-esc="order.dm_lichchieu_id.dm_diadiem_id.name"/><br/>
+                    Phòng chiếu:     <t t-esc="order.dm_lichchieu_id.dm_phong_id.name"/>
+                </div>
+                <div class="col-md-6 col-sm-3 col-xs-3 hidden-print" id="o_portal_order_actions">
+                    <t t-if="order.state == 'sent' and portal_confirmation == 'sign'" name="portal_confirmation_sign">
+                        <a class="btn btn-primary ml8 pull-right" href="#portal_sign">
+                            <i class="fa fa-arrow-circle-right"/> Accept &amp; Sign
+                        </a>
+                    </t>
+                    <t t-if="order.state == 'sale' and portal_confirmation == 'sign'">
+                        <a class="btn btn-success ml8 pull-right" disabled="disabled"
+                            t-attf-title="Order signed on #{order.confirmation_date} by #{order.partner_id.name}">
+                            <i class="fa fa-check-circle"/> Signed
+                        </a>
+                    </t>
+                    <!-- <a target="_blank" t-att-href="'/my/orders/pdf/%s?%s' % (order.id, keep_query())" class="ml8 pull-right mt4 mr8" title="Download">
+                        <i class="fa fa-download fa-2x" aria-hidden="true"/>
+                    </a> -->
+                </div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <t t-if="error or warning" t-call="sale.portal_order_error"/>
+              <t t-if="success and (not error and not warning)" t-call="sale.portal_order_success"/>
+              
+              
+
+              <div class="row">
+                <div class="col-md-2">
+                  <strong>Loại vé </strong>
+                </div>
+                <div class="col-md-2">
+                  <strong>Vị trí </strong>
+                </div>
+                <div class="hidden-sm hidden-xs col-md-2 text-right">
+                  <strong>Đơn giá</strong>
+                </div>
+                <div class="hidden-sm hidden-xs col-md-2 text-right">
+                  <strong>Số lượng</strong>
+                </div>
+                <div class="hidden-sm hidden-xs col-md-2 text-right">
+                  <strong>Thành tiền </strong>
+                </div>
+                
+              </div>
+              <t t-foreach="order.dm_donbanve_line_ids" t-as="ol">
+                <div class="row orders_vertical_align">
+                    <div class="col-md-2">
+                      <strong><span t-esc="ol.loaive "/> </strong>
+                    </div>
+
+                  
+                    <div class="col-md-2">
+                      <strong><span t-esc="ol.vitrighe.replace('_','') "/> </strong>
+                    </div>
+                    <div class="hidden-sm hidden-xs col-md-2 text-right">
+                      <strong> <span t-field="ol.dongia" t-options='{"widget": "float", "precision": 0}' /> </strong>
+                    </div>
+                    <div class="hidden-sm hidden-xs col-md-2 text-right">
+                      <strong><span t-field="ol.soluong" t-options='{"widget": "float", "precision": 0}' /></strong>
+                    </div>
+                    <div class="hidden-sm hidden-xs col-md-2 text-right">
+                      <strong><span t-field="ol.price_total" t-options='{"widget": "float", "precision": 0}' /></strong> 
+                    </div>
+                    
+                    <div class="hidden-sm hidden-xs col-md-2 text-right">
+                      
+                    </div>
+
+                </div>
+              </t>
+
+              <hr/>
+
+               <div class="row">
+                <div class="col-md-2">
+                  
+                </div>
+                <div class="col-md-2">
+                  
+                </div>
+                <div class="hidden-sm hidden-xs col-md-2 text-right">
+                  
+                </div>
+                <div class="hidden-sm hidden-xs col-md-2 text-right">
+                  <strong>Tổng cộng</strong>
+                </div>
+                <div class="hidden-sm hidden-xs col-md-2 text-right">
+                  <strong><span t-field="order.amount_total" t-options='{"widget": "float", "precision": 0}'/> </strong>
+                </div>
+                
+              </div>
+
+
+                <div>    
+                    <form class="myForm" method="POST" enctype="application/x-www-form-urlencoded" action="/cnm/web/momo/payment">
+                        <input type='hidden' t-att-value="order.id" name='order_id'/>
+                        <div style="margin-top: 1em;"> 
+                        </div>
+
+                        <button type="submit" class="btn btn-lg button-momo">
+                          Thanh toán momo
+                        </button>
+                    </form>
+                </div>
+              
+
+              <hr/>
+
+              
+                      
+
+            </div>
+            
+          </div>
+        </div>
+        <div class="oe_structure mb32"/>
+      
+    </template>
+
+</odoo>

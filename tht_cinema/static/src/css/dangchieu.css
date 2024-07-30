@@ -1,0 +1,258 @@
+body, html {
+    height: 100%;
+    margin: 0;
+  }
+
+.bg {
+    /* The image used */
+    background-image: url("/tht_cinema/static/src/img/dangchieu.jpg");
+    opacity: 1;
+    /* Full height */
+    height: 100%; 
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+  }
+
+
+  .ctn_lichchieu_bottom {
+    height: 10%;
+  }
+  
+  .ctn_lichchieu {
+    height: 80%;
+  }
+  
+  .container {
+    margin: 0px;
+    padding: 0px;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  .row.row_lichchieu {
+    height: 25%;
+    border-bottom: black 1px solid;
+    width: 101vw;
+  }
+  
+  body {
+    height: 100vh;
+    width: 100vw;
+    /* background: url("../../assets/img/dangchieu.jpg") no-repeat; */
+    background-size: cover;
+    font-size: 16px;
+    background-repeat: no-repeat;
+  }
+  
+  .vertical-center {
+    min-height: 20%;
+    min-height: 10vh;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 100%;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+  }
+  
+  
+  
+  .bg {
+    background-image: url("/tht_cinema/static/src/img/dangchieu.jpg");
+    opacity: 1;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .list-group {
+    padding-bottom: 10px;
+  }
+  
+  .conve {
+    color: green;
+    font-size: 2rem;
+  }
+  
+  .saphetve {
+    color: yellow;
+    font-size: 2rem;
+  }
+  
+  .hetve {
+    color: red;
+    font-size: 2rem;
+  }
+  
+  .saphetve {
+    color: yellow;
+    font-size: 2rem;
+  }
+  
+  .panel-default > .panel-heading {
+    text-align: center;
+  }
+  
+  .panel-title {
+    font-size: 2rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 48px;
+  }
+  
+  .panel-default > .panel-body {
+    text-align: center;
+    font-size: 20pt;
+  }
+  
+  .wrapper_suatchieu {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+  }
+  
+  .listsuatchieu {
+    flex-direction: row;
+  }
+  
+  .flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 30px;
+    text-align: center;
+  }
+  
+  .flex-item {
+    width: 250px;
+  }
+  
+  ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+    
+  }
+  
+  li {
+    float: left;
+  }
+  
+  .ovuong {
+    padding: 20px 30px 30px 10px;
+  }
+  
+  .text-ve {
+    padding: 2px 30px 30px 10px;
+    height: 20px;
+    float: right;
+    font-size: 24pt;
+  }
+  
+  #clock24 {
+    display: none;
+  }
+  
+  span {
+  }
+  
+  .conve_name {
+    color: white;
+    padding-left: 10px;
+    padding-right: 40px;
+  }
+  
+  .saphetve_name {
+    color: white;
+    font-size: 2rem;
+    padding-left: 10px;
+    padding-right: 40px;
+  }
+  
+  .hetve_name {
+    color: white;
+    padding-left: 10px;
+    padding-right: 40px;
+  }
+  
+  .row_ve_info {
+    background-color: black;
+    /* padding-left: 200px; */
+  }
+  
+  .container.ct_ve_info {
+    margin: 0px;
+    padding: 0px;
+    width: 100% !important;
+  }
+  
+  .ctn_veinfo {
+    background-color: black;
+  }
+  
+  .list-group-item {
+    position: relative;
+    display: block;
+    padding: 0px;
+    border: 1px solid rgba(0,0,0,.125);
+  }
+  
+  .time_dangchieu {
+      font-size: 3.2rem;
+      font-weight: bold;
+      padding-right: 2.0rem;
+  }
+
+  .ten_phim{
+    text-align: left;
+    font-size: 4rem;
+    font-weight: bold;
+    color:#87D1FA  ;
+  }
+
+  .gioihantuoi {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: orange   ;
+
+  }
+
+  .title_dangchieu {
+    font-size: 4rem;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+  }
+
+.saphetve_name {
+    font-size:4rem;
+}
+.conve_name.conve {
+    font-size:4rem;
+}
+.fa-square {
+    font-size:4rem;
+}

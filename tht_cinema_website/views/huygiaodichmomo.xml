@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="huygiaodichmomo" name="datve">
+        <t t-call="website.layout">
+    <div id="wrap" class="oe_structure oe_empty">
+      <section>
+        <div class="home_big_image_container">
+          <div class="home_big_image">
+            <a href="#" data-original-title="" title="">
+              <img src="/web/image/55442/Untitled-1.jpg" data-original-title="" title="" style="width: 25%;"/>
+            </a>
+          </div>
+        </div>
+      </section>
+      <section class="s_clarico_content">
+        <div class="container">
+          <div class="row">
+            <p class="cc_content_class" style="text-align: center; ">
+              <font class="text-black" style="font-size: 18px;">
+                <b>Bạn vừa hủy giao dịch thanh toán sử dụng Ví Momo</b>
+              </font>
+            </p>
+          </div>
+        </div>
+      </section>
+      <div class="oe_structure">
+        <section class="common-div mb48 mt32">
+          <div class="block" style="text-align: center; ">
+            <a href="/cnm/phim/dangchieu" class="shop_now_button" data-original-title="" title="" target="_blank">Bấm để quay lại trang chủ </a>
+          </div>
+        </section>
+      </div>
+    </div>
+        </t>
+    </template>
+</odoo>

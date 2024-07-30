@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="dm_website_phim_template" name="Website Phim Template">
+        <t t-call="website.layout">
+            <div class="container d-flex flex-column flex-grow-1 justify-content-around">
+                <div class="o_wevent_event_title" style="text-align: center;">
+                    
+                </div>
+            </div>
+
+            <t t-set="additional_title">Website Phim</t>
+            <div id="wrap">
+                <div class="oe_structure" />
+                <div class="container">
+                    
+                    <input type="hidden" id="event_id" t-att-value="phong_id" />
+                    <div id="jquery-script-menu">
+                        <div class="jquery-script-center">
+                            <div class="jquery-script-clear"> <t t-esc='event' /> </div>
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <div class="container">
+                            <div>
+                                <form class="navbar-form pull-right" role="search" t-attf-action="/phim/filter" method="get">
+                                    <t t-call="website.website_search_box"/>
+                                </form>
+                                <div> </div>
+
+                                <table class="table">
+                                    <thead>
+                                        <th>Phim</th>
+                                        <th>Phòng</th>
+                                        <th>Ngày</th>
+                                        <th>Giờ bắt đầu </th>
+                                        <th>Giờ Kết thúc </th>
+                                        <th>Lich chieu </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="event" t-as="faq">
+                                            <td>
+                                                <a t-attf-href="/ticket/faq/#{ slug(faq) }">
+                                                    <span t-field="faq.name"/> <br/>
+                                                    
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <span t-raw="'&lt;br/&gt;'.join(map(lambda x: (x.dm_phong_id.name), faq.dm_lichchieu_ids ))"/>
+                                            </td>
+                                            <td>
+                                                <span t-raw="'&lt;br/&gt;'.join(map(lambda x: (x.ngaychieu), faq.dm_lichchieu_ids ))"/>
+                                            </td>
+                                            <td>
+                                                <span t-raw="'&lt;br/&gt;'.join(map(lambda x: (str(x.batdau)), faq.dm_lichchieu_ids ))"/>
+                                            </td>
+                                            <td>
+                                                <span t-raw="'&lt;br/&gt;'.join(map(lambda x: (str(x.ketthuc)), faq.dm_lichchieu_ids ))"/>
+                                            </td>
+                                            <td>
+                                                <span t-raw="'&lt;br/&gt;'.join(map((lambda x: (str(x.id))), faq.dm_lichchieu_ids ))"/>
+                                            </td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

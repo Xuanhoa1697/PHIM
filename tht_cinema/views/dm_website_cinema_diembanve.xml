@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="dm_website_cinema_diembanve" name="dm_website_cinema_diembanve">
+        <html>
+            <head>
+                <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+                <meta http-equiv="Pragma" content="no-cache" />
+                <meta http-equiv="Expires" content="0" />
+                 <!-- <script type="text/javascript" src="/web/static/src/js/boot.js"></script> -->
+                <!-- <t t-call-assets="web.assets_common" t-js="false"/> -->
+            <!-- <t t-call-assets="web.assets_frontend" t-js="false"/> -->
+            <!-- <t t-call-assets="web_editor.summernote" t-js="false" groups="website.group_website_publisher"/> -->
+            <!-- <t t-call-assets="web_editor.assets_editor" t-js="false" groups="website.group_website_publisher"/> -->
+            <!-- <t t-call-assets="website.assets_editor" t-js="false" groups="website.group_website_publisher"/> -->
+
+            <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+            <t t-call-assets="web.assets_common" t-css="false"/>
+            <t t-call-assets="web.assets_frontend" t-css="false"/>
+            <!-- <t t-call-assets="website.assets_frontend" t-css="false"/> -->
+            
+            
+            <!-- <t t-call-assets="web_editor.summernote" t-css="false" groups="website.group_website_publisher"/>
+            <t t-call-assets="web_editor.assets_editor" t-css="false" groups="website.group_website_publisher"/>
+            <t t-call-assets="website.assets_editor" t-css="false" groups="website.group_website_publisher"/> -->
+
+                
+                    
+                
+                <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                
+                
+                <script src="https://cdn.jsdelivr.net/npm/underscore@1.12.0/underscore-min.js"></script>
+                <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script> -->
+                
+
+                <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+                <script type="text/javascript" src="/tht_cinema/static/src/js/jquery.seat-charts.js"></script>
+
+                <script type="text/javascript" src="/tht_cinema/static/src/js/JsBarcode.code128.min.js"></script>
+                <script type="text/javascript" src="/tht_cinema/static/src/js/jquery.mask.min.js"></script>
+
+                <script type="text/javascript" src="/tht_cinema/static/src/js/pos_booking_function.js"></script>
+                <script type="text/javascript" src="/tht_cinema/static/src/js/pos_seat_booking.js"></script>
+                <script type="text/javascript" src="/tht_cinema/static/src/js/lichchieu.js"></script>
+                <script type="text/javascript" src="/tht_cinema/static/src/js/tht_helper_format.js"></script>
+
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/jquery-confirm.min.css" />
+                <script type="text/javascript" src="/tht_cinema/static/src/js/jquery-confirm.min.js"></script>
+                <script type="text/javascript" src="/tht_cinema/static/src/js/pos_ketca.js"></script>
+
+                <script type="text/javascript" src="/tht_cinema/static/src/js/printthis.js"></script>
+
+                <!-- <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/pos/pos.css" />
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/pos/theme.css" />
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/pos/style.css" /> -->
+
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/jquery.seat-charts.css" />
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/seat-charts-custom.css" />
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/vexemphim.css" />
+
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/lichchieu.css" />
+                <!-- <script type="text/javascript" src="/tht_cinema/static/src/js/seat_receipt.js"></script> -->
+
+                <style>
+                .navbar-brand.navbar-image>img {
+                    padding-top: 3 px;
+                    z-index: 5;
+                    height: 50px;
+                </style>
+
+                <script type="text/javascript" >
+                    var pos_id = <t t-esc='pos_id' />
+                    var pos_line_id = <t t-esc='pos_line_id' />
+                    
+                </script>
+                
+                
+            
+            </head>
+            
+            <t t-call='tht_cinema.dm_website_cinema_menu_pos_banve' />
+
+            <body>
+
+            <div class='col-md-12 text-center'> <h3> Chọn suất chiếu theo ngày <br/> <span class='thangchieu'> <t t-esc="date_list[0]"/> </span> </h3> </div>
+            <div class='col-md-12 text-center' style='margin-bottom:20px'>
+                <t t-foreach="date_list" t-as="line">
+                    <div class='text-center' style='display:inline-block'><a t-attf-href="#{ dm_session.url_banve }?ngaychieu=#{ line }"> 
+                        <span class='format_date_ddmmyyyy' t-esc='line' />
+                        </a>
+                    </div>
+                </t>
+
+                <t t-foreach="date_list" t-as="line">
+                    <div class='text-center' style='display:none'><a t-attf-href="#{ dm_session.url_banve }/?ngaychieu=#{ line }"> 
+                        <span class='date_ddmmyyyy' t-esc='line' />
+                        </a>
+                    </div>
+                </t>
+            </div>
+            
+        <!-- end header panel -->
+        
+            <div class="container d-flex flex-column flex-grow-1 justify-content-around">
+            <div class='row'>
+                <t t-foreach='event' t-as='line' >
+                    <div class='col-md-4'>
+                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="height:320px">
+                        
+                            <div class="product-chooser-item selected">
+                                <img class='suatchieu_img_phim' 
+                                t-attf-src='data:image/*;base64,{{line["dm_phim"].hinhanh}}' />
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tenphim">
+                                    <t t-esc='line["dm_phim"].name' /> <br/>                                   
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- <span t-field="lc.batdau"   t-options='{"format": "MM/dd/yyyy "} '/> <br/> -->
+
+                        
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-left " style="padding:0px" >
+                            <div style='display:block'> <span class='date_ddmmyyyy ngaychieu suatchieu_date' t-esc="ngaychieu" /> </div>
+                            
+                            
+                            <div class='box_suatchieu'> 
+                                <t t-foreach="line['dm_lichchieu_obj']" t-as="lc">
+                                    <div class='suatchieu'> 
+                                    <a t-attf-href="/cinema/pos_line/#{current_session_line_id.id}/#{ lc.id }/"> 
+                                        <span class='suatchieu_time'  t-field="lc.batdau"   t-options='{"format": "HH:mm"} ' /> 
+                                    </a> 
+                                    </div>
+                                    
+                                </t>
+                            </div>
+                        </div>
+                </div>
+                </t>
+            </div>
+            </div>
+
+            
+
+            <script type="text/javascript" >
+                const clock24 = document.getElementById('clock24')
+
+                
+                function concatZero(timeFrame) {
+                    return timeFrame &lt; 10 ? '0'.concat(timeFrame) : timeFrame
+                }
+                function realTime() {
+                    let date = new Date()
+                    let sec = date.getSeconds()
+                    let mon = date.getMinutes()
+                    let hr = date.getHours()
+                    
+                    clock24.textContent = `${concatZero(hr)} : ${concatZero(mon)} : ${concatZero(sec)}`
+                    }
+
+                    setInterval(realTime, 1000)
+                    
+            </script>
+
+        </body>
+
+        
+    </html>
+    </template>
+</odoo>

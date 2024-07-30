@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dm_seat_arrangement_action" model="ir.actions.act_window">
+        <field name="name">Sơ đồ ghế  </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.seat.arrangement</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Sơ đồ ghế 
+                </p>
+        </field>
+    </record>
+
+    <record id="dm_seat_arrangement_tree" model="ir.ui.view">
+        <field name="name">Sơ đồ ghế </field>
+        <field name="model">dm.seat.arrangement</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="id"/>
+                
+            </tree>
+        </field>
+    </record>
+
+    <record id="dm_phong_line_form" model="ir.ui.view">
+        <field name="name">Sơ đồ ghế </field>
+        <field name="model">dm.phong.line</field>
+        <field name="arch" type="xml">
+            <form string="Sơ đồ ghế ">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="dm_phong_id" readonly="1" />
+                            <!-- <field name="name" readonly="1" string="Ticket Type" /> -->
+                            <field name="row_count" string="Total Row" />
+                            <field name="col_count" string="Max Seat Number in Single row" />
+                            <field name="add_blank_row"/>
+                            <field name="add_blank_col"/>
+                            <button name="prepare_arrangement" string="Prepare Seat Arrangement" type="object" class="btn-primary" />
+                            <button name="clear_arrangement" string="Clear Seat Arrangement" type="object" class="btn-primary" />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="seat_arrangement_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <!-- 	<field name="sequence" widget="handle"/> -->
+                                <button name="clear_row" string="Clear Row" type="object" class="btn-primary"/>
+                                <field name="row" />
+                                <field name="seat_selection_ids" widget="many2many_tags" options="{'no_create_edit':True}" />
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <group>
+                            <!-- <field name="seats_max" /> -->
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- <menuitem id="dm_seat_arrangement_menu"
+              parent="menu_caidat_rapphim"
+              name="Danh sách Sơ đồ ghế "
+              action="dm_seat_arrangement_action"
+              sequence = "3"/> -->
+</odoo>

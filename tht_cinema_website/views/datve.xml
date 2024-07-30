@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="datve" name="datve">
+        <t t-call="website.layout">
+            <script type="text/javascript" >
+                var sv_socket_io = "<t t-esc='sv_socket_io' />"
+                console.log(sv_socket_io)
+            </script>
+
+            <script type="text/javascript" >
+                    
+                var event_banggia_id = <t t-esc='event.dm_banggia_id.id' />
+                var dm_lichchieu_id = <t t-esc='event.id' />
+                var pos_id = 9000000 + <t t-esc="user_id.id"/>
+                const user_id = <t t-esc="user_id.id"/>
+                const lc_id = <t t-esc="lichchieu_id"/>
+                
+            </script>
+ 
+
+            <script type="text/javascript" src="/tht_cinema/static/src/js/seat_map_display.js"></script>
+                
+                <!-- <link href="/tht_cinema/static/src/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/> -->
+
+                <!-- <script src="/tht_cinema/static/src/js/bootstrap3.min.js"></script> -->
+                <script type="text/javascript" src="/tht_cinema/static/src/js/jquery.seat-charts.js"></script>
+
+                <script type="text/javascript" src="/tht_cinema/static/src/js/JsBarcode.code128.min.js"></script>
+                
+                <script type="text/javascript" src="/tht_cinema/static/src/js/autoNumeric.js"></script>
+
+                <script type="text/javascript" src="/tht_cinema/static/src/other/socket.io.js"></script>
+
+                <script type="text/javascript" src="/tht_cinema_website/static/src/js/ws_socket_fn.js"></script>
+                <script type="text/javascript" src="/tht_cinema_website/static/src/js/ws_seat_book.js"></script>
+                
+
+
+                <!-- <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/jquery-confirm.min.css" />
+                <script type="text/javascript" src="/tht_cinema/static/src/js/jquery-confirm.min.js"></script> -->
+                <!-- <script type="text/javascript" src="/tht_cinema/static/src/js/pos_ketca.js"></script> -->
+
+                <!-- <script type="text/javascript" src="/tht_cinema/static/src/js/printthis.js"></script> -->
+                <!-- <script type="text/javascript" src="/tht_cinema/static/src/js/datvetruoc.js"/> -->
+
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/jquery.seat-charts.css" />
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/seat-charts-custom.css" />
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/vexemphim.css" />
+                <link rel="stylesheet" type="text/css" href="/tht_cinema_website/static/src/css/datve.css" />
+
+                
+
+
+                <style id='style_map'>
+                .navbar-brand.navbar-image>img {
+                    padding-top: 3 px;
+                    z-index: 5;
+                    height: 50px;
+
+                }
+                <t t-raw='event.dm_phong_id.css_custom' />
+
+
+                </style>
+                
+
+                
+            
+            
+
+            <!-- <t t-call='tht_cinema.dm_website_cinema_menu_pos_banve' /> -->
+
+            <body>
+
+            
+
+           
+        <!-- end header panel -->
+            <div class='o_payment_form' />
+        
+            <div class="container d-flex flex-column flex-grow-1 justify-content-around">
+                <div class="o_wevent_event_title" style="text-align: center;">
+                    
+                </div>
+            </div>
+
+            <t t-set="additional_title">Lịch chiếu </t>
+            <div id="wrap">
+                <div class="oe_structure" />
+                <div class="container">
+                        
+                    <input type="hidden" id="lichchieu_id" t-att-value="lichchieu_id" />
+                    <input type="hidden" id="banggia_id" t-att-value="banggia_id" />
+                    <div id="jquery-script-menu">
+                        <div class="jquery-script-center">
+                            <div class="jquery-script-clear"></div>
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <div class="container">
+                         <div class='row'>
+                            <div class="col-md-8">
+                                    <div id="lichchieu" style='display:none;'>
+                                    </div>
+                                    
+                                    <div id="seat-map">
+                                        <div class="front-indicator">SCREEN</div>
+                                    </div>                              
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class='row'>
+                                    <div class='text-left'>
+                                        <div> Tên phim: <t t-esc="event.dm_phim_id.name"/></div>
+                                        <div> Ngày chiếu: <span t-field="event.batdau"  t-options='{"format": "dd/MM/yyyy"} '/> </div>
+                                        <div> Giờ chiếu: <span t-field="event.batdau"  t-options='{"format": "HH:mm"} '/> </div>
+                                        <div> Rạp phim: <t t-esc="event.dm_diadiem_id.name"/><br/></div>
+                                        <div> Phòng chiếu: <span t-field="event.dm_phong_id.name" /> </div>
+                                    </div>
+                                    
+                                
+                                <!-- <a class="fas fa-desktop" t-attf-href="/cinema/customer_display/{{dm_session.id}}/#action=cinema_customer_display.ui" target="_blank"><img width='80px' height='40px'
+                              src='/tht_cinema/static/src/img/screen.png' /></a> -->
+                                </div>
+                                <!-- <div class='row'>
+                                    <div class=' col-md-4 btn '> Mã khách hàng </div>
+                                    <div class=' col-md-4 btn '> <input id='makhachhang' size='15' /> </div>
+                                </div>
+                                <div class='row'>
+                                    <div class=' col-md-4 btn '> Số điện thoại </div>
+                                    <div class=' col-md-4 btn '> <input id='sodienthoai' size='15' /> </div>
+                                </div> -->
+                                
+                                
+                                
+                                <div class="booking-details">                                            
+                                    <div id='donbanhang' >
+                                        <ul class="responsive-table-banggia">
+                                            <li class="table-header">
+                                                <div class="col col-1">Ghế</div>
+                                                <div class="col col-2">Loại vé</div>
+                                                <div class="col col-3">Đơn giá</div>
+                                                <div class="col col-4"></div>
+                                            </li>                                                    
+                                        </ul>
+                                        
+                                        <ul id="donbanhang_line" class='responsive-table-banggia' >
+                                          
+                                        
+                                        </ul>
+
+                                        <div id='thanhtien'> <span> Tổng  <span id="counter">0</span> vé </span>
+                                            <span id="total_dongia">0</span> VNĐ  
+                                        </div>                                                
+
+                                    </div>
+                                            <div>
+                                                    <div style='width: 500px'>
+                                                        <div class='FlexContainer'>
+                                                            <t t-foreach="ptthanhtoan" t-as="pt" >
+                                                                
+   
+                                                            <div>
+                                                                <t t-if="pt_index == 0">
+                                                                    <input type="radio" name="ptthanhtoan_id" t-att-value="pt.id" checked="1" />
+
+                                                                    <t t-if=" 'omo' in pt.name ">
+                                                                    <img src='https://i.ibb.co/d2FN791/momo-icon-square-pinkbg-5x.png' width='40px'/> <br/>
+                                                                        </t>
+
+                                                                    <label style='padding-top:10px'><t t-esc='pt.name' /> </label> <br/>
+                                                                </t>
+                                                                <t t-if="pt_index != 0">
+                                                                    <input type="radio" name="ptthanhtoan_id" t-att-value="pt.id"  />
+
+                                                                    <t t-if=" 'omo' in pt.name ">
+                                                                    <img src='https://i.ibb.co/d2FN791/momo-icon-square-pinkbg-5x.png' width='40px'/> <br/>
+                                                                        </t>
+                                                                        
+                                                                    <label style='padding-top:10px'><t t-esc='pt.name' /> </label> <br/>
+                                                                </t>
+                                                                
+                                                            
+                                                            
+                                                            </div>
+                                                            
+                                                           
+
+                                                            </t>
+                                                        
+                                                        </div>
+
+                                                    </div>
+
+                                                <div class="form-group form-tien-thua" style="padding-top:5px">
+
+                                                    <label style='width:80px; padding-bottom:5px; display:none' for="exampleFormControlInput1">Khách đưa </label>
+                                                    <input style='display:none' class='form-control money' id='khachdua' type="text" />
+                                                    <!-- <br/> <label style='width:80px' for="exampleFormControlInput1" >Tiền thừa</label> -->
+                                                    <input class='form-control money' id='tienthua' type="text" maxlength='50' style='display:none'  />
+
+                                                </div>
+                                                <div id='thanhtoan' class='row thanhtoan' >
+                                                    
+                                                </div>
+                                                <div class='row '>
+                                                    <div class=' col-md-4 thanhtoan'> 
+                                                        <form id="registration_form1" t-attf-action="/cnm/web/momo/checkout/#{slug(event)}" method="post">
+                                                            <!-- <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" /> -->
+                                                            
+                                                            <button disabled="disabled" type="submit" class="btn btn-primary" id='checkout-button'>Thanh toán</button>
+                                                        </form>
+                                                    </div>
+                                                    
+                                                </div>
+
+                                                <div class='row'>
+                                                
+                                                </div>
+
+                                                <div class='row'>
+                                                
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                            </div>
+                         
+                         </div>
+                                    
+                            <div id="legend"></div>
+                            
+                            
+
+                            <div id="seat_layout">
+                                <div class="row">
+                                    <div class="col-8">
+                                        
+                                    </div>
+                                    <div class="col-12">
+                                        <div style='display:none'>
+                                            <h5> Lịch chiếu :  <span t-field="event.dm_phim_id.name" class="o_wevent_event_name" itemprop="name" placeholder="Event Title" />
+                                                -- BG <spand t-field='event.dm_banggia_id.name' /> </h5>
+                                            <div> Bắt đầu <span class='ngaychieu' t-field='event.batdau' /> </div>
+                                            <div> Kết thúc <span class='ngaychieu' t-field='event.ketthuc' /> </div>
+                                            <div class='row'>
+                                                <!-- <div class='col-md-6'> <span t-raw="'&lt;br/&gt;'.join(map((lambda x: (str(x.dm_loaighe_id.name))), event.dm_banggia_id.dm_banggia_line_ids ))"/> </div> -->
+                                                <div class='col-md-6'> <span t-raw="'&lt;br/&gt;'.join(map((lambda x: (str(x.dm_loaive_id.name))), event.dm_banggia_id.dm_banggia_line_ids ))"/> </div> 
+                                                <div class='col-md-6'> <span class='dongia_ve' t-raw="'&lt;br/&gt;'.join(map((lambda x: (str(x.dongia))), event.dm_banggia_id.dm_banggia_line_ids ))"/> </div> 
+                                            </div>
+                                        
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script type="text/javascript" >
+                const clock24 = document.getElementById('clock24')
+
+                
+                function concatZero(timeFrame) {
+                    return timeFrame &lt; 10 ? '0'.concat(timeFrame) : timeFrame
+                }
+                function realTime() {
+                    let date = new Date()
+                    let sec = date.getSeconds()
+                    let mon = date.getMinutes()
+                    let hr = date.getHours()
+                    
+                    clock24.textContent = `${concatZero(hr)} : ${concatZero(mon)} : ${concatZero(sec)}`
+                    }
+
+                    // setInterval(realTime, 1000)
+
+                $("#close_page").click(function() {
+                        var confirm_result = confirm("Are you sure you want to quit?");
+                        if (confirm_result == true) {
+                        window.close();
+                        }
+                    });
+                    
+            </script>
+
+        
+    </body>
+        
+    </t>
+    </template>
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="dm_website_cinema_backend_assets" name="dm_website_cinema_backend_assets">
+        <head>
+            <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+            <meta http-equiv="Pragma" content="no-cache" />
+            <meta http-equiv="Expires" content="0" />
+
+
+            <t t-call-assets="web.assets_common" t-css="false"/>
+            <t t-call-assets="web.assets_backend" t-css="false"/>
+            <t t-call-assets="web_editor.summernote" t-css="false"/>
+            <t t-call-assets="web_editor.assets_editor" t-css="false"/>
+
+            <link href="/tht_cinema/static/src/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+
+            <!-- <script src="/tht_cinema/static/src/js/bootstrap3.min.js"></script> -->
+
+        </head>
+
+
+    </template>
+</odoo>

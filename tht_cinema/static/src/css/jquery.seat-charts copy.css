@@ -1,0 +1,347 @@
+div.seatCharts-container {
+    /*min-width: 700px;*/
+}
+div.seatCharts-cell {
+    height: 16px;
+    width: 16px;
+    margin: 3px;
+    float: left;
+    text-align: center;
+    outline: none;
+    font-size: 13px;
+    line-height: 16px;
+    color: blue;
+}
+div.seatCharts-seat {
+    background-color: green;
+    color: white;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    cursor: default;
+}
+div.seatCharts-seat.seatCharts-cell {
+    line-height: 15px;
+}
+div.seatCharts-seat:focus {
+    border: none;
+}
+/*
+.seatCharts-seat:focus {
+	outline: none;
+}
+*/
+
+div.seatCharts-space {
+    background-color: white;
+}
+div.seatCharts-row {
+    clear: both;
+    float: left;
+    display: flex;
+    flex-direction: row;
+}
+
+div.seatCharts-row:after {
+    clear: both;
+}
+
+div.seatCharts-seat.selected {
+    background-color: aqua;
+}
+
+div.seatCharts-seat.focused {
+    background-color: #6db131;
+}
+
+div.seatCharts-seat.available {
+    background-color: green;
+}
+
+div.seatCharts-seat.unavailable {
+    background-color: red;
+    cursor: not-allowed;
+}
+
+ul.seatCharts-legendList {
+    list-style: none;
+}
+li.seatCharts-legendItem {
+    margin-top: 10px;
+    line-height: 2;
+    font-size: 14px;
+}
+
+.front-indicator {
+    margin: 5px 0px 45px 0px;
+    background-color: #f0f0f0;
+    color: #666;
+    text-align: center;
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 15px;
+}
+.booking-details .front-indicator {
+    margin: 5px 0px 45px 0px;
+}
+/*.wrapper {
+	width: 100%;
+	text-align: center;
+  	margin-top:20px;
+}
+.container {
+	margin: 0 auto;
+	width: 800px;
+	text-align: left;
+}*/
+.booking-details {
+    text-align: left;
+    margin-left: 0px;
+    font-size: 12px;
+    position: relative;
+    height: 470px;
+    padding-top: 20px;
+}
+.booking-details h2 {
+    margin: 25px 0 20px 0;
+    font-size: 17px;
+}
+.booking-details h3 {
+    margin: 5px 5px 0 0;
+    font-size: 14px;
+}
+div.seatCharts-cell {
+    color: #182c4e;
+    height: 25px;
+    width: 25px;
+    line-height: 15px;
+    display: inline;
+    padding: 5px;
+}
+div.seatCharts-seat {
+    color: #ffffff;
+    cursor: pointer;
+}
+div.seatCharts-row {
+    height: 35px;
+}
+div.seatCharts-seat.available {
+    background-color: #b9dea0;
+}
+div.seatCharts-seat.available.first-class {
+    background-color: #3a78c3;
+}
+div.seatCharts-seat.available.economys-class {
+    background-color: red;
+}
+div.seatCharts-seat.available.economy-class {
+    background-color: yellow;
+}
+div.seatCharts-seat.focused {
+    background-color: #76b474;
+}
+div.seatCharts-seat.selected {
+    background-color: #e6cac4;
+}
+div.seatCharts-seat.unavailable {
+    background-color: #472b34;
+}
+div.seatCharts-container {
+    width: auto;
+    padding: 20px 0px;
+    float: left;
+}
+div.seatCharts-legend {
+    padding-left: 0px;
+}
+ul.seatCharts-legendList {
+    padding-left: 0px;
+}
+span.seatCharts-legendDescription {
+    margin-left: 5px;
+    line-height: 30px;
+}
+.checkout-button {
+    display: block;
+    margin: 10px 0;
+    font-size: 14px;
+}
+#selected-seats {
+    max-height: 120px;
+    overflow-y: scroll;
+    overflow-x: none;
+    width: 100%;
+    margin-top: 10px;
+    padding-left: 0px;
+}
+#selected-seats > li {
+    position: relative;
+    margin: 5px 0px 2px 0px;
+    background: #efefef;
+    padding: 3px;
+}
+span.total {
+    font-size: 15px;
+}
+div.seatCharts-seat.available.a-class {
+    background-color: #3a78c3;
+}
+div.seatCharts-seat.available.b-class {
+    background-color: #b9dea0;
+}
+div.seatCharts-seat.available.c-class {
+    background-color: darksalmon;
+}
+div.seatCharts-seat.available.d-class {
+    background-color: green;
+}
+div.seatCharts-seat.available.e-class {
+    background-color: darkolivegreen;
+}
+div.seatCharts-seat.available.f-class {
+    background-color: orange;
+}
+div.seatCharts-seat.available.g-class {
+    background-color: violet;
+}
+div.seatCharts-seat.available.h-class {
+    background-color: plum;
+}
+div.seatCharts-seat.available.i-class {
+    background-color: tan;
+}
+div.seatCharts-seat.available.j-class {
+    background-color: skyblue;
+}
+div#seat_layout {
+    width: 100%;
+}
+a.cancel-cart-item {
+    position: absolute;
+    right: 5px;
+}
+div#seat_layout_left {
+    justify-content: center;
+    border-right: 1px dotted #ccc;
+    text-align: center;
+    margin: 0px auto;
+    display: flex;
+}
+
+#seat-map.sh-10 {
+    width: 45%;
+    overflow: auto;
+}
+#seat-map.sh-20 {
+    width: auto;
+    overflow: auto;
+}
+#seat-map.sh-30 {
+    width: 94%;
+    overflow: auto;
+    margin-left: 0px;
+    margin-right: auto;
+}
+#seat-map.sh-50 {
+    width: 94%;
+    overflow: auto;
+    margin-left: 0px;
+    margin-right: auto;
+}
+
+/************ Media Query *******/
+@media only screen and (max-width: 991px) {
+    div#seat_layout_left {
+        border-right: 0px;
+    }
+    #seat-map.sh-10 {
+        width: 50%;
+        overflow: auto;
+    }
+    #seat-map.sh-30 {
+        width: 99%;
+        overflow: auto;
+    }
+    .booking-details {
+        float: unset;
+        margin-left: 0px;
+    }
+    .front-indicator {
+        margin-left: 0px;
+    }
+    div.seatCharts-container {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+@media only screen and (max-width: 768px) and (min-width: 576px) {
+    #seat-map.sh-10 {
+        width: 50%;
+        overflow: auto;
+    }
+    #seat-map.sh-20 {
+        width: 90%;
+        overflow: auto;
+    }
+    #seat-map.sh-30 {
+        width: 97%;
+        overflow: auto;
+    }
+    #seat-map.sh-50 {
+        width: 97%;
+        overflow: auto;
+    }
+}
+@media only screen and (max-width: 575px) {
+    #seat-map.sh-10,
+    #seat-map.sh-20,
+    #seat-map.sh-30,
+    #seat-map.sh-50 {
+        width: auto;
+        overflow: auto;
+    }
+}
+h1.o_wevent_event_name {
+    font-size: 27px;
+    font-weight: bold;
+    margin-top: 20px;
+    padding-bottom: 15px;
+    position: relative;
+}
+h1.o_wevent_event_name:after {
+    position: absolute;
+    content: "";
+    width: 7%;
+    background: #3a78c3;
+    height: 2px;
+    bottom: 0%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/****** Scrollbar Style ******/
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: #f5f5f5;
+    height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #bdbdbd;
+    border: 2px solid #bdbdbd;
+}
+
+.seatCharts-row > .seatCharts-cell.seatCharts-space:first-child {
+    background: #f0f0f0;
+    color: #666;
+    border-radius: 5px;
+}
+
+.modal-body div#seat_layout_left {
+    border-right: 1px dotted #ccc;
+}

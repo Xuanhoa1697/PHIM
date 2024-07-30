@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="cinema_menu" model="ir.ui.view">
+        <field name="priority">99</field>
+        <field name="name">cinema_menu</field>
+        <field name="inherit_id" ref="website.layout"/>
+        <field name="website_id" search="[('name', 'like', 'inema')]" model="website"/>
+        <field name="arch" type="xml">
+            <xpath expr="//ul[@id='top_menu']" position="after">
+                <ul class="nav navbar-nav ml-auto text-right" id="top_menu">
+                <li class="nav-item" >
+                    <a class="nav-link" role="menuitem" t-attf-href="/cnm/phim/dangchieu">
+                    <span>Đang chiếu</span>
+                    </a>
+                </li>
+                <li class="nav-item" t-if="website.user_id != user_id">
+                    <a class="nav-link" role="menuitem" t-attf-href="/cnm/my/dbv">
+                    <span>Đơn bán vé</span>
+                    </a>
+                </li>
+                <li class="nav-item divider"></li>
+                <li class="nav-item dropdown" t-if="website.user_id != user_id">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <b>
+                        <span t-esc="user_id.name"/>
+                    </b>
+                    </a>
+                    <div class="dropdown-menu js_usermenu" role="menu">
+                    <a href="/my/home" role="menuitem" class="dropdown-item">My Account</a>
+                    <a id="o_logout" class="dropdown-item" role="menuitem" href="/web/session/logout?redirect=/">Logout</a>
+                    </div>
+                </li>
+                <li class="nav-item" t-if="website.user_id == user_id">
+                    <a class="nav-link" href="/web/login">
+                    <b>Sign in</b>
+                    </a>
+                </li>
+                
+                </ul>
+            </xpath>
+        
+        </field>
+    </record>
+
+</odoo>

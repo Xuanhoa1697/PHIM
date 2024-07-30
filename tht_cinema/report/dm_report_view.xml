@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<!-- Báo cáo chieu phim chi tiết  -->
+	   	<report
+	            id="action_dm_report_kqcp_detail_xlsx"
+	            model="dm.report.kqcp"
+	            string="Báo cáo chiếu phim"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.dm_report_kqcp_detail_xlsx"
+	            file="tht_cinema.dm_report_kqcp_detail_xlsx"
+	        />
+	        
+	   	<!-- Báo cáo chieu phim Tổng hợp  -->
+	   	<report
+	            id="action_dm_report_kqcp_general_xlsx"
+	            model="dm.report.donbanve"
+	            string="Báo cáo bán hàng Tổng hợp POS"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.dm_report_donbanve_general_xlsx"
+	            file="tht_cinema.dm_report_donbanve_general_xlsx"
+	        />
+
+		<!-- Bàn giao phiên Excel -->
+		<report
+	            id="action_report_pos_session_order_excel"
+	            model="pos.session"
+	            string="Bàn giao phiên Excel"
+	            menu="True"
+	            report_type="xlsx"
+	            name="tht_cinema.report_pos_session_order_xlsx"
+	            file="tht_cinema.report_pos_session_order_xlsx"
+	        />
+	        
+	   	<!-- Phát sinh trong ngày Excel -->
+		<report
+	            id="action_report_pos_session_order_oneday_excel"
+	            model="session.release.day"
+	            string="Phát sinh trong ngày Excel"
+	            menu="True"
+	            report_type="xlsx"
+	            name="tht_cinema.report_pos_session_order_oneday_xlsx"
+	            file="tht_cinema.report_pos_session_order_oneday_xlsx"
+	        />
+	        
+	   	<!-- Báo cáo bán hàng chi tiết POS -->
+	   	<report
+	            id="action_dm_report_donbanve_detail_xlsx"
+	            model="dm.report.donbanve"
+	            string="Báo cáo bán hàng chi tiết POS"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.dm_report_donbanve_detail_xlsx"
+	            file="tht_cinema.dm_report_donbanve_detail_xlsx"
+	        />
+	        
+	   	<!-- Báo cáo bán hàng Tổng hợp POS -->
+	   	<report
+	            id="action_dm_report_donbanve_general_xlsx"
+	            model="dm.report.donbanve"
+	            string="Báo cáo bán hàng Tổng hợp POS"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.dm_report_donbanve_general_xlsx"
+	            file="tht_cinema.dm_report_donbanve_general_xlsx"
+	        />
+	        
+		<!-- Báo cáo giầy sửa -->
+	   	<report
+	            id="action_report_repair_shoes_xlsx"
+	            model="repair.shoes"
+	            string="Báo cáo giầy sửa"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.report_repair_shoes_xlsx"
+	            file="tht_cinema.report_repair_shoes_xlsx"
+	        />
+	        
+		<!-- Báo cáo Doanh thu nhân viên -->
+	   	<report
+	            id="action_report_revenue_employee_xlsx"
+	            model="report.revenue.employee"
+	            string="Doanh thu nhân viên"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.report_revenue_employee_xlsx"
+	            file="tht_cinema.report_revenue_employee_xlsx"
+	        />
+	        
+		<!-- Báo cáo Nộp tiền giầy sửa -->
+	   	<report
+	            id="action_report_submit_money_shoes_xlsx"
+	            model="submit.money.shoes.report"
+	            string="Báo cáo nộp tiền giầy sửa"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.report_submit_money_shoes_xlsx"
+	            file="tht_cinema.report_submit_money_shoes_xlsx"
+	        />
+		
+		<!-- Xuất KH -->
+	   	<report
+	            id="action_export_customer_xlsx"
+	            model="export.customer"
+	            string="Xuất KH"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.report_export.customer_xlsx"
+	            file="tht_cinema.report_export.customer_xlsx"
+	        />
+		
+		<!-- Kiểu không bán được trong thời gian chọn -->
+	   	<report
+	            id="action_not_sale_template_xlsx"
+	            model="check.template"
+	            string="Kiểu không bán được trong thời gian chọn"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.report_check_template_not_sale_xlsx"
+	            file="tht_cinema.report_check_template_not_sale_xlsx"
+	        />
+	        
+	   	<!-- Kiểu bán được trong thời gian chọn -->
+	   	<report
+	            id="action_sale_template_xlsx"
+	            model="check.template"
+	            string="Kiểu bán được trong thời gian chọn"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.report_check_template_xlsx"
+	            file="tht_cinema.report_check_template_xlsx"
+	        />
+	        
+	 	<!-- Thống kê tổng thưởng của nhân viên -->
+	   	<report
+	            id="action_statistic_bonus_employee_xlsx"
+	            model="statistic.bonus.employee"
+	            string="Thống kê tổng thưởng của nhân viên"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.report_statistic_bonus_employee_xlsx"
+	            file="tht_cinema.report_statistic_bonus_employee_xlsx"
+	        />
+	   	
+	   	<!-- Báo cáo Doanh thu nhân viên Chi tiết -->
+	   	<report
+	            id="action_report_revenue_employee_detail_xlsx"
+	            model="statistic.bonus.employee"
+	            string="Thống kê tổng thưởng chi tiết của nhân viên"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.report_revenue_employee_detail_xlsx"
+	            file="tht_cinema.report_revenue_employee_detail_xlsx"
+	        />
+	        
+	        
+		<!-- In Phiếu tặng chưa phát hành Excel -->
+	   	<report
+	            id="action_gift_yet_release_xlsx"
+	            model="gift.yet.release"
+	            string="Phiếu tặng chưa phát hành"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.report_gift_yet_release_xlsx"
+	            file="tht_cinema.report_gift_yet_release_xlsx"
+	        />
+	        
+		<!-- In Phiếu tặng đã phát hành (chưa thu) Excel -->
+	   	<report
+	            id="action_report_gift_released_xlsx"
+	            model="gift.released"
+	            string="Phiếu tặng đã phát hành"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.report_gift_released_xlsx"
+	            file="tht_cinema.report_gift_released_xlsx"
+	        />
+	        
+		<!-- In Phiếu tặng đang thu hồi Excel -->
+	   	<report
+	            id="action_report_gift_revoking_xlsx"
+	            model="gift.yet.revoked"
+	            string="Phiếu tặng đang thu hồi"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.report_gift_revoking_xlsx"
+	            file="tht_cinema.report_gift_revoking_xlsx"
+	        />
+	    
+	    <!-- In tổng hợp Phiếu tặng đã thu hồi Excel -->
+	   	<report
+	            id="action_report_gift_revoked_xlsx"
+	            model="gift.revoked"
+	            string="Phiếu tặng đã thu hồi"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.report_gift_revoked_xlsx"
+	            file="tht_cinema.report_gift_revoked_xlsx"
+	        />
+	       
+	    <!-- In Chi tiết Phiếu tặng đã thu hồi Excel -->
+	   	<report
+	            id="action_report_gift_revoked_detail_xlsx"
+	            model="gift.revoked"
+	            string="Chi tiết phiếu tặng đã thu hồi"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.report_gift_revoked_detail_xlsx"
+	            file="tht_cinema.report_gift_revoked_detail_xlsx"
+	        /> 
+	           
+	   	<!-- In Phiếu tặng tổng hợp Excel -->
+	   	<report
+	            id="action_report_gift_general_xlsx"
+	            model="gift.general.report"
+	            string="Tổng hợp phiếu tặng"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.report_gift_general_xlsx"
+	            file="tht_cinema.report_gift_general_xlsx"
+	        />
+	   
+		<!-- In Phiếu tặng cho KH VIP -->
+	   	<report
+	            id="action_report_voucher_vip_xlsx"
+	            model="deal.customer.vip"
+	            string="Voucher Vip"
+	            menu="True"
+	            report_type="xlsx"
+	            name="tht_cinema.report_voucher_vip_xlsx"
+	            file="tht_cinema.report_voucher_vip_xlsx"
+	        />
+	        
+	   	<!-- In bảng kê đơn hàng POS -->
+	   	<report
+	            id="action_report_pos_statement_excel"
+	            model="pos.print.statement"
+	            string="Bảng kê đơn hàng"
+	            menu="True"
+	            report_type="xlsx"
+	            name="tht_cinema.report_pos_statement_excel"
+	            file="tht_cinema.report_pos_statement_excel"
+	        />
+	        
+	  	<!-- In bảng kê -->
+	   	<report
+	            id="action_dm_report_donbanve_general_attached_xlsx"
+	            model="dm.report.donbanve"
+	            string="In bảng kê"
+	            menu="False"
+	            report_type="xlsx"
+	            name="tht_cinema.pos_sale_general_attached_xlsx"
+	            file="tht_cinema.pos_sale_general_attached_xlsx"
+	        />
+		
+	</data>
+</odoo>

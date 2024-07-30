@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_dm_report_kqcp_form" model="ir.ui.view">
+			<field name="name">view.dm.report.kqcp.form</field>
+			<field name="model">dm.report.kqcp</field>
+			<field name="arch" type="xml">
+				<form string="Báo cáo chiếu phim">
+					<header>
+						<button name="action_general" string="Tính" type="object" class="oe_highlight"/>
+					</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="date_from" required="1"/>
+								<!-- <field name="dm_diadiem_id"/> -->
+								<field name="dm_phim_id"/>
+								<!-- <field name="payment_method"/> -->
+								
+								<!-- <field name="dm_session_line_id"/> -->
+								
+							</group>
+							<group>
+								<field name="date_to" required="1"/>
+								<field name="dm_lichchieu_id"/>
+								<!-- <field name="dm_session_id"/> -->
+							</group>
+							
+						</group>
+						<!-- <group>
+							<group>
+								<field name="specification"/>
+								<field name="yet_exported"/>
+							</group>
+							<group>
+								<field name="specification_number"/>
+								<field name="date_export_specification"/>
+							</group>
+						</group> -->
+						<notebook>
+							<page string="Dữ liệu Báo cáo chiếu phim">
+								<separator string="Dữ liệu Chi tiết"/>
+									<div>
+										<button name="%(action_dm_report_kqcp_detail_xlsx)d" string="In báo cáo (Excel)" type="action" class="oe_highlight" style='margin-right: 5px;'/>
+										
+										<group class="oe_subtotal_footer oe_right" col="6">
+				            				<field name="total_qty"/>
+				            				<field name="total_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+				            			</group>
+									</div>
+									<field name="detail_lines" nolabel="1" readonly="1">
+										<tree default_order='tenphim, suatchieu' editable="bottom">
+											<field name="id"/>
+											<field name="ngay" widget='date'/>
+											<field name="dm_lichchieu_id"/>
+											<field name="dm_phim_id"/>
+											<field name="tenphim"/>
+											<field name="nhaphathanh"/>
+											<field name="suatchieu" />
+											<field name="phong" />
+											<field name="soghe" />
+											<field name="tongsove" />
+											<!-- <field name="payment_method" /> -->
+											<field name="qty"/>
+											<field name="price_unit"/>
+											<field name="total_amount" widget='float'/>
+										</tree>
+									</field>
+								<separator string="Dữ liệu tổng hợp"/>
+									<div>
+										
+									</div>
+									<field name="general_lines" nolabel="1" readonly="1">
+										<tree editable="bottom">
+											<field name="id"/>
+											<field name="dm_phim_id"/>
+											<field name="tenphim"/>
+											<field name="qty"/>
+											<field name="total_amount"/>
+										</tree>
+									</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		
+		<record id="view_dm_report_kqcp_tree" model="ir.ui.view">
+			<field name="name">view.dm.report.kqcp.tree</field>
+			<field name="model">dm.report.kqcp</field>
+			<field name="arch" type="xml">
+				<tree string="Báo cáo chiếu phim">
+					<field name="tenphim"/>
+					<field name="date_from"/>
+					<field name="date_to"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record id="view_dm_report_kqcp_search" model="ir.ui.view">
+			<field name="name">view.dm.report.kqcp.search</field>
+			<field name="model">dm.report.kqcp</field>
+			<field name="arch" type="xml">
+				<search string="Báo cáo chiếu phim">
+					<field name="tenphim"/>
+					<field name="date_from"/>
+					<field name="date_to"/>
+					<group expand="1" string="Group By">
+						<filter string="Cửa hàng" domain="[]" context="{'group_by': 'tenphim'}"/>
+					</group>
+				</search>
+			</field>
+		</record>
+		
+		<record id="action_dm_report_kqcp" model="ir.actions.act_window">
+            <field name="name">Báo cáo chiếu phim</field>
+            <field name="res_model">dm.report.kqcp</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','sale')]</field>
+            <field name="context">{'default_type': 'sale'}</field>
+            <field name="search_view_id" ref="view_dm_report_kqcp_search"/>
+        </record>
+        
+        <menuitem id="menu_dm_report_kqcp" action="action_dm_report_kqcp" parent="tht_cinema.menu_caidat_baocao" sequence="4"/> -->
+        
+        <!-- <record id="action_dm_report_kqcp_return" model="ir.actions.act_window">
+            <field name="name">Báo cáo nhập đổi</field>
+            <field name="res_model">dm.report.kqcp</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','return')]</field>
+            <field name="context">{'default_type': 'return'}</field>
+            <field name="search_view_id" ref="view_dm_report_kqcp_search"/>
+        </record> -->
+        
+		<!-- <menuitem name="Báo cáo " id="menu_caidat_baocao" parent="menu_root"/> -->
+        <!-- <menuitem id="menu_dm_report_kqcp_return" action="action_dm_report_kqcp_return" parent="tht_cinema.menu_caidat_baocao" sequence="50"/> -->
+        
+	</data>
+</odoo>

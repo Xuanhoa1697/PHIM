@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="dm_website_lichchieu_receipt_template" name="dm_website_lichchieu_detail_template">
+        <html>
+            <head>
+                <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+                <meta http-equiv="Pragma" content="no-cache" />
+                <meta http-equiv="Expires" content="0" />
+
+                
+                    
+                
+                <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                
+                <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/underscore@1.12.0/underscore-min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+                
+
+                <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+                <script type="text/javascript" src="/tht_cinema/static/src/js/jquery.seat-charts.js"></script>
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/jquery.seat-charts.css" />
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/seat-charts-custom.css" />
+                <script type="text/javascript" src="/tht_cinema/static/src/js/seat_receipt.js"></script>
+                
+            
+            </head>
+            <body>
+                <div class="container d-flex flex-column flex-grow-1 justify-content-around">
+                <div class="o_wevent_event_title" style="text-align: center;">
+                    
+                </div>
+            </div>
+
+            <t t-set="additional_title">Lịch chiếu </t>
+            <div id="wrap">
+                <div class="oe_structure" />
+                <div class="container">
+                        
+                    <input type="hidden" id="lichchieu_id" t-att-value="lichchieu_id" />
+                    <input type="hidden" id="banggia_id" t-att-value="banggia_id" />
+                    <div id="jquery-script-menu">
+                        <div class="jquery-script-center">
+                            <div class="jquery-script-clear"></div>
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <div class="container">
+                            
+                            <div id="seat_layout">
+                                <div class="row">
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-12">
+                                        <div id="seat_layout_left">
+                                            <div id="seat-map">
+                                                <div class="front-indicator">SCREEN</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-12 col-sm-12 col-12">
+                                        <div>
+                                            <h5> Lịch chiếu :  <span t-field="event.dm_phim_id.name" class="o_wevent_event_name" itemprop="name" placeholder="Event Title" />
+                                                -- BG <spand t-field='event.dm_banggia_id.name' /> </h5>
+                                            <div> Bắt đầu <span class='ngaychieu' t-field='event.batdau' /> </div>
+                                            <div> Kết thúc <span class='ngaychieu' t-field='event.ketthuc' /> </div>
+                                            <div class='row'>
+                                                <!-- <div class='col-md-6'> <span t-raw="'&lt;br/&gt;'.join(map((lambda x: (str(x.dm_loaighe_id.name))), event.dm_banggia_id.dm_banggia_line_ids ))"/> </div> -->
+                                                <div class='col-md-6'> <span t-raw="'&lt;br/&gt;'.join(map((lambda x: (str(x.dm_loaive_id.name))), event.dm_banggia_id.dm_banggia_line_ids ))"/> </div> 
+                                                <div class='col-md-6'> <span class='dongia_ve' t-raw="'&lt;br/&gt;'.join(map((lambda x: (str(x.dongia))), event.dm_banggia_id.dm_banggia_line_ids ))"/> </div> 
+                                            </div>
+                                       
+                                            
+                                        </div>
+                                        <div class="booking-details">
+                                            <!-- <div class="front-indicator" style="font-size: 14px;">Seat Selection Information</div> -->
+                                            <h3>Selected Seats ( <span id="counter">0</span>):</h3>
+                                            <ul id="selected-seats"></ul>
+                                            <span class="total">Total : </span>
+                                            <b>
+                                                $
+                                                <span id="total">0</span>
+                                            </b>
+                                            <form id="registration_form1" t-attf-action="/donbanve/#{slug(event)}/registration/seat" method="post">
+                                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                                                <button disabled="disabled" type="submit" class="btn btn-primary checkout-button" t-attf-id="#{event.id}">Register</button>
+                                            </form>
+                                            <div id="legend"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </body>
+            
+        </html>
+        
+            
+        
+    </template>
+</odoo>

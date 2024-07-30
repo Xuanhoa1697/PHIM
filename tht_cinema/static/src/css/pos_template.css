@@ -1,0 +1,22 @@
+.FlexContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    width: 450px;
+    /* background-color: #3a8ee2; */
+    height: 20vh;
+    overflow: auto;
+    flex-direction: row;
+    align-content: center;
+}
+
+.FlexContainer div {
+    width: 180px;
+    height: 40px;
+    margin: 2px;
+    background-color: lightblue;
+    text-overflow: clip;
+
+}

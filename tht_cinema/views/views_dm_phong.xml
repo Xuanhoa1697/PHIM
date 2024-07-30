@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dm_phong_action" model="ir.actions.act_window">
+        <field name="name">Phòng chiếu </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.phong</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Phòng chiếu
+                </p>
+        </field>
+    </record>
+
+    <record id="dm_phong_tree" model="ir.ui.view">
+        <field name="name">Phòng chiếu</field>
+        <field name="model">dm.phong</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- <field name="id"/> -->
+                <field name="name"/>
+                <field name="dm_diadiem_id"/>
+                <field name="thietbiphongchieu"/>
+                
+            </tree>
+        </field>
+    </record>
+
+    <record id="dm_phong_form" model="ir.ui.view">
+        <field name="name">Phòng chiếu</field>
+        <field name="model">dm.phong</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                <group>
+                    <!-- <field name="id"/> -->
+                    <field name="name"/>
+                    <field name='hangngang' />
+                    <field name='columns' />
+                    <field name='rows' />
+                    <field name='tongsoghe' />
+                    <field name="dm_diadiem_id"/>
+                    <field name="thietbiphongchieu"/>
+                    <field name="dm_phong_line_ids" string='Sơ đồ ghế' >
+                        <tree editable="bottom">
+                            <field name="name" invisible="1" />
+                            <field name="dm_loaighe_id" />
+                            <!-- <field name="columns" /> -->
+                            <!-- <field name="x" />
+                            <field name="y" /> -->
+                            <field name="soluong" />
+                            <button name="room_seat_arrangement_action" string="So do ghe" type="object" icon="fa-list" />
+                        </tree>
+                    </field>
+                    <field name="css_custom"/>
+                    <field name="custom_styles"/>
+                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <menuitem id="dm_phong_menu"
+              parent="menu_caidat_rapphim"
+              name="Phòng chiếu"
+              action="dm_phong_action"
+              sequence = "3"/>
+</odoo>

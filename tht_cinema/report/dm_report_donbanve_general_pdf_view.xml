@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="pos_sale_general_report_pdf">
+		    <t t-call="web.basic_layout">
+		        <t t-foreach="docs" t-as="o">
+		        	<div class="page" style="font-size: 14px;font-family: 'Times New Roman'; padding: 60px 60px;">
+		        		<t t-if="o.type == 'sale'">
+		        			<div class="row text-center" style="font-size: 30px;color:#274675;"><b>Báo Cáo Bán Hàng Tổng Quát <span t-field="o.store_id.name"/></b></div>
+		        		</t>
+		        		<t t-if="o.type == 'return'">
+		        			<div class="row text-center" style="font-size: 30px;color:#274675;"><b>Báo Cáo Nhập Đổi Tổng Quát <span t-field="o.store_id.name"/></b></div>
+		        		</t>
+		        		<div class="row">
+		        			<div class="col-xs-2"></div>
+		        			<div class="col-xs-5 text-center" style="color:#274675;">Từ ngày: <span style="color:black;" t-esc="get_vietnam_date(o.date_from)"/></div>
+		        			<div class="col-xs-4 text-center" style="color:#274675;">Đến ngày: <span style="color:black;" t-esc="get_vietnam_date(o.date_to)"/></div>
+		        			<div class="col-xs-1"></div>
+		        		</div>
+		        		<div class="row">
+		        			<div class="col-xs-2"></div>
+		        			<div class="col-xs-5 text-center" style="color:#274675;">Tổng TT: <b><span style="color:red;" t-esc="convert_to_money(o.total_amount/1000,'VND')"/></b></div>
+		        			<div class="col-xs-4 text-center" style="color:#274675;">Tổng SL: <b><span style="color:black;" t-esc="int(o.total_qty)"/></b></div>
+		        			<div class="col-xs-1"></div>
+		        		</div>
+		        		<div class="row">
+		        			<table class="table table-condensed table-collsape">
+		        				<tr style="color:#274675; font-weight:bold;">
+		        					<td style="border: none;">Phân Loại</td>
+		        					<td class="text-center" style="border: none;">Tổng Số Lượng</td>
+		        					<td class="text-right" style="border: none;">Thành Tiền</td>
+		        				</tr>
+
+		        				<t t-foreach="get_category(o)" t-as="line_c">
+		        					<tr>
+			        					<td style="border: none;"><span t-esc="line_c['category_name']"/></td>
+			        					<td class="text-center" style="border: none;"><b><span t-esc="int(line_c['qty'])"/></b></td>
+			        					<td class="text-right" style="border: none;"><b><span t-esc="convert_to_money(line_c['total_amount'], 'VND')"/></b></td>
+			        				</tr>
+		        				</t>
+		        	
+		        			</table>
+		        		</div>
+		        	</div>
+		        </t>
+		   	</t>
+		</template>
+		
+		<report
+            id="action_dm_report_donbanve_general_pdf"
+            string="Báo cáo bán hàng Tổng hợp POS"
+            model="dm.report.donbanve"
+            report_type="qweb-pdf"
+            name="tht_cinema.pos_sale_general_report_pdf"
+            file="tht_cinema.pos_sale_general_report_pdf"
+            menu="False"
+            auto="False"
+        />
+        
+        <record id="action_dm_report_donbanve_general_pdf" model="ir.actions.report">
+		    <field name="paperformat_id" ref="tht_cinema.paperformat_report_pos_session"/>
+		</record>
+	</data>
+</odoo>

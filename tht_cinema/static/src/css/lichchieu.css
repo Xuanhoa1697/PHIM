@@ -1,0 +1,59 @@
+.css_thu {
+    margin-right: 20px;
+    padding: 3px;
+    font-size: 14pt;
+}
+
+.css_thu0 {
+    font-weight: bold;
+    color: red;
+}
+.css_thu6 {
+    font-weight: bold;
+    color: blue;
+}
+
+.css_ngay {
+    margin-right: 20px;
+    padding: 3px;
+    font-size: 14pt;
+}
+
+.css_month {
+    padding-left:20px;
+}
+
+.css_ngay0 {
+    margin-left:5px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    padding: 3px;
+    background: #fff;
+    border: 2px solid #666;
+    color: #666;
+    text-align: center;
+    background: bac;
+    background-color: gold;
+    
+    font-weight: bold;
+}
+
+.ngaychieu {
+    font-size: 13pt;
+}
+
+.thangchieu{
+    padding-top:8px;
+    display:block;
+    font-size: 14pt;
+    color:#428bca;
+}
+
+.suatchieu_time{
+    font-size: 12pt;
+}
+
+.suatchieu_date{
+    color: orangered;
+}

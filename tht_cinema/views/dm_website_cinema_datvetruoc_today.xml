@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="cinema_datvetruoc_today" name="cinema_datvetruoc_today">
+        <html>
+            <head>
+                <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+                <meta http-equiv="Pragma" content="no-cache" />
+                <meta http-equiv="Expires" content="0" />
+               
+
+            <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+            <t t-call-assets="web.assets_common" t-css="false"/>
+            <t t-call-assets="web.assets_frontend" t-css="false"/>
+                    
+                
+                <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+                
+                
+                <script src="https://cdn.jsdelivr.net/npm/underscore@1.12.0/underscore-min.js"></script>
+                <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script> -->
+                
+
+                <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+                <script type="text/javascript" src="/tht_cinema/static/src/js/jquery.seat-charts.js"></script>
+
+                <script type="text/javascript" src="/tht_cinema/static/src/js/JsBarcode.code128.min.js"></script>
+                <script type="text/javascript" src="/tht_cinema/static/src/js/jquery.mask.min.js"></script>
+
+                <script type="text/javascript" src="/tht_cinema/static/src/js/pos_seat_booking.js"></script>
+                <script type="text/javascript" src="/tht_cinema/static/src/js/lichchieu.js"></script>
+
+                <script type="text/javascript" src="/tht_cinema/static/src/js/printthis.js"></script>
+
+                <!-- <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/pos/pos.css" />
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/pos/theme.css" />
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/pos/style.css" /> -->
+
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/jquery.seat-charts.css" />
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/seat-charts-custom.css" />
+                <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/vexemphim.css" />
+                <!-- <script type="text/javascript" src="/tht_cinema/static/src/js/seat_receipt.js"></script> -->
+
+                <style>
+                .navbar-brand.navbar-image>img {
+                    padding-top: 3 px;
+                    z-index: 5;
+                    height: 50px;
+                </style>
+
+                <script type="text/javascript" >
+                    
+                </script>
+                
+                
+            
+            </head>
+            <body>
+
+            <nav id='pos-nav' class="navbar">
+                <div  class="container-fluid">
+                    <div class="navbar-header">
+                    
+                    
+
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <!-- <li class="">
+                            <a class="" href="#"><img width='80px' height='40px'
+                            t-attf-src="data:image/*;base64,{{event.dm_diadiem_id.logo}}" /></a>
+                        </li> -->
+
+                        
+                    <li class="active"><a href="#">  </a>
+                    </li>
+                    <li><a href="#"></a></li>
+                    <li><a href="#"> <span t-field="user_id.name" /> </a>  </li>
+                    <li><a href="#">Quầy</a></li>
+                    <li><a href="#">Ca bán</a></li>
+                    <li><a href="#"><span id='clock24'/> </a></li>
+                    
+                    </ul>
+                </div>
+            </nav>
+
+           
+        <!-- end header panel -->
+        
+            <div class="container d-flex flex-column flex-grow-1 justify-content-around">
+                <div class="o_wevent_event_title" style="text-align: center;">
+                    
+                </div>
+            </div>
+
+            <t t-set="additional_title">Lịch chiếu </t>
+            <div id="wrap">
+                <div class="oe_structure" />
+                <div class="container">
+                        
+                    <input type="hidden" id="lichchieu_id" t-att-value="lichchieu_id" />
+                    <input type="hidden" id="banggia_id" t-att-value="banggia_id" />
+                    <div id="jquery-script-menu">
+                        <div class="jquery-script-center">
+                            <div class="jquery-script-clear"></div>
+                        </div>
+                    </div>
+                    <div class="wrapper">
+                        <div class="container">
+                         <div class='row'>
+                            <div class="col-md-8">
+                                    <div id="lichchieu" style='display:none;'>
+                                    </div>                              
+                                    <div id="seat-map">
+                                        <div class="front-indicator">SCREEN</div>
+                                    </div>                              
+                            </div>
+
+                            <div class="col-md-4">
+                                
+                                
+                                    
+                                           
+                            </div>
+                         
+                         </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script type="text/javascript" >
+                const clock24 = document.getElementById('clock24')
+
+                
+                function concatZero(timeFrame) {
+                    return timeFrame &lt; 10 ? '0'.concat(timeFrame) : timeFrame
+                }
+                function realTime() {
+                    let date = new Date()
+                    let sec = date.getSeconds()
+                    let mon = date.getMinutes()
+                    let hr = date.getHours()
+                    
+                    clock24.textContent = `${concatZero(hr)} : ${concatZero(mon)} : ${concatZero(sec)}`
+                    }
+
+                    setInterval(realTime, 1000)
+                    
+            </script>
+
+        </body>
+
+        
+    </html>
+    </template>
+</odoo>

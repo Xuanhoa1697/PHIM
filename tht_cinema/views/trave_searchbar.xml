@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="trave_searchbar" name="trave_searchbar">
+        <form action ='' >
+        <div class='row'>
+            <div class=' col-md-1 btn ' > Mã đơn bán vé </div>
+            <div class=' col-md-1 btn '> <input id='donbanve' name='donbanve' size='15' /> </div>
+
+            <div class=' col-md-2 btn text-right' > Mã khách hàng </div>
+            <div class=' col-md-2 btn '> <input id='makhachhang' name='makhachhang' size='15' /> </div>
+        
+            <div class=' col-md-1 btn '> Số điện thoại </div>
+            <div class=' col-md-2 btn '> <input id='sodienthoai' name='sodienthoai' size='15' /> </div>
+
+            <div class=' col-md-2 btn '> <input type='submit' class='button' size='15' value='Tìm' /> </div>
+        </div>
+        <div class='row'>
+            <div class=' col-md-4 btn '> </div>
+            <div class=' col-md-4 btn '> <input type="hidden" id='dm_session_line_id' name="dm_session_line" t-att-value="pos_session_line_id" /> </div>
+            <div class=' col-md-4 btn '> <input type="hidden" id='datvetruoc' name="datvetruoc" t-att-value="dm_session.datvetruoc" /> </div>
+        </div>
+
+        </form>
+        
+      
+
+    </template>
+</odoo>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="user_dbv" name="user_dvb">
+        <t t-call="website.layout">
+
+        <t t-if="not dbv_obj">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 body-main">
+                        <h3> Không có đơn hàng </h3>
+                    </div>
+                </div>
+            </div>
+            
+        </t>
+
+        <t t-if="dbv_obj">
+            <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 body-main">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div id="qrcode"></div>
+                             
+                             </div>
+                            <div class="col-md-8 text-left">
+                                <h4 style="color: #F81D2D;"> <strong>Đơn hàng: <t t-esc="dbv_obj.name"/></strong></h4>
+                                <p>Phim: <t t-esc="dbv_obj.dm_phim_id.name"/></p>
+                                <p>Ngày chiếu: <span t-field="dbv_obj.dm_lichchieu_id.batdau" t-options='{"format": "dd/MM/yyyy"}' />
+                                <span> (ngày/tháng/năm)</span> </p>
+                                <p>Giờ chiếu: <span t-field="dbv_obj.dm_lichchieu_id.batdau" t-options='{"format": "HH:mm"}' />
+                                </p>
+                                
+                                <p>Rạp phim: <t t-esc="dbv_obj.dm_lichchieu_id.dm_diadiem_id.name" /> </p>
+                                <p>Phòng chiếu: <t t-esc="dbv_obj.dm_phong_id.name" /> </p>
+                                <p> Hình thức thanh toán: <t t-esc="dbv_obj.ht_thanhtoan"/> </p>
+                                
+                            </div>
+                        </div> <br />
+                
+                        <div>
+                            
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <h5>Loại vé</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Vị trí ghế</h5>
+                                        </th>
+                                        <th>
+                                            <h5>Đơn giá</h5>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="dbv_obj.dm_donbanve_line_ids" t-as="l">                                
+                                        <tr>
+                                            <td class="col-md-9"><t t-esc="l.loaive"/></td>
+                                            <td class="col-md-9"><t t-esc="l.name"/></td>
+                                            <td class="col-md-3 text-right"><i class="fas fa-rupee-sign" area-hidden="true"></i> 
+                                                <t t-esc="'{:0,.0f}'.format(float(l.dongia))"/> </td>
+                                        </tr>
+                                    </t>
+                                    
+                                    <tr style="color: #F81D2D;">
+                                        <td></td>
+                                        <td class="text-right">
+                                            <p> <strong>Tổng tiền</strong> </p>
+                                            
+                                        </td>
+                                        <td class="text-right">
+                                            <p> <strong><i class="fas fa-rupee-sign" area-hidden="true"></i> <t t-esc="'{:0,.0f}'.format(float(dbv_obj.amount_total))"/> </strong> </p>
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <div class="col-md-12">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <script type="text/javascript" src="/tht_cinema_website/static/src/lib/easy.qrcode.min.js"></script>
+
+        <script type="text/javascript">
+            // Options
+            var options = {
+                text: '<t t-esc="dbv_obj.name"/>',
+                width: 128,
+                height: 128,
+            };
+            
+            // Create QRCode Object
+            new QRCode(document.getElementById("qrcode"), options);
+        </script>
+            
+    </t>    
+    </t>
+    </template>
+</odoo>

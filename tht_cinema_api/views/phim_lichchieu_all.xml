@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="phim_lichchieu_all" name="phim_lichchieu_all">
+    <t t-call="website.layout">
+        <h1> Phim lich chieu all </h1>
+        <t t-foreach="lichchieu" t-as="line">
+            <t t-esc="line['ngaychieu']"/> <br/>
+
+            <t t-foreach="line['dm_lichchieu_obj']" t-as="lc">
+             ---- <t t-esc="lc.id"/> -- <t t-esc="lc.batdau" /> <br/>
+
+                
+            </t>
+            <hr/>
+            
+        </t>
+    </t>
+    
+</template>
+
+
+
+</odoo>

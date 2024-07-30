@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dm_diadiem_action" model="ir.actions.act_window">
+        <field name="name">Rạp phim </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.diadiem</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Rạp phim
+                </p>
+        </field>
+    </record>
+
+    <record id="dm_diadiem_tree" model="ir.ui.view">
+        <field name="name">Rạp phim</field>
+        <field name="model">dm.diadiem</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- <field name="id"/> -->
+                <field name="name"/>
+                <field name="marap"/>
+                <field name="logo"/>
+                <field name="diachi"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="dm_diadiem_form" model="ir.ui.view">
+        <field name="name">Rạp phim</field>
+        <field name="model">dm.diadiem</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                <group>
+                    <!-- <field name="id"/> -->
+                    <field name="name"/>
+                    <field name="marap"/>
+                    <field name="logo" widget='image' class="oe_avatar"/>
+                    <field name="img_app" widget='image' class="oe_avatar"/>
+                    <field name="diachi"/>
+                    <field name="gioihanthoigian_lc"/>
+                    <field name="thongtinchuyenkhoan"/>
+                    <field name="url_banve"/>
+                    <field name="dm_phong_ids" string='Danh sach phòng' >
+                        <tree editable="bottom">
+                            <field name="name" invisible="0" />
+                            
+                            <!-- <field name="x" />
+                            <field name="y" /> -->
+                            
+                        </tree>
+                    </field>
+                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <menuitem id="dm_diadiem_menu"
+              parent="menu_caidat_rapphim"
+              name="Rạp phim"
+              action="dm_diadiem_action"
+              sequence = "3"/>
+</odoo>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="phimdangchieu" name="Phim đang chiếu">
+    <t t-call="website.layout">
+        <t t-set="Phim đang chiếu" t-value="'homepage'"/>
+
+        <link rel="stylesheet" href="/tht_cinema_website/static/src/css/cinema_style.css"/>
+        
+
+        <div id="wrap" class="oe_structure oe_empty"/>
+
+        <div class="tab-content">
+  <div class="tab-pane active" id="movie1">
+    <div class="container">
+      <div class="movie-time-wrap">
+        
+        <t t-foreach='dm_phim_obj' t-as='line' >
+            <!-- <div class="clearfix"></div> -->
+            <div class="col-sm-6">
+            <!-- Movie variant with time -->
+            <div class="movie movie--time">
+                <div class="row">
+                <div class="col-sm-6 col-md-5">
+                    <div class="movie__images">
+                    <span class="movie__rating"><t t-esc="line.danhgia"/></span>
+                    <img
+                    
+                        alt=""
+                        t-attf-src='data:image/*;base64,{{line.hinhanh}}'
+                    />
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-7">
+                    <!-- <a href="movie-page-left.html" class="movie__title">  -->
+                       <t t-esc='line.name' /> 
+                    <!-- </a> -->
+
+                    <p class="movie__time"><t t-esc="line.thoiluong"/> phút</p>
+
+                    <!-- <p class="movie__option">
+                    <a href="#">Drama</a> | <a href="#">Sci-Fi</a> |
+                    <a href="#">Thriller</a>
+                    </p> -->
+                </div>
+                    <div class="time-select">
+                        <ul class="items-wrap">
+                            <!-- <t t-foreach="line.dm_lichchieu_ids.filtered(lambda r: r.ngaychieu == str(today))" t-as="lc"> -->
+                            <t t-foreach="line.dm_lichchieu_ids.filtered(lambda r: r.ngaychieu >= str(today) and r.sudung == 1)" t-as="lc">
+                                <li class="time-select__item">
+                                    <a t-attf-href="/cinema/muave/#{ lc.id }">  
+                                        <span t-field="lc.ngaychieu" t-options='{"format": "dd/MM"} ' /> <br/>
+                                        <span t-field="lc.batdau" t-options='{"format": "HH:mm"} ' /> 
+                                    </a>
+                                </li>
+                                
+
+                            </t>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Movie variant with time -->
+            </div>
+        </t>
+
+        
+
+
+      </div>
+    </div>
+  </div>
+  
+  
+</div>
+
+       
+
+
+    </t>
+    
+</template>
+
+
+
+</odoo>

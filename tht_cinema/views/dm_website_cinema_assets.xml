@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="dm_website_cinema_assets" name="dm_website_cinema_assets">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+
+        <script src="/tht_cinema/static/src/js/jquery-1.11.1.min.js"></script>
+        <t t-call-assets="web.assets_common" t-css="false"/>
+        <t t-call-assets="web.assets_frontend" t-css="false"/>
+
+        
+        <link href="/tht_cinema/static/src/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+        <link rel="stylesheet" href="/tht_cinema/static/src/font-awesome/css/font-awesome.min.css" />
+        
+        
+        <!-- <script src="https://cdn.jsdelivr.net/npm/underscore@1.12.0/underscore-min.js"></script> -->
+        
+        <script src="/tht_cinema/static/src/js/bootstrap3.min.js"></script>
+        <script type="text/javascript" src="/tht_cinema/static/src/js/jquery.seat-charts.js"></script>
+
+        <script type="text/javascript" src="/tht_cinema/static/src/js/JsBarcode.code128.min.js"></script>
+
+        <script type="text/javascript" src="/tht_cinema/static/src/js/autoNumeric.js"></script>
+
+        <script type="text/javascript" src="/tht_cinema/static/src/js/pos_booking_function.js"></script>
+        <script type="text/javascript" src="/tht_cinema/static/src/js/pos_seat_booking.js"></script>
+        <script type="text/javascript" src="/tht_cinema/static/src/js/lichchieu.js"></script>
+        <script type="text/javascript" src="/tht_cinema/static/src/js/tht_helper_format.js"></script>
+        
+        <script type="text/javascript" src="/tht_cinema/static/src/js/printthis.js"></script>
+
+
+        <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/jquery.seat-charts.css" />
+        <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/seat-charts-custom.css" />
+        <link rel="stylesheet" type="text/css" href="/tht_cinema/static/src/css/vexemphim.css" />
+
+
+        <style>
+        .navbar-brand.navbar-image>img {
+            padding-top: 3 px;
+            z-index: 5;
+            height: 50px;
+        </style>
+        
+    
+    </template>
+</odoo>

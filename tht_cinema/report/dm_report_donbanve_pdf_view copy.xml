@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="dm_report_donbanve_pdf">
+		    <t t-call="web.basic_layout">
+		        <t t-foreach="docs" t-as="o">
+		        	<div class="page" style="font-size: 14px;font-family: 'Times New Roman';">
+		        		
+		        		<div class="row">
+		        			<div class="col-xs-2"></div>
+		        			
+		        			<div class="col-xs-1"></div>
+		        		</div>
+		        		<div class="row">
+		        			<div class="col-xs-2"></div>
+		        			<!-- <div class="col-xs-5" style="color:#274675;"><b>Tổng TT: </b><span style="color: black;" t-esc="convert_to_money(o.total_amount/1000,'VND')"/></div>
+		        			<div class="col-xs-4" style="color:#274675;"><b>Tổng SL: </b><span style="color: black;" t-esc="int(o.total_qty)"/></div> -->
+		        			<div class="col-xs-1"></div>
+		        		</div>
+		        		<div class="row text-right">ĐVT: 1000đ</div>
+		        		<div class="row">
+		        			<table class="table table-condensed table-collsape text-center">
+		        				<tr style="color:#274675; font-weight:bold;">
+		        					<td style="border: 1px solid #ddd;">Mã vạch</td>
+		        					<td style="border: 1px solid #ddd;">Kiểu</td>
+		        					<td style="border: 1px solid #ddd;" width="10%">SL</td>
+		        					<td style="border: 1px solid #ddd;">Giá</td>
+		        					<td style="border: 1px solid #ddd;">Thành tiền</td>
+		        				</tr>
+
+			        				<t t-foreach="get_category(o)" t-as="line_c">
+			        					<tr>
+				        					<td class="text-left" style="border: 1px solid #ddd;" colspan="2"><b><u><span t-esc="line_c['category_name']"/></u></b></td>
+				        					<td class="text-left" style="border: 1px solid #ddd;color:red;"><u><span t-esc="int(line_c['qty'])"/></u></td>
+				        					<td style="border: 1px solid #ddd;"></td>
+				        					<td class="text-left" style="border: 1px solid #ddd;color:red;"><u><span t-esc="convert_to_money(line_c['total_amount'], 'VND')"/></u></td>
+				        				</tr>
+				        				<t t-foreach="get_line(line_c['category_name'], o)" t-as="line">
+				        					<tr>
+					        					<td style="border: 1px solid #ddd;"><span t-esc="line['product_barcode']"/></td>
+					        					<td style="border: 1px solid #ddd;"><span t-esc="line['product_id']"/></td>
+					        					<td style="border: 1px solid #ddd;"><span t-esc="int(line['qty'])"/></td>
+					        					<td style="border: 1px solid #ddd;"><span t-esc="convert_to_money(line['price_unit'],'VND')"/></td>
+					        					<td style="border: 1px solid #ddd;"><span t-esc="convert_to_money(line['total_amount'],'VND')"/></td>
+					        				</tr>
+				        				</t>
+			        				</t>
+		        				<tr>
+		        					<td style="border: 1px solid #ddd;"></td>
+		        					<td style="border: 1px solid #ddd;"></td>
+		        					<td style="border: 1px solid #ddd;color:#274675;" colspan="2"><b>Tổng cộng</b></td>
+		        					<td style="border: 1px solid #ddd;"><span t-esc="convert_to_money(o.total_amount/1000,'VND')"/></td>
+		        				</tr>
+		        			</table>
+		        		</div>
+		        	</div>
+		        </t>
+		   	</t>
+		</template>
+		
+		<report
+            id="action_dm_report_donbanve_pdf"
+            string="Báo cáo bán ve pdf"
+            model="dm.report.donbanve"
+            report_type="qweb-pdf"
+            name="tht_cinema.dm_report_donbanve_pdf"
+            file="tht_cinema.dm_report_donbanve_pdf"
+            menu="False"
+            auto="False"
+        />
+
+		<record id="paperformat_dm_report_donbanve_session" model="report.paperformat">
+	    <field name="name">Pos Session A4</field>
+	    <field name="default" eval="True" />
+	    <field name="format">A4</field>
+	    <field name="page_height">0</field>
+	    <field name="page_width">0</field>
+	    <field name="orientation">Portrait</field>
+	    <field name="margin_top">15</field>
+	    <field name="margin_bottom">15</field>
+	    <field name="margin_left">4</field>
+	    <field name="margin_right">4</field>
+	    <field name="header_line" eval="False" />
+	    <field name="header_spacing">10</field>
+	    <field name="dpi">90</field>
+	</record>
+        
+        <record id="action_dm_report_donbanve_pdf" model="ir.actions.report">
+		    <field name="paperformat_id" ref="tht_cinema.paperformat_dm_report_donbanve_session"/>
+		</record>
+	</data>
+</odoo>

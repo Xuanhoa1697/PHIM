@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="user_momo_error" name="user_momo_error">
+        <t t-call="website.layout">
+            <h1> Đơn hàng momo thanh toán không thành công </h1>
+            <h3> click trở về trang chủ </h3>
+        
+        </t>
+    </template>
+</odoo>
