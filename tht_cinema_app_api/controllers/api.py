@@ -2,6 +2,8 @@
 
 import json
 import base64
+import werkzeug
+import jwt
 
 from odoo import fields, http
 import requests
@@ -15,6 +17,11 @@ from odoo.http import content_disposition, dispatch_rpc, request, \
 import requests
 from urllib.parse import unquote
 from odoo.tools.image import image_data_uri, base64_to_image
+
+databases = http.db_list()
+db = False
+if databases:
+    db = databases[0]
 
 def convert_utc_native_dt_to_gmt7(utc_datetime_inputs):
     local = pytz.timezone('Etc/GMT-7')
@@ -304,6 +311,170 @@ class ThtCinemaAppApi(http.Controller):
             'status': 200,
             'result': bigData
         }
+    
+    @http.route('/web/api/v1/register', type='json', auth='public', csrf=False, methods=['POST'], cors='*')
+    def cnm_api_register(self, email=None, name=None, password=None, phone=None, **kw):        
+        data = request.jsonrequest
+        try:
+            self._signup_with_values(login=email, name=name, password=password, phone=phone, email=email )
+        except AttributeError:
+            return {
+                    'status': 500,
+                    'msg': 'Đã xảy ra lỗi.'
+                }
+        except ValueError as e:
+            if request.env["res.users"].sudo().search([("login", "=", data['email'])]):
+                return {
+                'status': 500,
+                'msg': 'Email đã được sử dụng. Vui lòng kiểm tra lại.'
+            }
+            else:
+                return {
+                    'status': 500,
+                    'msg': 'Đã xảy ra lỗi.'
+                }
+        except Exception as e:
+            return {
+                'status': 500,
+                'msg': 'Đã xảy ra lỗi.'
+            }
+        # log the user in
+        # return do_login(email, password)
+        return {
+            'status': 200,
+            'msg': 'Đăng ký thành công.'
+        }
+
+    def _signup_with_values(self, **values):
+        # request.env['res.users'].sudo().signup(values, None)
+        request.env.cr.commit()     # as authenticate will use its own cursor we need to commit the current transaction
+        self.signup_email(values)
+
+    def signup_email(self, values):
+        user_sudo = request.env['res.users'].sudo().search([('login', '=', values.get('login'))])
+        template = request.env.ref('auth_signup.mail_template_user_signup_account_created', raise_if_not_found=False)
+        if user_sudo and template:
+            template.sudo().with_context(
+                lang=user_sudo.lang,
+                auth_login=werkzeug.url_encode({'auth_login': user_sudo.email}),
+            ).send_mail(user_sudo.id, force_send=True)
+
+    @http.route('/web/api/v1/login', type='json', auth="none", methods=['POST'], csrf=False)
+    def app_api_get_token(self, email=False, password=False):
+        result = {}
+        # email = kw.get('email', False)
+        # password = kw.get('password', False)
+        data = request.jsonrequest
+        
+        try:
+            if db and db != request.db:
+                raise Exception(_("Could not select database '%s'", db))
+            uid = request.session.authenticate(request.db, email, password)
+            user_id = request.env['res.users'].sudo().search([('id', '=', uid)])
+            tz = user_id.tz
+            partner_id = user_id.partner_id
+
+            if uid:
+                # role_name = request.env['base64.imageurl'].user_role()
+                # print('role_name', role_name)
+                token = jwt.encode({'uid': fields.datetime.today().strftime("%Y-%m-%d %H:%M:%S")}, 'secret', algorithm='HS256', headers={'uid': uid})
+                
+                if token:
+                    result.update({
+                    'status': 200,
+                    'user_mail': email, 
+                    'user_name': user_id.name,
+                    'user': user_id.name,
+                    'user_id': uid,
+                    'uid':uid, 
+                    'access_token': token, 
+                    'phone': partner_id.phone,
+                    'msg':'Logged in Successfully'})
+                    # request.env['res.user.token'].sudo().create({'user_id':uid, 'access_token':token, 'last_request':fields.datetime.today(pytz.timezone(tz)).strftime("%Y-%m-%d %H:%M:%S") if tz else fields.datetime.today(pytz.utc).strftime("%Y-%m-%d %H:%M:%S")})
+                    # request.env['rest.api.access.history'].sudo().create({'user_id':uid, 'origin':req_env['REMOTE_ADDR'], 'access_token':token, 'accessed_on':datetime.now(pytz.timezone(tz)).strftime("%Y-%m-%d %H:%M:%S") if tz else datetime.now(pytz.utc).strftime("%Y-%m-%d %H:%M:%S")})
+                else:
+                    result.update({'token': 'Invalid Token'})
+        except:
+            result.update({
+                'status': 500,
+                'msg': 'The authorization credentials provided for the request are invalid.',
+                })
+        return result
+    
+    @http.route('/web/api/v1/user_delete', type='json', auth="none", methods=['POST'], csrf=False)
+    def app_api_user_delete(self, debug=False, **kw):
+        result = {
+            'status': 200,
+            'msg': 'Success'
+        }
+        data = request.jsonrequest.get('params')
+        uid = data['user_id']
+        access_token = data['access_token']
+        
+        try:
+            if db and db != request.db:
+                raise Exception(_("Could not select database '%s'", db))
+            domain = [('id', '=', uid)]
+            domain_token = [('user_id', '=', uid), ('access_token', '=', access_token)]
+            res_users_token_obj = request.env['res.user.token'].sudo().search(domain_token, limit=1000)
+            if res_users_token_obj and len(res_users_token_obj) > 0:
+                res_users_obj = request.env['res.users'].sudo().search(domain, limit=1)
+                res_users_obj.sudo().unlink()
+                
+
+        except:
+            result.update({
+                'status': '500',
+                'msg': 'The authorization credentials provided for the request are invalid.',
+            })
+        
+        return result
+
+    @http.route('/web/api/v1/user_update', type='json', auth="none", methods=['POST'], csrf=False)
+    def app_api_user_update(self, debug=False, **kw):
+        result = {}
+        # email = kw.get('email', False)
+        # password = kw.get('password', False)
+        data = request.jsonrequest.get('params')
+        email = data['email']
+        # password = data['password']
+        uid = data['user_id']
+        phone = data['phone']
+        name = data['name']
+        
+        try:
+            if db and db != request.db:
+                raise Exception(_("Could not select database '%s'", db))
+            
+            res_users_obj = request.env['res.users'].sudo().search([('id', '=', uid)], limit=1)
+            # res_partner_obj = request.env['res.partner'].sudo().search([('id', '=', res_users_obj.partner_id.id)], limit=1)
+            res_partner_obj = request.env['res.partner'].sudo().browse(res_users_obj.partner_id.id)
+            if phone!='' or name !='' or email !='':
+                res_partner_obj.write({
+                    'phone': phone,
+                    'name': name,
+                    'display_name': name,
+                    'email': email,
+                })
+            result = {
+                    'status': 200,
+                    'result': {
+                        'phone': phone,
+                        'name': name,
+                        'display_name': name,
+                        'email': email,
+                        'user_name': name
+                    }
+                    
+                }
+
+        except:
+            result.update({
+                'status': 500,
+                'message': 'The authorization credentials provided for the request are invalid.',
+            })
+        
+        return result
 
     @http.route('/web/api/v1/booking/', type='json', auth="public", methods=['POST'], csrf=False, cors='*')
     def cnm_api_app_booking(self, order=None, access_token=None, **kw):
