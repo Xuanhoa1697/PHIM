@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import re
 import json
 import base64
 import werkzeug
@@ -16,7 +16,6 @@ from odoo.http import content_disposition, dispatch_rpc, request, \
     serialize_exception as _serialize_exception, Response
 import requests
 from urllib.parse import unquote
-from odoo.tools.image import image_data_uri, base64_to_image
 
 databases = http.db_list()
 db = False
@@ -38,8 +37,7 @@ def convert_odoo_datetime_to_vn_datetime(odoo_datetime):
 class ThtCinemaAppApi(http.Controller):
 
     @http.route('/web/api/v1/get_background_app', type='http', auth="public")
-    def get_background_app(self, image_type='', model='', res_id=False):
-        print(image_type)
+    def get_background_app(self, image_type='', model='', res_id=False, time=False):
         try:
             domain = [(image_type, '!=', False)]
             if res_id:
@@ -66,7 +64,7 @@ class ThtCinemaAppApi(http.Controller):
                 'id': cinema.id,
                 'name': cinema.name,
                 'image': '/web/api/v1/get_background_app?image_type=hinhanh&model=dm.phim&res_id=' + str(cinema.id),
-                'rate': cinema.ratephim,
+                'nsx': cinema.nsx,
                 'type': cinema.dm_phim_theloai_id.name,
                 'old_limit': cinema.gioihantuoi,
                 'content': cinema.noidung,
@@ -162,6 +160,24 @@ class ThtCinemaAppApi(http.Controller):
             'status': 200,
             'result': data
         }
+
+    def no_accent_vietnamese(self, s):
+        s = re.sub('[áàảãạăắằẳẵặâấầẩẫậ]', 'a', s)
+        s = re.sub('[ÁÀẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬ]', 'A', s)
+        s = re.sub('[éèẻẽẹêếềểễệ]', 'e', s)
+        s = re.sub('[ÉÈẺẼẸÊẾỀỂỄỆ]', 'E', s)
+        s = re.sub('[óòỏõọôốồổỗộơớờởỡợ]', 'o', s)
+        s = re.sub('[ÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢ]', 'O', s)
+        s = re.sub('[íìỉĩị]', 'i', s)
+        s = re.sub('[ÍÌỈĨỊ]', 'I', s)
+        s = re.sub('[úùủũụưứừửữự]', 'u', s)
+        s = re.sub('[ÚÙỦŨỤƯỨỪỬỮỰ]', 'U', s)
+        s = re.sub('[ýỳỷỹỵ]', 'y', s)
+        s = re.sub('[ÝỲỶỸỴ]', 'Y', s)
+        s = re.sub('đ', 'd', s)
+        s = re.sub('Đ', 'D', s)
+        s = re.sub(' ', '%20', s)
+        return s
     
     @http.route('/web/api/v1/lichchieu/seatmap', type='json', auth="public", csrf=False)
     def api_lichchieu_lichchieu_id(self, lichchieu_id):
@@ -171,15 +187,17 @@ class ThtCinemaAppApi(http.Controller):
         banggia_obj = request.env['dm.banggia'].sudo().browse(int(lichchieu_obj.dm_banggia_id.id))
 
         # phuong thuc thanh toan
-        ptthanhtoan = request.env['dm.ptthanhtoan'].sudo().search([('source','=','app_mobile')])
+        ptthanhtoan = request.env['dm.ptthanhtoan'].sudo().search([('source','=','app_mobile'), ('ht_thanhtoan','=','bank')])
 
         ptthanhtoan_data = []
         if ptthanhtoan and len(ptthanhtoan) > 0 :
             for r in ptthanhtoan:
+                # banking_id = ptthanhtoan.account_journal_id.bank_account_id
                 ptthanhtoan_data.append(
                     {
                         'id': r.id,
-                        'name': r.name
+                        'name': r.name,
+                        'luu_y': r.luuy_thanhtoan
                     }
                 )
         
@@ -323,7 +341,7 @@ class ThtCinemaAppApi(http.Controller):
                     'msg': 'Đã xảy ra lỗi.'
                 }
         except ValueError as e:
-            if request.env["res.users"].sudo().search([("login", "=", data['email'])]):
+            if request.env["res.users"].sudo().search([("login", "=", email)]):
                 return {
                 'status': 500,
                 'msg': 'Email đã được sử dụng. Vui lòng kiểm tra lại.'
@@ -338,15 +356,13 @@ class ThtCinemaAppApi(http.Controller):
                 'status': 500,
                 'msg': 'Đã xảy ra lỗi.'
             }
-        # log the user in
-        # return do_login(email, password)
         return {
             'status': 200,
             'msg': 'Đăng ký thành công.'
         }
 
     def _signup_with_values(self, **values):
-        # request.env['res.users'].sudo().signup(values, None)
+        request.env['res.users'].sudo().signup(values, None)
         request.env.cr.commit()     # as authenticate will use its own cursor we need to commit the current transaction
         self.signup_email(values)
 
@@ -362,13 +378,9 @@ class ThtCinemaAppApi(http.Controller):
     @http.route('/web/api/v1/login', type='json', auth="none", methods=['POST'], csrf=False)
     def app_api_get_token(self, email=False, password=False):
         result = {}
-        # email = kw.get('email', False)
-        # password = kw.get('password', False)
-        data = request.jsonrequest
-        
         try:
             if db and db != request.db:
-                raise Exception(_("Could not select database '%s'", db))
+               raise Exception("Could not select database '%s'", db)
             uid = request.session.authenticate(request.db, email, password)
             user_id = request.env['res.users'].sudo().search([('id', '=', uid)])
             tz = user_id.tz
@@ -389,20 +401,22 @@ class ThtCinemaAppApi(http.Controller):
                     'uid':uid, 
                     'access_token': token, 
                     'phone': partner_id.phone,
-                    'msg':'Logged in Successfully'})
-                    # request.env['res.user.token'].sudo().create({'user_id':uid, 'access_token':token, 'last_request':fields.datetime.today(pytz.timezone(tz)).strftime("%Y-%m-%d %H:%M:%S") if tz else fields.datetime.today(pytz.utc).strftime("%Y-%m-%d %H:%M:%S")})
+                    'msg':'Đăng nhập thành công'})
+                    request.env['res.user.token'].sudo().create({'user_id':uid, 'access_token':token, 'last_request':fields.datetime.today(pytz.timezone(tz)).strftime("%Y-%m-%d %H:%M:%S") if tz else fields.datetime.today().strftime("%Y-%m-%d %H:%M:%S")})
                     # request.env['rest.api.access.history'].sudo().create({'user_id':uid, 'origin':req_env['REMOTE_ADDR'], 'access_token':token, 'accessed_on':datetime.now(pytz.timezone(tz)).strftime("%Y-%m-%d %H:%M:%S") if tz else datetime.now(pytz.utc).strftime("%Y-%m-%d %H:%M:%S")})
                 else:
                     result.update({'token': 'Invalid Token'})
-        except:
+            else:
+                result.update({'status': 500, 'msg': 'Đăng nhập thất bại. Vui lòng thử lại'})
+        except Exception as e:
             result.update({
                 'status': 500,
-                'msg': 'The authorization credentials provided for the request are invalid.',
+                'msg': 'Đăng nhập thất bại. Vui lòng thử lại',
                 })
         return result
     
     @http.route('/web/api/v1/user_delete', type='json', auth="none", methods=['POST'], csrf=False)
-    def app_api_user_delete(self, debug=False, **kw):
+    def app_api_user_delete(self, user_id=None, access_token=None, **kwargs):
         result = {
             'status': 200,
             'msg': 'Success'
@@ -413,7 +427,7 @@ class ThtCinemaAppApi(http.Controller):
         
         try:
             if db and db != request.db:
-                raise Exception(_("Could not select database '%s'", db))
+                raise Exception("Could not select database '%s'", db)
             domain = [('id', '=', uid)]
             domain_token = [('user_id', '=', uid), ('access_token', '=', access_token)]
             res_users_token_obj = request.env['res.user.token'].sudo().search(domain_token, limit=1000)
@@ -425,13 +439,13 @@ class ThtCinemaAppApi(http.Controller):
         except:
             result.update({
                 'status': '500',
-                'msg': 'The authorization credentials provided for the request are invalid.',
+                'msg': 'Đã xảy ra lỗi khi vô hiệu hóa tài khoản'
             })
         
         return result
 
     @http.route('/web/api/v1/user_update', type='json', auth="none", methods=['POST'], csrf=False)
-    def app_api_user_update(self, debug=False, **kw):
+    def app_api_user_update(self, user_id=False, **kw):
         result = {}
         # email = kw.get('email', False)
         # password = kw.get('password', False)
@@ -444,7 +458,7 @@ class ThtCinemaAppApi(http.Controller):
         
         try:
             if db and db != request.db:
-                raise Exception(_("Could not select database '%s'", db))
+                raise Exception("Could not select database '%s'", db)
             
             res_users_obj = request.env['res.users'].sudo().search([('id', '=', uid)], limit=1)
             # res_partner_obj = request.env['res.partner'].sudo().search([('id', '=', res_users_obj.partner_id.id)], limit=1)
@@ -476,15 +490,15 @@ class ThtCinemaAppApi(http.Controller):
         
         return result
 
-    @http.route('/web/api/v1/booking/', type='json', auth="public", methods=['POST'], csrf=False, cors='*')
-    def cnm_api_app_booking(self, order=None, access_token=None, **kw):
+    @http.route('/web/api/v1/booking', type='json', auth="public", methods=['POST'], csrf=False, cors='*')
+    def cnm_api_app_booking(self, data=None, **kw):
         data = request.jsonrequest
         
         user_id = data['user_id']
-        lc_id = data['cartRedu']['lcInfo']['lc_detail']['lc_id']
-        dbv_items = data['cartRedu']['items']
+        lc_id = data['lc_id']
+        dbv_items = data['items']
         ptthanhtoan_id = data['ptthanhtoan_id']
-        amount_total = data['cartRedu']['totals']
+        amount_total = data['totals']
 
         result = ''
 
@@ -514,7 +528,7 @@ class ThtCinemaAppApi(http.Controller):
         banggia_id = event_obj.dm_banggia_id.id
 
         for i in dbv_lines:
-            dm_loaighe_id = i['dm_loaighe_id']['dm_loaighe_id']
+            dm_loaighe_id = i['dm_loaighe_id']
             dm_loaive_id = i['dm_loaive_id']
             
             dbv_line = {
@@ -531,10 +545,8 @@ class ThtCinemaAppApi(http.Controller):
             dm_donbanve_line_ids.append((0,0, dbv_line))
         donbanve_info = {
             'makhachhang' : user_id ,
-            # 'makhachhang' : post.get('makhachhang', '') ,
             'sodienthoai' : partner_id.phone ,
             'payment_method' : '',
-            # 'dm_session_line_id' : post.get('dm_session_line_id', '') ,
             'datvetruoc' : 'datvetruoc' ,
             'partner_id': partner_id.id,
             'user_id': user_id ,
@@ -573,7 +585,13 @@ class ThtCinemaAppApi(http.Controller):
         create_dbv = request.env['dm.donbanve'].sudo().create(dbv_to_create)
         return create_dbv
 
-        
+    def _dongiave(self, dm_banggia_id, dm_loaighe_id, dm_loaive_id):
+        dongia_obj = request.env['dm.banggia.line'].sudo().search(
+                [('dm_banggia_id', '=', dm_banggia_id),
+                    ('dm_loaighe_id', '=', int(dm_loaighe_id)),
+                    ('dm_loaive_id', '=', int(dm_loaive_id)),
+                ], limit=1)
+        return dongia_obj.dongia
 
     
     
