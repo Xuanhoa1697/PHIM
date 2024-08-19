@@ -18,6 +18,7 @@ import requests
 from urllib.parse import unquote
 
 databases = http.db_list()
+text = re.compile('<.*?>')
 db = False
 if databases:
     db = databases[0]
@@ -33,6 +34,12 @@ def convert_odoo_datetime_to_vn_datetime(odoo_datetime):
     utc_datetime_inputs = fields.Datetime.from_string(odoo_datetime)
     vn_time = convert_utc_native_dt_to_gmt7(utc_datetime_inputs)
     return vn_time
+
+def strToTimeGmt7(string_date):
+    res = ''
+    if string_date:
+        res = datetime.datetime.strptime(string_date, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=7)
+    return res
 
 class ThtCinemaAppApi(http.Controller):
 
@@ -67,7 +74,7 @@ class ThtCinemaAppApi(http.Controller):
                 'nsx': cinema.nsx,
                 'type': cinema.dm_phim_theloai_id.name,
                 'old_limit': cinema.gioihantuoi,
-                'content': cinema.noidung,
+                'content': re.sub(text, '', cinema.noidung),
                 'creator': cinema.nhaphathanh,
                 'time': cinema.thoiluong,
                 'trailer': cinema.trailer,
@@ -492,32 +499,77 @@ class ThtCinemaAppApi(http.Controller):
 
     @http.route('/web/api/v1/booking', type='json', auth="public", methods=['POST'], csrf=False, cors='*')
     def cnm_api_app_booking(self, data=None, **kw):
-        data = request.jsonrequest
-        
-        user_id = data['user_id']
-        lc_id = data['lc_id']
-        dbv_items = data['items']
-        ptthanhtoan_id = data['ptthanhtoan_id']
-        amount_total = data['totals']
-
-        result = ''
-
-        if ptthanhtoan_id and ptthanhtoan_id != "":
-            ptthanhtoan = request.env['dm.ptthanhtoan'].sudo().browse(ptthanhtoan_id)
-            dbv_obj = self._app_process_donbanve(user_id, lc_id, dbv_items, ptthanhtoan, amount_total )
-            if ptthanhtoan.ht_thanhtoan and "momo" in ptthanhtoan.ht_thanhtoan:
-                result = self.paymomo(dbv_obj.id, user_id)
-            if ptthanhtoan.ht_thanhtoan and "cash" in ptthanhtoan.ht_thanhtoan:
-                result = self.app_datvetruoc(dbv_obj.id)
-            if ptthanhtoan.ht_thanhtoan and "bank" in ptthanhtoan.ht_thanhtoan:
-                result = self.app_chuyenkhoan(dbv_obj.id)
-        values = {
-            'deeplink': result,
-            'dbv_id': dbv_obj.id,
-            'dbv_name': dbv_obj.name,
+        # data = request.jsonrequest['params']
+        datas = {
+            'status': 200,
         }
-        
-        return json.dumps(values, ensure_ascii=False)
+        try:
+            values = {}
+            user_id = data['user_id']
+            lc_id = data['lc_id']
+            dbv_items = data['items']
+            ptthanhtoan_id = data['ptthanhtoan_id']
+            amount_total = data['totals']
+
+            result = ''
+
+            if ptthanhtoan_id and ptthanhtoan_id != "":
+                ptthanhtoan = request.env['dm.ptthanhtoan'].sudo().browse(ptthanhtoan_id)
+                check_exits = self._check_exits_booking(lc_id, dbv_items)
+
+                if check_exits:
+                    return {
+                        'status': 500,
+                        'exist': ",".join(check_exits)
+                    }
+                dbv_obj = self._app_process_donbanve(user_id, lc_id, dbv_items, ptthanhtoan, amount_total )
+                # if ptthanhtoan.ht_thanhtoan and "momo" in ptthanhtoan.ht_thanhtoan:
+                #     result = self.paymomo(dbv_obj.id, user_id)
+                # if ptthanhtoan.ht_thanhtoan and "cash" in ptthanhtoan.ht_thanhtoan:
+                #     result = self.app_datvetruoc(dbv_obj.id)
+                # if ptthanhtoan.ht_thanhtoan and "bank" in ptthanhtoan.ht_thanhtoan:
+                #     result = self.app_chuyenkhoan(dbv_obj.id)
+                qr = self.get_qr_banking(dbv_obj, ptthanhtoan, amount_total)
+                values.update({
+                    'dbv_id': dbv_obj.id,
+                    'dbv_name': dbv_obj.name,
+                    'qr': qr
+                })
+            else:
+                datas.update({
+                    'status': 500,
+                    'msg': 'Quản trị viên chưa cấu hình phương thức thanh toán.'
+                })
+            datas.update({
+                'data': values
+            })
+        except ValueError as e:
+            datas.update({
+                'status': 500,
+                'msg': 'Quản trị viên chưa cấu hình phương thức thanh toán.'
+            })
+        return datas
+
+    def _check_exits_booking(self, lc_id, dbv_items):
+        detail= request.env['dm.donbanve.line'].sudo()
+        line_exist_ids = detail.search([
+            ('vitrighe', 'in', list(map(lambda x: x['id'], dbv_items))),
+            ('dm_lichchieu_id', '=', lc_id)
+        ])
+        return line_exist_ids.mapped('vitrighe')
+
+    def get_qr_banking(self, dbv_obj, ptthanhtoan, amount_total):
+        banking_id = ptthanhtoan.account_journal_id.bank_account_id
+        description = ''
+        if ptthanhtoan.tt_chuyenkhoan:
+            try:
+                description = ptthanhtoan.tt_chuyenkhoan.format(
+                    orderInfo=dbv_obj.name,
+                    amount=int(amount_total)
+                )
+            except Exception as e:
+                pass
+        return f'https://img.vietqr.io/image/{banking_id.bank_bic}-{banking_id.acc_number}-qr_only.jpg?amount={amount_total}&addInfo={self.no_accent_vietnamese(description)}&accountName={self.no_accent_vietnamese(banking_id.partner_id.name)}'
 
     def _app_process_donbanve(self, user_id, lc_id, dbv_lines, ptthanhtoan, amount_total):
         dm_donbanve_line_ids = []
@@ -539,7 +591,7 @@ class ThtCinemaAppApi(http.Controller):
                 'dongia': self._dongiave(banggia_id, dm_loaighe_id, dm_loaive_id),
                 'soluong': 1,
                 # 'price_total': rec[1],
-                'loaive': i['loaiveLabel'],
+                'loaive': i['dm_loaive_name'],
 
             }
             dm_donbanve_line_ids.append((0,0, dbv_line))
@@ -592,6 +644,97 @@ class ThtCinemaAppApi(http.Controller):
                     ('dm_loaive_id', '=', int(dm_loaive_id)),
                 ], limit=1)
         return dongia_obj.dongia
+
+    @http.route('/web/api/v1/get_ticket', type='json', auth="public", methods=['POST'], csrf=False, cors='*')
+    def cnm_api_get_ticket(self, user_id=None, **kw):
+        result = {
+            'status': 200,
+            'msg': 'Đã lấy dữ liệu vé xem phim'
+        }
+        datas = []
+        data = request.jsonrequest['params']
+        if data.get('user_id'):
+            datas_ids = request.env['dm.donbanve'].sudo().search([('user_id', '=', data.get('user_id')), \
+                                                                 ('ht_thanhtoan', '=', 'bank')],
+                                                                order='id desc')
+            for j in datas_ids:
+                lines = []
+                tongtien = 0
+                for r in j.dm_donbanve_line_ids:
+                    lines.append({
+                        'name': r.name,
+                        'loaive': r.loaive,
+                        'dongia': r.dongia,
+                    })
+                    tongtien += r.dongia
+
+                qr = self.get_qr_banking(j, j.dm_ptthanhtoan_id, tongtien)
+
+                description = j.dm_ptthanhtoan_id.tt_chuyenkhoan.format(
+                    orderInfo=j.name,
+                    amount=int(tongtien)
+                )
+
+                dbv_info = {
+                    'id': j.id,
+                    'name': j.name,
+                    'sodienthoai': j.sodienthoai,
+                    'amount_total': j.amount_total,
+                    'tenphim': j.dm_phim_id.name,
+                    'phim_id': j.dm_phim_id.id,
+                    'phong': j.dm_phong_id.name,
+                    # 'batdau': j.dm_lichchieu_id.batdau,
+                    # 'ketthuc': j.dm_lichchieu_id.ketthuc,
+                    'batdau': strToTimeGmt7(j.dm_lichchieu_id.batdau).strftime("%d/%m/%Y %H:%M:%S"),
+                    'ketthuc': strToTimeGmt7(j.dm_lichchieu_id.ketthuc).strftime("%d/%m/%Y %H:%M:%S"),
+                    'lines': lines,
+                    'rapphim': j.dm_lichchieu_id.dm_diadiem_id.name,
+                    # 'thanhtoan': j.payment_method,
+                    'thanhtoan': j.dm_ptthanhtoan_id.name,
+                    'state': j.state,
+                    'ht_thanhtoan': j.ht_thanhtoan,
+                    'date_order': strToTimeGmt7(j.date_order).strftime("%d/%m/%Y %H:%M:%S"),
+                    'tt_chuyenkhoan': j.dm_ptthanhtoan_id.tt_chuyenkhoan,
+                    'tt_chuyenkhoan_convert': description,
+                    'qr': qr,
+                    'tongtien': tongtien,
+                    'luu_y': j.dm_ptthanhtoan_id.luuy_thanhtoan
+                }
+                datas.append(dbv_info)
+        result.update({
+            'result': datas
+        })
+
+        return result
+
+
+    @http.route('/web/api/v1/blogpost', type='json', auth="public", methods=['POST'], csrf=False, cors='*')
+    def cnm_api_blogpost(self, **kw):
+        # today = datetime.date.today()
+        today = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        event = []
+        values = []
+        domain = [('showinapp', '=', True)]
+        blog_ids = request.env['blog.post'].sudo().search(domain, limit=100, order="id desc")
+        if blog_ids:
+            for r in blog_ids:
+                rec_obj = {
+                    "id": r.id,
+                    "title": r.name,
+                    "poster_path": 'r.id',
+                    'title': r.name,
+                    'subtitle': r.subtitle,
+                    'cover_properties': r.cover_properties,
+                    'content': re.sub(text, '', r.content),
+
+                }
+                values.append(rec_obj)
+
+        return {
+            'status': 200,
+            'data': values
+        }
+
 
     
     
